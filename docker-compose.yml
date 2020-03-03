@@ -1,0 +1,64 @@
+
+version: '3'
+
+services:
+
+    client:
+        build:
+            context: .
+            dockerfile: Dockerfile.client
+        environment:
+            - NODE_ENV=development
+        volumes:
+            - .:/home/node/app
+        ports:
+            - "3000:3000"
+        command: "npm run client"
+        depends_on:
+            - server
+            - db
+        networks:
+            - store_app
+
+    server:
+        build:
+            context: .
+            dockerfile: Dockerfile.server
+        volumes:
+            - ./:/home/node/app
+        ports:
+            - "8080:8080"
+        command: [ "./wait-for-it.sh", "store_db_1:3306", "--timeout=0", "--", "npm", "run", "dev-server" ]
+        depends_on:
+            - db
+        networks:
+            - store_app
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5
+        restart: always
+        ports:
+            - "8081:80"
+        environment:
+            PMA_HOST: db
+            MYSQL_ROOT_PASSWORD: rootpass
+        depends_on:
+            - db
+        networks:
+            - store_app
+
+    db:
+        build:
+            context: .
+            dockerfile: Dockerfile.db
+        restart: always
+        environment:
+            MYSQL_USER: noble
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: store
+            MYSQL_ROOT_PASSWORD: rootpass
+        networks:
+            - store_app
+
+networks:
+    store_app:

@@ -1,0 +1,91 @@
+
+interface Node {
+    id: ID!
+}
+
+type Product {
+    id: ID
+    name: String
+    description: String
+    price: Float
+    threshold: Int
+    quantity: Int
+}
+
+type Category {
+    id: ID
+    name: String
+}
+
+type Customer {
+    id: ID
+    first_name: String
+    password: String
+    address: String
+    city: String
+    state: String
+    
+} 
+
+type Admin {
+    id: ID
+    user_name: String
+    password: String
+    first_name: String
+    last_name: String
+    role: Admin_Role
+    status: Admin_Status
+}
+
+enum Admin_Status {
+    ACTIVE
+    SUSPENDED
+    TERMINATED
+}
+
+enum Admin_Role {
+    SUPERVISOR
+    EMPLOYEE
+}
+
+enum Payment_Method {
+    CASH
+    CARD
+}
+
+type Transaction {
+    id: ID
+    products: [ Product ]
+    payment_method: Payment_Method
+    card_number: String
+    total_cost: Float
+    employee: Employee
+    address: String
+    coupon_code: String
+}
+
+type Payment {
+    id: ID
+    transaction_id: ID
+    method: Payment_Method
+    
+}
+
+type Query {
+    node ( id: ID! ): Node
+    product( id: ID ): Product
+}
+
+input AddProductInput {
+  name: String!
+  clientMutationId: String
+}
+
+type AddTodoPayload {
+  name: String!
+  clientMutationId: String
+}
+
+schema {
+    query: Query
+}
