@@ -1,12 +1,9 @@
 
 CREATE DATABASE IF NOT EXISTS store;
--- GRANT ALL PRIVILEGES on store.* TO 'noble'@'*';
 
 USE store;
 
-
 ALTER USER 'noble'@'%' IDENTIFIED WITH mysql_native_password BY 'pass';
-flush privileges;
 
 CREATE USER 'saifali'@'%' IDENTIFIED BY 'password';
 CREATE USER 'frank'@'%' IDENTIFIED BY 'password';
@@ -17,6 +14,7 @@ GRANT ALL PRIVILEGES ON store . * TO 'saifali'@'%';
 GRANT ALL PRIVILEGES ON store . * TO 'frank'@'%';
 GRANT ALL PRIVILEGES ON store . * TO 'osama'@'%';
 
+flush privileges;
 
 CREATE TABLE product (
     id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
