@@ -9,9 +9,8 @@ Database: MySQL
 
 ## Getting started
 
-1. Open terminal
-2. Download [Docker Desktop](https://www.docker.com/products/docker-desktop), turn it on
-3. 
+1. Download [Docker Desktop](https://www.docker.com/products/docker-desktop), turn it on
+2. Enter the following into your terminal
 ```bash
 git clone https://github.com/swooner/Store.git
 cd Store
