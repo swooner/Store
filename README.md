@@ -1,20 +1,22 @@
 
 
-COSC 3380 Database Project - Store
+# COSC 3380 Database Project - Store
 
 Front-end: React (Javascript)
 Back-end: Node, Express, GraphQL
 Database: MySQL
 
 
-Instructions for getting started up
+## Getting started
 
-1. Clone project
-2. Download Docker Desktop, turn on
-3. Cd into the project directory
-4. Run 'docker-compose up' command in terminal
+1. Open terminal
+2. Download [Docker Desktop](https://www.docker.com/products/docker-desktop), turn it on
+3. 
+```bash
+git clone https://github.com/swooner/Store.git
+cd Store
+docker-compose up
+```
 
-
-Website will be running on localhost:3000
-
-Database administration will be running on localhost:8081
+4. Website will be running on localhost:3000
+5. Database administration will be running on localhost:8081
