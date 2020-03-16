@@ -1,5 +1,14 @@
 
-import { GraphQLID, GraphQLString, GraphQLInt } from 'graphql';
+import { 
+    GraphQLID, 
+    GraphQLString, 
+    GraphQLInt 
+} from 'graphql';
+import {
+    connectionArgs,
+    connectionDefinitions,
+    connectionFromArray,
+} from 'graphql-relay';
 import { GraphQLProduct } from '../nodes.js';
 import { Product, getProductOrThrow } from '../../database/queries/product.js';
 
@@ -16,4 +25,12 @@ const ProductQuery = {
     }
 };
 
-export { ProductQuery } ;
+const {
+    connectionType: ProductsConnection,
+    edgeType: GraphQLProductEdge,
+  } = connectionDefinitions({
+    name: 'Product',
+    nodeType: GraphQLProduct,
+});
+
+export { ProductQuery, ProductsConnection, GraphQLProductEdge } ;

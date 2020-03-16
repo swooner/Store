@@ -3,10 +3,16 @@ const mysql = require( 'mysql' );
 const path = require( 'path' );
 const Sequelize = require('sequelize');
 
-const database = new Sequelize( 'store', 'noble', 'pass', {
-    host: 'store_db_1',
+
+const database = new Sequelize( 'tale22_COSC3380_store', 'tale22_Nobel', 'Nobel', {
+    host: 'tale22.heyuhnem.com',
     dialect: 'mysql'
 });
+
+// const database = new Sequelize( 'store', 'noble', 'pass', {
+//     host: 'store_db_1',
+//     dialect: 'mysql'
+// });
 
 database
     .authenticate()

@@ -3,6 +3,7 @@
 # COSC 3380 Database Project - Store
 
 Front-end: React (Javascript)
+
 Back-end: Node, Express, GraphQL
 Database: MySQL
 

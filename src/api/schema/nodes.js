@@ -19,11 +19,19 @@ import {
 
 import {
     getProductOrThrow,
+    getProducts,
 } from '../database/queries/product';
+
+import {
+    ProductsConnection
+} from './queries/ProductQuery';
   
 const { nodeInterface, nodeField } = nodeDefinitions(
     globalId => {
         const { type, id } = fromGlobalId( globalId );
+        if ( type === 'Category' ) {
+            return getCategory( id );
+        } 
         if ( type === 'Product' ) {
             return getProductOrThrow( id );
         } 
@@ -36,6 +44,31 @@ const { nodeInterface, nodeField } = nodeDefinitions(
         return null;
     },
 );
+  
+const GraphQLCategory = new GraphQLObjectType({
+    name: 'Category',
+    interfaces: [ nodeInterface ],
+    fields: {
+        id: globalIdField( 'Category' ),
+        name: {
+            type: new GraphQLNonNull( GraphQLString ),
+            resolve: ( root ) => root.name,
+        },
+        products: {
+            type: ProductsConnection,
+            args: {
+                ...connectionArgs,
+            },
+            resolve: ( root, { status, after, before, first, last } ) =>
+                connectionFromArray( [ ...getProducts( root.name ) ], {
+                    after,
+                    before,
+                    first,
+                    last,
+                }),
+        },
+    },
+});
   
 const GraphQLProduct = new GraphQLObjectType({
     name: 'Product',
@@ -53,4 +86,4 @@ const GraphQLProduct = new GraphQLObjectType({
     },
   });
   
-  export { nodeField, GraphQLProduct };
+  export { nodeField, GraphQLCategory, GraphQLProduct };

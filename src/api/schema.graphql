@@ -3,6 +3,12 @@ interface Node {
     id: ID!
 }
 
+type Category {
+    id: ID
+    name: String
+    products: [ Products ]
+}
+
 type Product {
     id: ID
     name: String
@@ -10,11 +16,6 @@ type Product {
     price: Float
     threshold: Int
     quantity: Int
-}
-
-type Category {
-    id: ID
-    name: String
 }
 
 type Customer {

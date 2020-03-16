@@ -41,7 +41,7 @@ services:
             - "8081:80"
         environment:
             PMA_HOST: db
-            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_ROOT_PASSWORD: YourRootPassword
         depends_on:
             - db
         networks:
@@ -53,12 +53,41 @@ services:
             dockerfile: Dockerfile.db
         restart: always
         environment:
-            MYSQL_USER: noble
-            MYSQL_PASSWORD: pass
-            MYSQL_DATABASE: store
-            MYSQL_ROOT_PASSWORD: rootpass
+            MYSQL_USER: Tale22_Nobel
+            MYSQL_PASSWORD: Nobel
+            MYSQL_DATABASE: tale22_COSC3380_store
+            MYSQL_ROOT_PASSWORD: YourRootPassword
         networks:
             - store_app
 
 networks:
     store_app:
+
+
+
+
+        # phpmyadmin:
+        #     image: phpmyadmin/phpmyadmin:5
+        #     restart: always
+        #     ports:
+        #         - "8081:80"
+        #     environment:
+        #         PMA_HOST: db
+        #         MYSQL_ROOT_PASSWORD: rootpass
+        #     depends_on:
+        #         - db
+        #     networks:
+        #         - store_app
+    
+        # db:
+        #     build:
+        #         context: .
+        #         dockerfile: Dockerfile.db
+        #     restart: always
+        #     environment:
+        #         MYSQL_USER: noble
+        #         MYSQL_PASSWORD: pass
+        #         MYSQL_DATABASE: store
+        #         MYSQL_ROOT_PASSWORD: rootpass
+        #     networks:
+        #         - store_app

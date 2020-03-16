@@ -41,6 +41,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-relay": "^9.0.0",
+    "react-router-dom": "^5.1.2",
     "relay-compiler": "^9.0.0",
     "relay-config": "^9.0.0",
     "sequelize": "^5.21.5"
