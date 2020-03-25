@@ -3,14 +3,30 @@ interface Node {
     id: ID!
 }
 
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
 type Category {
     id: ID
     name: String
     products: [ Products ]
 }
 
+type ProductConnection {
+    pageInfo: PageInfo,
+    edges: [ ProductEdge ]
+}
+type ProductEdge {
+    node: Product
+    cursor: String!
+}
+
 type Product {
-    id: ID
+    product_id: Int
+    brand: String
     name: String
     description: String
     price: Float
@@ -18,14 +34,21 @@ type Product {
     quantity: Int
 }
 
+
 type Customer {
-    id: ID
+    customer_id: Int
     first_name: String
-    password: String
+    last_name: String
+    account_name: String
+    account_password: String
     address: String
     city: String
     state: String
-    
+    zip_code: String
+    phone_number: String
+    email_address: String
+    is_manager: Boolean
+    is_employee: Boolean
 } 
 
 type Admin {
@@ -74,7 +97,39 @@ type Payment {
 
 type Query {
     node ( id: ID! ): Node
-    product( id: ID ): Product
+    product( product_id: ID ): Product
+    productList ( first: Int ): ProductConnection
+}
+
+type Mutation {
+    signUp ( input: SignUpInput! ): SignUpPayload!
+    login ( input: LoginInput! ): LoginPayload!
+}
+
+input SignUpInput {
+    Cus_Fname: String
+    Cus_Lname: String
+    Cus_accName: String
+    Cus_accPass: String
+    Cus_address: String
+    Cus_city: String
+    Cus_state: String
+    Cus_zipCode: String
+    Cus_phone: String
+    Cus_email: String
+    clientMutationId: String
+}
+type SignUpPayload {
+    customer: Customer!
+}
+
+input LoginInput {
+    Cus_accName: String
+    Cus_accPass: String
+    clientMutationId: String
+}
+type LoginPayload {
+    customer: Customer!
 }
 
 input AddProductInput {
@@ -89,4 +144,5 @@ type AddTodoPayload {
 
 schema {
     query: Query
+    mutation: Mutation
 }

@@ -33,6 +33,8 @@ module.exports = merge( baseConfig, {
         modules: [ path.resolve( __dirname ), 'node_modules' ]
     },
     devServer: {
+        historyApiFallback: true,
+        contentBase : '../public',
         host: '0.0.0.0',
         port: 3000,
         hot: true,
