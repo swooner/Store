@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash d8423dc080962b5a059fefd9ab2ebcac
+ * @relayHash 4008862c42c0f4375b3538c74df991cb
  */
 
 /* eslint-disable */
@@ -10,8 +10,8 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type LoginInput = {|
-  Cus_AccName?: ?string,
-  Cus_AccPass?: ?string,
+  account_Name?: ?string,
+  password?: ?string,
   clientMutationId?: ?string,
 |};
 export type LoginMutationVariables = {|
@@ -19,9 +19,8 @@ export type LoginMutationVariables = {|
 |};
 export type LoginMutationResponse = {|
   +login: {|
-    +customer: {|
-      +customer_id: ?number,
-      +account_name: ?string,
+    +user: {|
+      +user_id: ?number
     |}
   |}
 |};
@@ -37,9 +36,8 @@ mutation LoginMutation(
   $input: LoginInput!
 ) {
   login(input: $input) {
-    customer {
-      customer_id
-      account_name
+    user {
+      user_id
     }
   }
 }
@@ -73,23 +71,16 @@ v1 = [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "customer",
+        "name": "user",
         "storageKey": null,
         "args": null,
-        "concreteType": "Customer",
+        "concreteType": "User",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "customer_id",
-            "args": null,
-            "storageKey": null
-          },
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "account_name",
+            "name": "user_id",
             "args": null,
             "storageKey": null
           }
@@ -118,12 +109,12 @@ return {
     "operationKind": "mutation",
     "name": "LoginMutation",
     "id": null,
-    "text": "mutation LoginMutation(\n  $input: LoginInput!\n) {\n  login(input: $input) {\n    customer {\n      customer_id\n      account_name\n    }\n  }\n}\n",
+    "text": "mutation LoginMutation(\n  $input: LoginInput!\n) {\n  login(input: $input) {\n    user {\n      user_id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a99be160e8df389cb5fa1e7d100014e8';
+(node/*: any*/).hash = 'f574eeead00e835c3931deba67ba6f9b';
 
 module.exports = node;

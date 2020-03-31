@@ -44,7 +44,7 @@ export const signUp = ({
         type: Sequelize.QueryTypes.INSERT 
     })
     .then( rows => {
-        // console.log( 'Sign Up customer rows:', rows );
+        console.log( 'Sign Up user rows:', rows );
         return rows;
     })
     .catch( err => console.error( err.stack ) );
@@ -65,7 +65,7 @@ export const login = ({
         type: Sequelize.QueryTypes.SELECT 
     })
     .then( rows => {
-        // console.log( 'Login customer rows:', rows[ 0 ] );
+        console.log( 'Login user rows:', rows[ 0 ] );
         return rows[ 0 ];
     })
     .catch( err => console.error( err.stack ) );

@@ -5,9 +5,8 @@ import environment from '../../../../helpers/relay-environment';
 const mutation = graphql`
     mutation LoginMutation( $input: LoginInput! ) {
         login ( input: $input ) {
-            customer {
-                customer_id
-                account_name
+            user {
+                user_id
             }
         }
     }
@@ -33,8 +32,8 @@ function commit( args, callback ) {
                     console.error( response.error )
                     return
                 }
-                if ( response.customer ) {
-                    localStorage.setItem( 'ACTIVE_USER', response.customer.account_name );
+                if ( response.user ) {
+                    localStorage.setItem( 'ACTIVE_USER', JSON.stringify( response.user ) );
                     window.location.replace( '/' );
                 }
             },

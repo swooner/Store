@@ -1,5 +1,5 @@
 
-FROM node:13
+FROM node:12.16.1-stretch
 
 WORKDIR /home/node/app
 

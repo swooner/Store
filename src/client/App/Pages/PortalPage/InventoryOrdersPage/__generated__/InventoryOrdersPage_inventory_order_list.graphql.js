@@ -9,25 +9,28 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type ProductListPage_productList$ref: FragmentReference;
-declare export opaque type ProductListPage_productList$fragmentType: ProductListPage_productList$ref;
-export type ProductListPage_productList = {|
-  +productList: ?{|
+declare export opaque type InventoryOrdersPage_inventory_order_list$ref: FragmentReference;
+declare export opaque type InventoryOrdersPage_inventory_order_list$fragmentType: InventoryOrdersPage_inventory_order_list$ref;
+export type InventoryOrdersPage_inventory_order_list = {|
+  +inventory_order_list: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
-        +product_id: ?number,
-        +brand: ?string,
-        +name: ?string,
-        +price: ?number,
+        +product: ?{|
+          +name: ?string
+        |},
+        +quantity: ?number,
+        +status: ?string,
+        +created_at: ?any,
+        +received_at: ?any,
       |}
     |}>
   |},
-  +$refType: ProductListPage_productList$ref,
+  +$refType: InventoryOrdersPage_inventory_order_list$ref,
 |};
-export type ProductListPage_productList$data = ProductListPage_productList;
-export type ProductListPage_productList$key = {
-  +$data?: ProductListPage_productList$data,
-  +$fragmentRefs: ProductListPage_productList$ref,
+export type InventoryOrdersPage_inventory_order_list$data = InventoryOrdersPage_inventory_order_list;
+export type InventoryOrdersPage_inventory_order_list$key = {
+  +$data?: InventoryOrdersPage_inventory_order_list$data,
+  +$fragmentRefs: InventoryOrdersPage_inventory_order_list$ref,
   ...
 };
 */
@@ -35,7 +38,7 @@ export type ProductListPage_productList$key = {
 
 const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
-  "name": "ProductListPage_productList",
+  "name": "InventoryOrdersPage_inventory_order_list",
   "type": "Query",
   "metadata": {
     "connection": [
@@ -44,7 +47,7 @@ const node/*: ReaderFragment*/ = {
         "cursor": null,
         "direction": "forward",
         "path": [
-          "productList"
+          "inventory_order_list"
         ]
       }
     ]
@@ -60,11 +63,11 @@ const node/*: ReaderFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "productList",
-      "name": "__ProductListPage_productList_connection",
+      "alias": "inventory_order_list",
+      "name": "__InventoryOrdersPage_inventory_order_list_connection",
       "storageKey": null,
       "args": null,
-      "concreteType": "ProductConnection",
+      "concreteType": "InventoryOrderConnection",
       "plural": false,
       "selections": [
         {
@@ -73,7 +76,7 @@ const node/*: ReaderFragment*/ = {
           "name": "edges",
           "storageKey": null,
           "args": null,
-          "concreteType": "ProductEdge",
+          "concreteType": "InventoryOrderEdge",
           "plural": true,
           "selections": [
             {
@@ -82,34 +85,52 @@ const node/*: ReaderFragment*/ = {
               "name": "node",
               "storageKey": null,
               "args": null,
-              "concreteType": "Product",
+              "concreteType": "InventoryOrder",
               "plural": false,
               "selections": [
                 {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "product",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "Product",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "name",
+                      "args": null,
+                      "storageKey": null
+                    }
+                  ]
+                },
+                {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "product_id",
+                  "name": "quantity",
                   "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "brand",
+                  "name": "status",
                   "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "name",
+                  "name": "created_at",
                   "args": null,
                   "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "price",
+                  "name": "received_at",
                   "args": null,
                   "storageKey": null
                 },
@@ -161,6 +182,6 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '913ee7b3eeae876661e492ca6f3c8101';
+(node/*: any*/).hash = 'b6ed6e3e5b859f214814607f5df9ca31';
 
 module.exports = node;

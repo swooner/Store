@@ -1,0 +1,243 @@
+
+scalar DateTime
+
+interface Node {
+    id: ID!
+}
+
+type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    startCursor: String
+    endCursor: String
+}
+
+type UserConnection {
+    pageInfo: PageInfo,
+    edges: [ UserEdge ]
+}
+type UserEdge {
+    node: User
+    cursor: String!
+}
+type ProductConnection {
+    pageInfo: PageInfo,
+    edges: [ ProductEdge ]
+}
+type ProductEdge {
+    node: Product
+    cursor: String!
+}
+type InventoryOrderConnection {
+    pageInfo: PageInfo,
+    edges: [ InventoryOrderEdge ]
+}
+type InventoryOrderEdge {
+    node: InventoryOrder
+    cursor: String!
+}
+
+type Category {
+    category_id: Int
+    name: String
+    description: String
+    # products: ProductConnection
+}
+
+type Product {
+    product_id: Int
+    category: Category
+    brand: String
+    name: String
+    description: String
+    price: Float
+    threshold: Int
+    quantity: Int
+    created_at: DateTime
+    created_by: User
+}
+
+type User {
+    user_id: Int
+    first_name: String
+    last_name: String
+    account_name: String
+    account_password: String
+    address: String
+    city: String
+    state: String
+    zip_code: String
+    phone_number: String
+    email_address: String
+    employee_info: EmployeeInfo
+}
+
+type EmployeeInfo {
+    role: String
+}
+
+type InventoryOrder {
+    inventory_order_id: ID
+    status: String
+    product: Product
+    quantity: Int
+    created_at: DateTime
+    received_at: DateTime
+}
+
+enum Admin_Status {
+    ACTIVE
+    SUSPENDED
+    TERMINATED
+}
+
+enum Admin_Role {
+    SUPERVISOR
+    EMPLOYEE
+}
+
+enum Payment_Method {
+    CASH
+    CARD
+}
+
+type Transaction {
+    id: ID
+    products: [ Product ]
+    payment_method: Payment_Method
+    card_number: String
+    total_cost: Float
+    employee: Employee
+    address: String
+    coupon_code: String
+}
+
+type Payment {
+    id: ID
+    transaction_id: ID
+    method: Payment_Method
+    
+}
+
+type Query {
+    node ( id: ID! ): Node
+    viewer ( id: Int ): User
+    category_product_list ( category_name: String, first: Int ): ProductConnection
+
+    user_search ( query: String, first: Int ): UserConnection
+    employee_list ( first: Int ) : UserConnection
+    category ( category_id: ID ): Category
+    category_list ( first: Int ): [ Category ]
+    product ( product_id: ID ): Product
+    product_list ( first: Int ): ProductConnection
+    inventory_order_list ( first: Int ): InventoryOrderConnection
+}
+
+type Mutation {
+    signUp ( input: SignUpInput! ): SignUpPayload!
+    login ( input: LoginInput! ): LoginPayload!
+    updateRole ( input: UpdateRoleInput! ): UpdateRolePayload!
+    addCategory ( input: AddCategoryInput! ): AddCategoryPayload!
+    addProduct ( input: AddProductInput! ): AddProductPayload!
+    deleteEmployee ( input: DeleteEmployeeInput! ): DeleteEmployeePayload!
+    deleteCategory ( input: DeleteCategoryInput! ): DeleteCategoryPayload!
+    deleteProduct ( input: DeleteProductInput! ): DeleteProductPayload!
+    deleteInventoryOrder ( input: DeleteInventoryOrderInput! ): DeleteInventoryOrderPayload!
+}
+
+input DeleteEmployeeInput {
+    user_id: Int
+    clientMutationId: String
+}
+type DeleteEmployeePayload {
+    user: User!
+}
+
+input UpdateRoleInput {
+    role: String
+    clientMutationId: String
+}
+type UpdateRolePayload {
+    user: User!
+}
+
+input SignUpInput {
+    first_name: String
+    last_name: String
+    account_name: String
+    password: String
+    address: String
+    city: String
+    state: String
+    zip_code: String
+    phone_number: String
+    email_address: String
+    clientMutationId: String
+}
+type SignUpPayload {
+    user: User!
+}
+
+input LoginInput {
+    account_Name: String
+    password: String
+    clientMutationId: String
+}
+type LoginPayload {
+    user: User!
+}
+
+input AddCategoryInput {
+    name: String!
+    description: String
+    employee_id: Int
+    clientMutationId: String
+}
+type AddCategoryPayload {
+    category: Category!
+    clientMutationId: String
+}
+input DeleteCategoryInput {
+    category_id: Int!
+    clientMutationId: String
+}
+type DeleteCategoryPayload {
+    category: Category!
+    clientMutationId: String
+}
+
+input AddProductInput {
+    category_id: Int
+    name: String!
+    description: String
+    price: Float!
+    quantity: Int!
+    threshold: Int!
+    employee_id: Int
+    clientMutationId: String
+}
+type AddProductPayload {
+    product: Product!
+    clientMutationId: String
+}
+input DeleteProductInput {
+    product_id: Int!
+    clientMutationId: String
+}
+type DeleteProductPayload {
+    product: Product!
+    clientMutationId: String
+}
+input DeleteInventoryOrderInput {
+    inventory_order_id: Int!
+    clientMutationId: String
+}
+type DeleteInventoryOrderPayload {
+    inventory_order: InventoryOrder!
+    clientMutationId: String
+}
+
+schema {
+    query: Query
+    mutation: Mutation
+}

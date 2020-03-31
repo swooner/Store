@@ -21,8 +21,44 @@ export const getProduct = ({ id }) => {
 
 // get a list of products
 export const getProductList = ({ }) => {
-    const sql = `SELECT * FROM product`;
-    return database.query( sql, {
+    return database.query(
+            `SELECT * FROM product`
+        , {
+        raw: true,
+        type: Sequelize.QueryTypes.SELECT
+    })
+    .then( rows => {
+        // console.log( 'getProducts rows:', rows );
+        return rows
+    })
+};
+
+export const getProductsByCategoryId = ({ category_id }) => {
+    return database.query(
+            `
+                SELECT * 
+                FROM product
+                WHERE P_Cat_ID = '${ category_id }'
+            `
+        , {
+        raw: true,
+        type: Sequelize.QueryTypes.SELECT
+    })
+    .then( rows => {
+        // console.log( 'getProducts rows:', rows );
+        return rows
+    })
+};
+
+export const getProductsByCategoryName = ({ category_name }) => {
+    return database.query(
+            `
+                SELECT product.* 
+                FROM product, prod_category
+                WHERE prod_category.Cat_name = '${ category_name }'
+                    AND product.P_Cat_ID = prod_category.Cat_ID
+            `
+        , {
         raw: true,
         type: Sequelize.QueryTypes.SELECT
     })

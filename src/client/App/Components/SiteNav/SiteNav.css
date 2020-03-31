@@ -1,0 +1,18 @@
+
+.SiteNav {
+    display: flex
+}
+
+.SiteNav ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0
+}
+
+.SiteNav ul:not(:last-child) {
+    margin-right: 10px;
+}
+
+.SiteNav li:not(:last-child) {
+    margin-right: 10px;
+}

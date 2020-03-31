@@ -2,8 +2,8 @@
 import database from '../../../../mysql/connection';
 const Sequelize = require('sequelize');
 
-const getCategory = ({ id }) => {
-    const sql = `SELECT * from category`;
+export const getCategory = ({ id }) => {
+    const sql = `SELECT * from prod_category`;
     const replacements = id ? [ id ] : [];
     database.query( sql, {
         replacements,
@@ -16,4 +16,15 @@ const getCategory = ({ id }) => {
     });
 };
 
-export { getCategory }
+export const getCategoryList = ({ }) => {
+    return database.query(
+            `SELECT * FROM prod_category`
+        , {
+        raw: true,
+        type: Sequelize.QueryTypes.SELECT
+    })
+    .then( rows => {
+        // console.log( 'getCategoryList rows:', rows )
+        return rows
+    })
+};

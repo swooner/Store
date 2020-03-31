@@ -1,35 +1,32 @@
 
 
 import React from 'react';
-import {
-    Switch,
-    Route,
-} from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import HomePage from './Pages/HomePage/HomePage';
 import AboutPage from './Pages/AboutPage/AboutPage';
+import PortalPage from './Pages/PortalPage/PortalPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import SignUpPage from './Pages/SignUpPage/SignUpPage';
 import ProductPage from './Pages/ProductPage/ProductPage';
-import ProductListPage from './Pages/ProductListPage/ProductListPage';
+import ProductListPage from './Pages/PortalPage/ProductsPage/ProductsPage';
 
 const Routes = ( props ) => {
     /* The <Switch> is for grouping multiple routes. If a route matches one of the paths listed
     below, the component that is being returned in that route will be chosen  */
     return (
         <Switch>
-            <Route exact path='/store' render={ ( ) => {
-                {/* productList={ props.productList } contains the productList data we got from our API */}
+            <Route exact path='/' render={ ( ) => {
                 return (
-                    <ProductListPage
-                        productList={ props } />
+                    <HomePage
+                        { ...props } />
                 )
             }} />
-            <Route path='/store/product/:product_id' render={ () => {
-                {/* product={ props.product } contains the product data we got from our API */}
-                return (
-                    <ProductPage
-                        product={ props } />
-                )
+            <Route path='/portal' render={ () => {
+                const { viewer } = props;
+                return viewer ? (
+                    <PortalPage
+                        { ...props } />
+                ) : <Redirect to={ '/' } />
             }} />
             <Route path='/about' render={ () => {
                 return (
@@ -37,22 +34,24 @@ const Routes = ( props ) => {
                         { ...props } />
                 )
             }} />
-            <Route exact path='/' render={ () => {
-                return (
-                    <HomePage
-                        { ...props } />
-                )
-            }} />
             <Route exact path='/login' render={ () => {
-                return (
+                const { viewer } = props;
+                return !viewer ? (
                     <LoginPage
                         { ...props } />
-                )
+                ) : <Redirect to={ '/' } />
             }} />
             <Route exact path='/sign-up' render={ () => {
-                return (
+                const { viewer } = props;
+                return !viewer ? (
                     <SignUpPage
                         { ...props } />
+                ) : <Redirect to={ '/' } />
+            }} />
+            <Route exact path='/sign-out' render={ () => {
+                localStorage.removeItem( 'ACTIVE_USER' );
+                return (
+                    <Redirect to="/" />
                 )
             }} />
         </Switch>

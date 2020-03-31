@@ -6,11 +6,16 @@ import {
     Link,
     useLocation,
 } from 'react-router-dom';
+import SiteNav from './Components/SiteNav/SiteNav';
 import Routes from './Routes';
 import styles from './App.css';
 
 const App = ( ) => {
-    const viewer = localStorage.getItem( 'ACTIVE_USER' );
+    let storage_viewer = localStorage.getItem( 'ACTIVE_USER' );
+    storage_viewer = storage_viewer ? JSON.parse( storage_viewer ) : null;
+    const user_id = storage_viewer ? storage_viewer.user_id : null; 
+    console.log( 'user_id:', user_id );
+
     // react-router provides a function for getting the location from the Javascript Browser API. 
     // We could just as easily use window.location, but react-router's lcoation allows for passing a state object
     // from page to page, so I think it's better for this app.
@@ -18,18 +23,46 @@ const App = ( ) => {
     // console.log( 'location:', location );
     const { pathname } = location;
     const [ ,...paths  ] = pathname.split( '/' )
-    let isProductPage, isProductListPage;
+    let isProductPage = false;
+    let isHomePage = false;
+    let category_name = '';
+
+    let isPortalPage = false;
+    let isCategoriesPage = false;
+    let isProductsPage = false;
+    let isEmployeesPage = false;
+    let isAddEmployeePage = false;
+    let isAddProductPage = false;
+    let isInventoryOrdersPage = false;
     let product_id;
+    let page = paths[ 0 ];
     // when a user goes to the page for viewing specific products, we assign the product's id that is 
     // passed in the url and feed to our API.
     // console.log( 'paths:', paths );
-    if ( paths[ 0 ] === 'store' ) {
-        isProductListPage = true;
-        if ( paths[ 1 ] === 'product' ) {
-            isProductPage = true;
-            isProductListPage = false;
-            product_id = parseInt( paths[ 2 ] );
+    if ( page === 'portal' ) {
+        isPortalPage = true;
+        if ( paths[ 1 ] === 'employees' ) {
+            isEmployeesPage = true;
+            if ( paths[ 2 ] === 'add-employee' ) {
+                isAddEmployeePage = true;
+            }
         }
+        if ( paths[ 1 ] === 'categories' ) {
+            isCategoriesPage = true;
+        }
+        if ( paths[ 1 ] === 'products' ) {
+            isProductsPage = true;
+            if ( paths[ 2 ] === 'add-product' ) {
+                isAddProductPage = true;
+            }
+        }
+        if ( paths[ 1 ] === 'inventory-orders' ) {
+            isInventoryOrdersPage = true;
+        }
+    }
+    else {
+        isHomePage = true;
+        category_name = 'Burgers';
     }
     // console.log( 'product_id:', product_id );
     // <QueryRenderer> here is for bridging our API to our views. Whenever we need data from our
@@ -40,21 +73,52 @@ const App = ( ) => {
             environment={ environment }
             query={ graphql`
                 query AppQuery (
+                    $user_id: Int
+                    
+                    $category_name: String
                     $product_id: Int
-                    $isProductPage: Boolean
-                    $isProductListPage: Boolean
+                    $isHomePage: Boolean!
+                    $isProductPage: Boolean!
+                    
+                    $isEmployeesPage: Boolean!
+                    $isAddProductPage: Boolean!
+                    $isAddEmployeePage: Boolean!
+                    $isCategoriesPage: Boolean!
+                    $isProductsPage: Boolean!
+                    $isInventoryOrdersPage: Boolean!
                 ) { 
+                    viewer ( id: $user_id ) {
+                        user_id
+                        employee_info {
+                            role
+                        }
+                    }
                     # This object fragment is found in ProductPage.js. The product_id from the
                     # url is passed to it
                     ...ProductPage_product @arguments( product_id: $product_id ) @include ( if: $isProductPage )
-                    # This object fragment is found in ProductListPage.js
-                    ...ProductListPage_productList @include ( if: $isProductListPage )
+                    ...ProductList_category_product_list @arguments( category_name: $category_name ) @include ( if: $isHomePage )
+
+                    ...AddEmployee_user_search @include ( if: $isAddEmployeePage )
+                    ...EmployeesPage_employee_list @include ( if: $isEmployeesPage )
+                    ...CategoriesPage_category_list @include ( if: $isCategoriesPage )
+                    ...ProductsPage_product_list @include ( if: $isProductsPage )
+                    ...AddProduct_category_list @include ( if: $isAddProductPage )
+                    ...InventoryOrdersPage_inventory_order_list @include ( if: $isInventoryOrdersPage )
                 }
             `}
             variables={{
+                user_id,
                 product_id,
+                category_name,
+                isHomePage,
                 isProductPage,
-                isProductListPage,
+                
+                isProductsPage,
+                isEmployeesPage,
+                isAddEmployeePage,
+                isAddProductPage,
+                isCategoriesPage,
+                isInventoryOrdersPage,
             }}
             render={ ( { error, props } ) => {
                 if ( error ) {
@@ -65,41 +129,14 @@ const App = ( ) => {
                     return <div>Loading...</div>;
                 }
                 // console.log( 'props:', props );
+                const { viewer } = props;
                 return (
                     /* styles.App references the import styles statement above. Since global styling is bad practice, our styling will be
                     component-based. if you want to style an element, you need to match that element directly to a specific stylesheet. 
                     The stylesheet for this component is called App.css and is imported at the top of this file. In the App.css file, 
                     you would then style like normal  */
                     <div className={ styles.App }>
-                        <nav>
-                            <ul>
-                                { /* The <Link> component is provided by react-router for going to specific pathnames. It works just like <a> */ }
-                                <li>
-                                    <Link to="/">Home</Link>
-                                </li>
-                                <li>
-                                    <Link to="/about">About</Link>
-                                </li>
-                                <li>
-                                    <Link to="/store">Store</Link>
-                                </li>
-                                { !viewer &&
-                                    <li>
-                                        <Link to="/sign-up">Sign up</Link>
-                                    </li>
-                                }
-                                { !viewer &&
-                                    <li>
-                                        <Link to="/login">Login</Link>
-                                    </li>
-                                }
-                                { viewer &&
-                                    <li>
-                                        <Link to="/admin">Admin</Link>
-                                    </li>
-                                }
-                            </ul>
-                        </nav>
+                        <SiteNav viewer={ viewer } isPortalPage={ isPortalPage } />
                         <Routes 
                             { ...props }
                             viewer={ viewer } />

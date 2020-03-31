@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash da2f4be29c2d9fdfbdf3bec8a139de37
+ * @relayHash 54b6c80d96a5e8210968b2cee4f71660
  */
 
 /* eslint-disable */
@@ -10,17 +10,16 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type SignUpInput = {|
-  Cus_Fname?: ?string,
-  Cus_Lname?: ?string,
-  Cus_AccName?: ?string,
-  Cus_AccPass?: ?string,
-  Cus_address?: ?string,
-  Cus_city?: ?string,
-  Cus_state?: ?string,
-  Cus_zipcode?: ?string,
-  Cus_phone?: ?string,
-  Cus_Email?: ?string,
-  Cus_isEmployee?: ?boolean,
+  first_name?: ?string,
+  last_name?: ?string,
+  account_name?: ?string,
+  password?: ?string,
+  address?: ?string,
+  city?: ?string,
+  state?: ?string,
+  zip_code?: ?string,
+  phone_number?: ?string,
+  email_address?: ?string,
   clientMutationId?: ?string,
 |};
 export type SignUpMutationVariables = {|
@@ -28,8 +27,8 @@ export type SignUpMutationVariables = {|
 |};
 export type SignUpMutationResponse = {|
   +signUp: {|
-    +customer: {|
-      +customer_id: ?number
+    +user: {|
+      +user_id: ?number
     |}
   |}
 |};
@@ -45,8 +44,8 @@ mutation SignUpMutation(
   $input: SignUpInput!
 ) {
   signUp(input: $input) {
-    customer {
-      customer_id
+    user {
+      user_id
     }
   }
 }
@@ -80,16 +79,16 @@ v1 = [
       {
         "kind": "LinkedField",
         "alias": null,
-        "name": "customer",
+        "name": "user",
         "storageKey": null,
         "args": null,
-        "concreteType": "Customer",
+        "concreteType": "User",
         "plural": false,
         "selections": [
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "customer_id",
+            "name": "user_id",
             "args": null,
             "storageKey": null
           }
@@ -118,12 +117,12 @@ return {
     "operationKind": "mutation",
     "name": "SignUpMutation",
     "id": null,
-    "text": "mutation SignUpMutation(\n  $input: SignUpInput!\n) {\n  signUp(input: $input) {\n    customer {\n      customer_id\n    }\n  }\n}\n",
+    "text": "mutation SignUpMutation(\n  $input: SignUpInput!\n) {\n  signUp(input: $input) {\n    user {\n      user_id\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '2a296dc16491e6e629b55a4eb191ab05';
+(node/*: any*/).hash = '273d8141964b37545c2fdd6219f3c467';
 
 module.exports = node;

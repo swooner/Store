@@ -11,15 +11,49 @@ module.exports = merge( baseConfig, {
     },
     output: {
         path: path.resolve( __dirname, 'dist' ),
-        filename: 'bundle.client.js'
+        filename: 'bundle.client.js',
+        publicPath: '/'
     },
+    devtool: 'inline-source-map',
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.sass$/i,
                 use: [
                     'style-loader',
-                    'css-loader'
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: true,
+                            importLoaders: 1,
+                            modules: {
+                                localIdentName: '[name]__[local]__[hash:base64:5]'
+                            },
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: true,
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    {
+                        loader: 'style-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            importLoaders: 1,
+                            modules: {
+                                localIdentName: '[name]__[local]__[hash:base64:5]'
+                            },
+                        }
+                    }
                 ],
             },
         ],
@@ -34,7 +68,6 @@ module.exports = merge( baseConfig, {
     },
     devServer: {
         historyApiFallback: true,
-        contentBase : '../public',
         host: '0.0.0.0',
         port: 3000,
         hot: true,

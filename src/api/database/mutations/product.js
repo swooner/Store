@@ -1,12 +1,30 @@
 
 import database from '../../../../mysql/connection';
 const Sequelize = require('sequelize');
+import { DateTimeNow } from '../../helpers';
 
-export const addProduct = ( ) => {
-    database.query( 
+export const addProduct = ({ 
+    category_id, 
+    name, 
+    description, 
+    price, 
+    quantity, 
+    threshold, 
+    employee_id 
+}) => {
+    return database.query( 
         `
-            INSERT INTO product ( P_brand, P_name, P_description, P_quantity, P_price, P_threshold ) 
-            VALUES ( 'Hersheys', 'Kisses', 'A tasty chocolate treat', 100, 0.99, 5000 )
+            INSERT INTO product ( P_Cat_ID, P_name, P_description, P_price, P_quantity, P_threshold, P_Cus_ID, P_createdAt ) 
+            VALUES ( 
+                '${ category_id }', 
+                '${ name }', 
+                '${ description }', 
+                '${ price }', 
+                '${ quantity }', 
+                '${ threshold }', 
+                '${ employee_id }',
+                '${ DateTimeNow( ) }'
+            )
         `, {
         type: Sequelize.QueryTypes.INSERT 
     })
@@ -17,16 +35,16 @@ export const addProduct = ( ) => {
     .catch( err => console.error( err.stack ) );
 };
 
-
-// Seed initial data
-// addSampleProduct( );
-
-export const deleteProduct = ( ) => {
-    database.query( "DELETE FROM product WHERE P_name='Kisses'" )
+export const deleteProduct = ({ product_id }) => {
+    return database.query(
+        `
+            DELETE FROM product 
+            WHERE P_ID='${ product_id }'
+        ` ), {
+            type: Sequelize.QueryTypes.DELETE 
+        }
         .then( rows => {
             console.log( 'Deleted rows:', rows );
         })
         .catch( err => console.error( err.stack ) );
 };
-
-// deleteProduct( );

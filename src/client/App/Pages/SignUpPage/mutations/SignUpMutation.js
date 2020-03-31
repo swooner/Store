@@ -5,15 +5,15 @@ import environment from '../../../../helpers/relay-environment';
 const mutation = graphql`
     mutation SignUpMutation( $input: SignUpInput! ) {
         signUp ( input: $input ) {
-            customer {
-                customer_id
+            user {
+                user_id
             }
         }
     }
 `;
 
 function commit( args, callback ) {
-    console.log(args)
+    console.log( args )
     return commitMutation(
         environment,
         {
@@ -21,20 +21,19 @@ function commit( args, callback ) {
             variables: {
                 input: args
             },
-            onCompleted: (res, err) => {
-                const response = res.SignUp;
+            onCompleted: ( res, err ) => {
+                const response = res.signUp;
                 if ( err ) {
-                    console.error(err)
+                    console.error( err )
                     return
                 }
                 if ( response.error ) {
-                    console.error(response.error)
+                    console.error( response.error )
                     return
                 }
-                // sessionStorage.setItem('email', response.user.email);
-                // window.location.replace('/');
+                window.location.replace( '/login' );
             },
-            onError: err => console.error(err.stack)
+            onError: err => console.error( err.stack )
         }
     ),
     callback
