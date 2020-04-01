@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import HomePage from './Pages/HomePage/HomePage';
+import StorePage from './Pages/StorePage/StorePage';
 import AboutPage from './Pages/AboutPage/AboutPage';
 import PortalPage from './Pages/PortalPage/PortalPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
@@ -17,7 +17,7 @@ const Routes = ( props ) => {
         <Switch>
             <Route exact path='/' render={ ( ) => {
                 return (
-                    <HomePage
+                    <StorePage
                         { ...props } />
                 )
             }} />

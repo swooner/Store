@@ -41,7 +41,7 @@ type Category {
     category_id: Int
     name: String
     description: String
-    # products: ProductConnection
+    products ( first: Int ): ProductConnection
 }
 
 type Product {
@@ -70,6 +70,19 @@ type User {
     phone_number: String
     email_address: String
     employee_info: EmployeeInfo
+    cart: Cart
+}
+
+type Cart {
+    items: [ CartItem ]
+    total: Float
+}
+
+type CartItem {
+    product: Product
+    size: String
+    quantity: Int
+    cost: Float
 }
 
 type EmployeeInfo {
@@ -122,11 +135,10 @@ type Payment {
 type Query {
     node ( id: ID! ): Node
     viewer ( id: Int ): User
-    category_product_list ( category_name: String, first: Int ): ProductConnection
+    categories: [ Category ]
 
     user_search ( query: String, first: Int ): UserConnection
     employee_list ( first: Int ) : UserConnection
-    category ( category_id: ID ): Category
     category_list ( first: Int ): [ Category ]
     product ( product_id: ID ): Product
     product_list ( first: Int ): ProductConnection
@@ -212,9 +224,14 @@ input AddProductInput {
     description: String
     price: Float!
     quantity: Int!
+    sizes: ProductSizeInput
     threshold: Int!
     employee_id: Int
     clientMutationId: String
+}
+input ProductSizeInput {
+    name: String
+    surcharge: Float
 }
 type AddProductPayload {
     product: Product!

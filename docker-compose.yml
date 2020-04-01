@@ -13,7 +13,7 @@ services:
             - .:/home/node/app
         ports:
             - "3000:3000"
-        command: "npm run client"
+        command: "npm run dev-client"
         depends_on:
             - server
             - db

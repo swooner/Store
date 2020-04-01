@@ -1,0 +1,32 @@
+
+
+.ProductList {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    min-height: 100vh;
+    background: blue;
+}
+
+.ProductList .Product {
+    cursor: pointer;
+}
+
+
+.ActiveProduct {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    height: 100vh;
+    background: red;
+}
+
+.Cart {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    visibility: hidden;
+}

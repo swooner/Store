@@ -24,7 +24,7 @@ const App = ( ) => {
     const { pathname } = location;
     const [ ,...paths  ] = pathname.split( '/' )
     let isProductPage = false;
-    let isHomePage = false;
+    let isStorePage = false;
     let category_name = '';
 
     let isPortalPage = false;
@@ -61,7 +61,7 @@ const App = ( ) => {
         }
     }
     else {
-        isHomePage = true;
+        isStorePage = true;
         category_name = 'Burgers';
     }
     // console.log( 'product_id:', product_id );
@@ -75,9 +75,8 @@ const App = ( ) => {
                 query AppQuery (
                     $user_id: Int
                     
-                    $category_name: String
                     $product_id: Int
-                    $isHomePage: Boolean!
+                    $isStorePage: Boolean!
                     $isProductPage: Boolean!
                     
                     $isEmployeesPage: Boolean!
@@ -92,11 +91,12 @@ const App = ( ) => {
                         employee_info {
                             role
                         }
+                        ...Cart_cart @include ( if: $isStorePage )
                     }
                     # This object fragment is found in ProductPage.js. The product_id from the
                     # url is passed to it
                     ...ProductPage_product @arguments( product_id: $product_id ) @include ( if: $isProductPage )
-                    ...ProductList_category_product_list @arguments( category_name: $category_name ) @include ( if: $isHomePage )
+                    ...ProductList_categories @include ( if: $isStorePage )
 
                     ...AddEmployee_user_search @include ( if: $isAddEmployeePage )
                     ...EmployeesPage_employee_list @include ( if: $isEmployeesPage )
@@ -109,8 +109,7 @@ const App = ( ) => {
             variables={{
                 user_id,
                 product_id,
-                category_name,
-                isHomePage,
+                isStorePage,
                 isProductPage,
                 
                 isProductsPage,
