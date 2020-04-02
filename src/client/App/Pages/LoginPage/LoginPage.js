@@ -12,7 +12,7 @@ const LoginPage = ( ) => {
         updateForm({ ...form, [ name ]: e.target.value })
     };
     const submitForm = ( ) => {
-        // console.log( 'form:', form );
+        console.log( 'form:', form );
         LoginMutation.commit( form );
     };
     return (

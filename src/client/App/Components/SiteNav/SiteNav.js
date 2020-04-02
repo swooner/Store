@@ -12,7 +12,7 @@ const SiteNav = ( props ) => {
         <nav className={ styles.SiteNav }>
             <ul className={ styles.HomeNav }>
                 <li>
-                    <Link to="/">Home</Link>
+                    <Link to="/">Store</Link>
                 </li>
             </ul>
             { !isPortalPage ? (
@@ -20,35 +20,35 @@ const SiteNav = ( props ) => {
                     <li>
                         <Link to="/about">About</Link>
                     </li>
-                    <li>
-                        <Link to="/store">Store</Link>
-                    </li>
-                    { viewer && ( employee_info.role === 'manager' || employee_info.role === 'inventory'  || employee_info.role === 'employee' ) &&
+                    { viewer && employee_info && ( employee_info.role === 'manager' || employee_info.role === 'inventory'  || employee_info.role === 'employee' ) &&
                         <li>
                             <Link to="/portal">Portal</Link>
                         </li>
                     }
                 </ul>
             ) : (
-                <ul className={ styles.EmployeeNav }>
-                    { employee_info.role === 'manager' &&
+                    <ul className={ styles.EmployeeNav }>
+                        { employee_info.role === 'manager' &&
+                            <li>
+                                <Link to={ '/portal/employees' }>Employees</Link>
+                            </li>
+                        }
                         <li>
-                            <Link to={ '/portal/employees' }>Employees</Link>
+                            <Link to={ '/portal/categories' }>Categories</Link>
                         </li>
-                    }
-                    <li>
-                        <Link to={ '/portal/categories' }>Categories</Link>
-                    </li>
-                    <li>
-                        <Link to={ '/portal/products' }>Products</Link>
-                    </li>
-                    { ( employee_info.role === 'manager' && employee_info.role === 'inventory' ) &&
                         <li>
-                            <Link to={ '/portal/inventory-orders' }>Orders</Link>
+                            <Link to={ '/portal/products' }>Products</Link>
                         </li>
-                    }
-                </ul>
-            )}
+                        { ( employee_info.role === 'manager' && employee_info.role === 'inventory' ) &&
+                            <li>
+                                <Link to={ '/portal/inventory-orders' }>Orders</Link>
+                            </li>
+                        }
+                    </ul>
+
+                
+                )
+            }
             <ul className={ styles.AuthNav }>
                 { !viewer &&
                     <li>

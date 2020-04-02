@@ -191,7 +191,7 @@ type SignUpPayload {
 }
 
 input LoginInput {
-    account_Name: String
+    account_name: String
     password: String
     clientMutationId: String
 }

@@ -52,15 +52,15 @@ export const signUp = ({
 
 
 export const login = ({
-    Cus_accName,
-    Cus_accPass,
+    account_name,
+    password,
 }) => {
     return database.query( 
         `
             SELECT Cus_ID, Cus_accName
             FROM customer
-            WHERE Cus_accName = '${ Cus_accName }'
-                AND Cus_accPass = '${ Cus_accPass }'
+            WHERE Cus_accName = '${ account_name }'
+                AND Cus_accPass = '${ password }'
         `, {
         type: Sequelize.QueryTypes.SELECT 
     })

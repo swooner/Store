@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash dbfa1e8315c9d7690912fa6f652ffe35
+ * @relayHash 4b329a024ba963c78aaddaf6e8cd49f3
  */
 
 /* eslint-disable */
@@ -15,9 +15,14 @@ export type AddProductInput = {|
   description?: ?string,
   price: number,
   quantity: number,
+  sizes?: ?ProductSizeInput,
   threshold: number,
   employee_id?: ?number,
   clientMutationId?: ?string,
+|};
+export type ProductSizeInput = {|
+  name?: ?string,
+  surcharge?: ?number,
 |};
 export type AddProductMutationVariables = {|
   input: AddProductInput

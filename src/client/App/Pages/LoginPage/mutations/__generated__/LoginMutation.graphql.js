@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4008862c42c0f4375b3538c74df991cb
+ * @relayHash ff97eeb294f82c95119c547eee200623
  */
 
 /* eslint-disable */
@@ -10,7 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type LoginInput = {|
-  account_Name?: ?string,
+  account_name?: ?string,
   password?: ?string,
   clientMutationId?: ?string,
 |};
