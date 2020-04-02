@@ -45,8 +45,8 @@ export const SignUpMutation = mutationWithClientMutationId({
 		city: { type: GraphQLString },
 		state: { type: GraphQLString },
 		zip_code: { type: GraphQLString },
-		phone: { type: GraphQLString },
-		email: { type: GraphQLString },
+		phone_number: { type: GraphQLString },
+		email_address: { type: GraphQLString },
 		// isEmployee: { type: GraphQLBoolean },
 	},
 	outputFields: {

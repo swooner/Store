@@ -19,56 +19,56 @@ const SignUpPage = ( props ) => {
             <ControlGroup title={ 'First name' } description={ null }>
                 <Input 
                     placeholder={ 'First Name' } 
-                    onChange={ ( e ) => this.handleInput( e, 'first_name' ) } />
+                    onChange={ ( e ) => handleInput( e, 'first_name' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Last name' } description={ null }>
                 <Input 
                     placeholder={ 'Last Name' } 
-                    onChange={ ( e ) => this.handleInput( e, 'last_name' ) } />
+                    onChange={ ( e ) => handleInput( e, 'last_name' ) } />
             </ControlGroup>
             <ControlGroup title={ 'User name' } description={ null }>
                 <Input 
                     placeholder={ 'User name' } 
-                    onChange={ ( e ) => this.handleInput( e, 'account_name' ) } />
+                    onChange={ ( e ) => handleInput( e, 'account_name' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Password' } description={ null }>
                 <Input 
                     type={ 'password' } 
                     placeholder={ 'Password' } 
-                    onChange={ ( e ) => this.handleInput( e, 'password' ) } />
+                    onChange={ ( e ) => handleInput( e, 'password' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Address' } description={ null }>
                 <Input 
                     placeholder={ 'Address' } 
-                    onChange={ ( e ) => this.handleInput( e, 'address' ) } />
+                    onChange={ ( e ) => handleInput( e, 'address' ) } />
             </ControlGroup>
             <ControlGroup title={ 'City' } description={ null }>
                 <Input 
                     placeholder={ 'City' } 
-                    onChange={ ( e ) => this.handleInput( e, 'city' ) } />
+                    onChange={ ( e ) => handleInput( e, 'city' ) } />
             </ControlGroup>
             <ControlGroup title={ 'State' } description={ null }>
                 <Input 
                     placeholder={ 'State' } 
-                    onChange={ ( e ) => this.handleInput( e, 'state' ) } />
+                    onChange={ ( e ) => handleInput( e, 'state' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Zip Code' } description={ null }>
                 <Input 
                     placeholder={ 'Zip Code' } 
-                    onChange={ ( e ) => this.handleInput( e, 'zip_code' ) } />
+                    onChange={ ( e ) => handleInput( e, 'zip_code' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Phone number' } description={ null }>
                 <Input 
                     placeholder={ 'Phone number' } 
-                    onChange={ ( e ) => this.handleInput( e, 'phone_number' ) } />
+                    onChange={ ( e ) => handleInput( e, 'phone_number' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Email address' } description={ null }>
                 <Input 
                     type={ 'email' }
                     placeholder={ 'Email address' } 
-                    onChange={ ( e ) => this.handleInput( e, 'email_address' ) } />
+                    onChange={ ( e ) => handleInput( e, 'email_address' ) } />
             </ControlGroup>
-            <SubmitButton text={ 'Submit' } onClick={ () => this.submitForm( ) } />
+            <SubmitButton text={ 'Submit' } onClick={ () => submitForm( ) } />
         </div>
     )
 };

@@ -10,6 +10,7 @@ const Store = ( props ) => {
     const selectProduct = ( product ) => {
         activateProduct( product );
     };
+    const { viewer } = props;
     return (
         <div className={ styles.StorePage }>
             <ProductList 
@@ -21,7 +22,11 @@ const Store = ( props ) => {
                     { ...props }
                     activeProduct={ activeProduct } />
             }
-            <Cart />
+            { viewer &&
+                <Cart 
+                    { ...props }
+                    cart={ viewer }/>
+            }
         </div>
     )
 };

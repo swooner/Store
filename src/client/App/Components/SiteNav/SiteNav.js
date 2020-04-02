@@ -6,7 +6,8 @@ import styles from './SiteNav.css';
 
 const SiteNav = ( props ) => {
     const { viewer, isPortalPage } = props;
-    const { employee_info } = viewer;
+    const employee_info = viewer ? viewer.employee_info : null;
+    console.log( 'viewer:', viewer );
     return (
         <nav className={ styles.SiteNav }>
             <ul className={ styles.HomeNav }>

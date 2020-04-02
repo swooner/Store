@@ -20,15 +20,15 @@ const LoginPage = ( ) => {
             <ControlGroup title={ 'User name' } description={ null }>
                 <Input 
                     placeholder={ 'User name' } 
-                    onChange={ ( e ) => this.handleInput( e, 'account_name' ) } />
+                    onChange={ ( e ) => handleInput( e, 'account_name' ) } />
             </ControlGroup>
             <ControlGroup title={ 'Password' } description={ null }>
                 <Input 
                     type={ 'password' } 
                     placeholder={ 'Password' } 
-                    onChange={ ( e ) => this.handleInput( e, 'password' ) } />
+                    onChange={ ( e ) => handleInput( e, 'password' ) } />
             </ControlGroup>
-            <SubmitButton text={ 'Submit' } onClick={ () => this.submitForm( ) } />
+            <SubmitButton text={ 'Submit' } onClick={ () => submitForm( ) } />
         </div>
     )
     
