@@ -3,8 +3,8 @@ import database from '../../../../mysql/connection';
 const Sequelize = require('sequelize');
 
 export const updateRole = ({
-    E_Cus_ID,
-    E_role,
+    user_id,
+    role,
 }) => {
     return database.query(
         `
@@ -13,10 +13,10 @@ export const updateRole = ({
                 E_role
             )
             VALUES(
-                '${ E_Cus_ID }',
-                '${ E_role }'
+                '${ user_id }',
+                '${ role }'
             )
-            ON DUPLICATE KEY UPDATE E_role='${ E_role }'
+            ON DUPLICATE KEY UPDATE E_role='${ role }'
         `, {
         type: Sequelize.QueryTypes.INSERT 
     })

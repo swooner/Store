@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash eebd5281bcff8cecdcb9c57b11ed95dc
+ * @relayHash 2aa233ebc454ecb1d4d40f0d4128aa2f
  */
 
 /* eslint-disable */
@@ -10,6 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type UpdateRoleInput = {|
+  user_id?: ?number,
   role?: ?string,
   clientMutationId?: ?string,
 |};

@@ -24,7 +24,7 @@ export const getUser = ({ id }) => {
 export const searchUsers = ({ query, first }) => {
     return database.query(
         `
-            SELECT DISTINCT Cus_ID, Cus_FName, Cus_LName, Cus_accName
+            SELECT DISTINCT Cus_ID, Cus_Fname, Cus_Lname, Cus_accName
             FROM customer
             WHERE Cus_FName LIKE '%${ query }%'
                 OR Cus_LName LIKE '%${ query }%'

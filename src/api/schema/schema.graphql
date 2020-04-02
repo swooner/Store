@@ -166,6 +166,7 @@ type DeleteEmployeePayload {
 }
 
 input UpdateRoleInput {
+    user_id: Int
     role: String
     clientMutationId: String
 }

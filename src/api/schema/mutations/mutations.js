@@ -104,8 +104,8 @@ export const DeleteEmployeeMutation = mutationWithClientMutationId({
 export const UpdateRoleMutation = mutationWithClientMutationId({
     name: 'UpdateRole',
     inputFields: {
-        E_Cus_ID: { type: GraphQLInt },
-        E_role: { type: GraphQLString },
+        user_id: { type: GraphQLInt },
+        role: { type: GraphQLString },
     },
     outputFields: {
         user: {

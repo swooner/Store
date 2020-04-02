@@ -32,24 +32,24 @@ const AddEmployee = ( props ) => {
     };
     const selectEmployee = ( user ) => {
         console.log( 'user:', user );
+        const { employee_info } = user;
         setQuery( '' );
         setActiveUser( user );
-        setFormRole( user.employee_info.role );
+        setFormRole( employee_info ? employee_info.role : null );
     };
-    const changeRole = ( value ) => {
-        console.log( 'value:', value );
-        setFormRole( value );
+    const changeRole = ( e ) => {
+        setFormRole( e.target.value );
     };
     const submitEmployeeForm = ( ) => {
         const form = {
-            E_Cus_ID: activeUser.user_id,
-            E_role: activeRole,
+            user_id: activeUser.user_id,
+            role: activeRole === 'none' ? 'employee' : activeRole,
         };
         UpdateRoleMutation.commit( form );
     };
     const { user_search, name } = props;
     // console.log( 'AddEmployee props:', props );
-    // console.log( 'activeUser:', activeUser );
+    console.log( 'activeUser:', activeUser );
     return (
         <div className={ styles.AddEmployee }>
             <div className={ styles.UserSearch }>
@@ -101,11 +101,13 @@ const Result = ({ result, onClick }) => {
 
 const EmployeeForm = ({ activeUser, activeRole, onRoleChange, onSubmitClick }) => {
     const { first_name, last_name } = activeUser;
+    console.log( 'activeRole:', activeRole );
     return (
         <div className={ styles.EmployeeForm }>
             <div className={ styles.FirstName }>{ first_name }</div>
             <div className={ styles.LastName }>{ last_name }</div>
-            <select onChange={ ( e ) => onRoleChange( e ) } value={ activeRole }>
+            <select onChange={ ( e ) => onRoleChange( e ) } value={ activeRole || 'none' }>
+                <option value={ 'none' }>Select role</option>
                 <option value={ 'employee' }>Employee</option>
                 <option value={ 'manager' }>Manager</option>
                 <option value={ 'inventory' }>Inventory</option>

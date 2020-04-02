@@ -6,7 +6,11 @@ import Cart from './Cart/Cart';
 import styles from './StorePage.css';
 
 const Store = ( props ) => {
+    const [ activeCategory, activateCategory ] = useState( );
     const [ activeProduct, activateProduct ] = useState( );
+    const selectCategory = ( category ) => {
+        activateCategory( category );
+    };
     const selectProduct = ( product ) => {
         activateProduct( product );
     };
@@ -16,7 +20,8 @@ const Store = ( props ) => {
             <ProductList 
                 { ...props } 
                 categories={ props }
-                selectProduct={ selectProduct } />
+                selectProduct={ selectProduct }
+                selectCategory={ selectCategory } />
             { activeProduct &&
                 <ActiveProduct
                     { ...props }

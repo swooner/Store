@@ -12,7 +12,7 @@ const ProductList = ( props ) => {
             { categories ? categories.map(( category, i ) => {
                 const { name, description, products } = category;
                 return (
-                    <div key={ i } className={ styles.Category } onClick={ () => props.activateCategory( category ) }>
+                    <div key={ i } className={ styles.Category } onClick={ () => props.selectCategory( category ) }>
                         <div className={ styles.Header }>
                             <div className={ styles.Indicator }></div>
                             <div className={ styles.Name }>{ name }</div>
