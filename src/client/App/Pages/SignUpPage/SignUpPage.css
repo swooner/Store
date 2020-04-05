@@ -1,0 +1,23 @@
+.Card{
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    max-width: 600px;
+    position: relative;
+    display: block;
+    margin-top: 8rem;
+}
+.CardBody{
+    padding: 2rem; 
+}
+/* .Background{
+    background-image: url('../../../../../images/burger-background.jpg');
+    background-repeat: no-repeat;
+} */
+/* @media screen and (max-width: 500px){
+    .Card{
+        margin:3rem;
+        margin:1.5rem;
+    }
+} */

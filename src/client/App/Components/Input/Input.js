@@ -6,19 +6,19 @@ class Input extends Component {
     render() {
         const { id, type, placeholder, value, onChange, textarea, min, max, step } = this.props;
         return textarea ? (
-            <textarea className={ styles.Textarea } placeholder={ placeholder } defaultValue={ value } onChange={ onChange }></textarea>
+            <textarea className={styles.Textarea} placeholder={placeholder} defaultValue={value} onChange={onChange}></textarea>
         ) : (
-            <input 
-                id={ id } 
-                className={ styles.Input } 
-                type={ type || 'text' } 
-                placeholder={ placeholder } 
-                value={ value } 
-                onChange={ onChange }
-                min={ min }
-                max={ max }
-                step={ step } />
-        )
+                <input
+                    id={id}
+                    className="form-control"
+                    type={type || 'text'}
+                    placeholder={placeholder}
+                    value={value}
+                    onChange={onChange}
+                    min={min}
+                    max={max}
+                    step={step} />
+            )
     }
 };
 

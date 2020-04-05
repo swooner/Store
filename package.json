@@ -7,7 +7,7 @@
     "build": "babel src -d lib",
     "relay": "relay-compiler --src ./src --schema ./src/api/schema/schema.graphql",
     "dev-server": "babel-watch ./src/server/index.js",
-    "dev-client": "NODE_ENV=development webpack-dev-server --config ./webpack/dev.config.cjs",
+    "dev-client": "webpack-dev-server --config ./webpack/dev.config.cjs",
     "client": "npm-run-all relay dev-client"
   },
   "author": "",

@@ -1,0 +1,18 @@
+.LoginPage{
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.5);
+    position: relative;
+    max-width: 600px;
+    position: relative;
+    display: block;
+    margin:auto;
+}
+.LoginBody{
+    padding: 2rem;
+    margin-top: 10rem;
+}
+.FlexContainer{
+    display: flex;
+    justify-content: center;
+}
