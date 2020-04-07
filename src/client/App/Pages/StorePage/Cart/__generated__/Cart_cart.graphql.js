@@ -13,11 +13,21 @@ declare export opaque type Cart_cart$ref: FragmentReference;
 declare export opaque type Cart_cart$fragmentType: Cart_cart$ref;
 export type Cart_cart = {|
   +cart: ?{|
+    +order_id: ?number,
     +items: ?$ReadOnlyArray<?{|
       +product: ?{|
-        +name: ?string
+        +product_id: ?number,
+        +name: ?string,
+        +price: ?number,
+        +sizes: ?$ReadOnlyArray<?{|
+          +product_size_id: ?number,
+          +name: ?string,
+        |}>,
       |},
-      +size: ?string,
+      +size: ?{|
+        +product_size_id: ?number,
+        +name: ?string,
+      |},
       +quantity: ?number,
       +cost: ?number,
     |}>,
@@ -34,7 +44,25 @@ export type Cart_cart$key = {
 */
 
 
-const node/*: ReaderFragment*/ = {
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+},
+v1 = [
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "product_size_id",
+    "args": null,
+    "storageKey": null
+  },
+  (v0/*: any*/)
+];
+return {
   "kind": "Fragment",
   "name": "Cart_cart",
   "type": "User",
@@ -50,6 +78,13 @@ const node/*: ReaderFragment*/ = {
       "concreteType": "Cart",
       "plural": false,
       "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "order_id",
+          "args": null,
+          "storageKey": null
+        },
         {
           "kind": "LinkedField",
           "alias": null,
@@ -71,18 +106,39 @@ const node/*: ReaderFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "name",
+                  "name": "product_id",
                   "args": null,
                   "storageKey": null
+                },
+                (v0/*: any*/),
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "price",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "LinkedField",
+                  "alias": null,
+                  "name": "sizes",
+                  "storageKey": null,
+                  "args": null,
+                  "concreteType": "ProductSize",
+                  "plural": true,
+                  "selections": (v1/*: any*/)
                 }
               ]
             },
             {
-              "kind": "ScalarField",
+              "kind": "LinkedField",
               "alias": null,
               "name": "size",
+              "storageKey": null,
               "args": null,
-              "storageKey": null
+              "concreteType": "ProductSize",
+              "plural": false,
+              "selections": (v1/*: any*/)
             },
             {
               "kind": "ScalarField",
@@ -111,7 +167,8 @@ const node/*: ReaderFragment*/ = {
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = 'f69dcb7b26dd3acf6688b8e9cb7047b9';
+(node/*: any*/).hash = 'a861f027c231e026b28b7694e031b381';
 
 module.exports = node;

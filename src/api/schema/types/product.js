@@ -4,6 +4,7 @@ import {
 	GraphQLInt,
 	GraphQLFloat,
 	GraphQLString,
+	GraphQLList,
 	GraphQLObjectType, 
 } from 'graphql';
 
@@ -21,6 +22,7 @@ import GraphQLCategory from './category';
 
 import { getCategory } from '../../database/queries/category';;
 import { getUser } from '../../database/queries/user';
+import { getProductSizes } from '../../database/queries/product';
 
 
 const GraphQLProduct = new GraphQLObjectType({
@@ -50,6 +52,12 @@ const GraphQLProduct = new GraphQLObjectType({
 				return root.P_name
 			},
 		},
+		sizes: {
+			type: new GraphQLList( ProductSize ),
+			resolve: ( root ) => {
+				return getProductSizes({ product_id: root.P_ID })
+			},
+		},
 		description: {
 			type: GraphQLString,
 			resolve: ( root ) => root.P_description,
@@ -76,6 +84,28 @@ const GraphQLProduct = new GraphQLObjectType({
 				return getUser({ id: root.P_Cus_ID })
 			}
 		}
+	}),
+});
+
+export const ProductSize = new GraphQLObjectType({
+	name: 'ProductSize',
+	fields: () => ({
+		product_size_id: {
+			type: GraphQLInt,
+			resolve: ( root ) => {
+				return root.PS_ID
+			},
+		},
+		name: {
+			type: GraphQLString,
+			resolve: ( root ) => {
+				return root.PS_name
+			},
+		},
+		surcharge: {
+			type: GraphQLFloat,
+			resolve: ( root ) => root.PS_surcharge,
+		},
 	}),
 });
 

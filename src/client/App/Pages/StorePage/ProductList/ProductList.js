@@ -54,12 +54,18 @@ export default createFragmentContainer( ProductList, {
                 products ( first: 10 ) @connection ( key: "ProductList_products" ) {
                     edges {
                         node {
+                            product_id
                             category {
                                 name
                             }
                             name
                             description
                             price
+                            sizes {
+                                product_size_id
+                                name
+                                surcharge
+                            }
                         }
                     }
                 }

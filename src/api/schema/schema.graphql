@@ -50,11 +50,18 @@ type Product {
     brand: String
     name: String
     description: String
+    sizes: [ ProductSize ]
     price: Float
     threshold: Int
     quantity: Int
     created_at: DateTime
     created_by: User
+}
+
+type ProductSize {
+    product_size_id: Int
+    name: String
+    surcharge: Float
 }
 
 type User {
@@ -63,7 +70,7 @@ type User {
     last_name: String
     account_name: String
     account_password: String
-    address: String
+    street: String
     city: String
     state: String
     zip_code: String
@@ -74,13 +81,14 @@ type User {
 }
 
 type Cart {
+    order_id: Int
     items: [ CartItem ]
     total: Float
 }
 
 type CartItem {
     product: Product
-    size: String
+    size: ProductSize
     quantity: Int
     cost: Float
 }
@@ -155,6 +163,85 @@ type Mutation {
     deleteCategory ( input: DeleteCategoryInput! ): DeleteCategoryPayload!
     deleteProduct ( input: DeleteProductInput! ): DeleteProductPayload!
     deleteInventoryOrder ( input: DeleteInventoryOrderInput! ): DeleteInventoryOrderPayload!
+    addCartItem ( input: AddCartItemInput! ): AddCartItemPayload!
+    deleteCartItem ( input: DeleteCartItemInput! ): DeleteCartItemPayload!
+    updateCartItem ( input: UpdateCartItemInput! ): UpdateCartItemPayload!
+    submitOrder ( input: SubmitOrderInput! ): SubmitOrderPayload!
+    savePayment ( input: SavePaymentInput! ): SavePaymentPayload!
+    validatePayment ( input: ValidatePaymentInput! ): ValidatePaymentPayload!
+}
+
+input ValidatePaymentInput {
+    card_name: String
+    card_number: String
+    expiration_month: Int
+    expiration_year: Int
+    security_code: Int
+    clientMutationId: String
+}
+
+type ValidatePaymentPayload {
+    user: User
+}
+
+input SavePaymentInput {
+    user_id: Int
+    card_name: String
+    card_number: String
+    expiration_month: Int
+    expiration_year: Int
+    clientMutationId: String
+}
+
+type SavePaymentPayload {
+    user: User
+}
+
+input SubmitOrderInput {
+    order_id: Int
+    saleMethod: String
+    paymentMethod: String
+    addressType: String
+    street: String
+    city: String
+    state: String
+    zipCode: String
+    clientMutationId: String
+}
+
+type SubmitOrderPayload {
+    order: Cart
+}
+
+input UpdateCartItemInput {
+    order_id: Int
+    product_id: Int
+    size_id: Int
+    quantity: Int
+    clientMutationId: String
+}
+type UpdateCartItemPayload {
+    product: Product
+}
+
+input DeleteCartItemInput {
+    order_id: Int
+    product_id: Int
+    clientMutationId: String
+}
+type DeleteCartItemPayload {
+    product: Product
+}
+
+input AddCartItemInput {
+    product_id: Int
+    quantity: Int
+    size_id: Int
+    user_id: Int
+    clientMutationId: String
+}
+type AddCartItemPayload {
+    product: Product
 }
 
 input DeleteEmployeeInput {
@@ -179,7 +266,7 @@ input SignUpInput {
     last_name: String
     account_name: String
     password: String
-    address: String
+    street: String
     city: String
     state: String
     zip_code: String

@@ -68,6 +68,12 @@ import {
 	DeleteCategoryMutation,
 	DeleteProductMutation,
 	DeleteInventoryOrderMutation,
+	AddCartItemMutation,
+	DeleteCartItemMutation,
+	UpdateCartItemMutation,
+	SubmitOrderMutation,
+	SavePaymentMutation,
+	ValidatePaymentMutation,
 } from './mutations/mutations';
 
 
@@ -100,6 +106,12 @@ const Mutation = new GraphQLObjectType({
 		deleteCategory: DeleteCategoryMutation,
 		deleteProduct: DeleteProductMutation,
 		deleteInventoryOrder: DeleteInventoryOrderMutation,
+		addCartItem: AddCartItemMutation,
+		deleteCartItem: DeleteCartItemMutation,
+		updateCartItem: UpdateCartItemMutation,
+		submitOrder: SubmitOrderMutation,
+		savePayment: SavePaymentMutation,
+		validatePayment: ValidatePaymentMutation,
 	},
 });
 

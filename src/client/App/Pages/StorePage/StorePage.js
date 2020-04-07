@@ -1,20 +1,27 @@
 
 import React, { useState } from 'react';
+import { graphql, createFragmentContainer } from 'react-relay';
 import ProductList from './ProductList/ProductList';
 import ActiveProduct from './ActiveProduct/ActiveProduct';
 import Cart from './Cart/Cart';
+import AddCartItemMutation from './mutations/AddCartItemMutation';
 import styles from './StorePage.css';
 
-const Store = ( props ) => {
+const StorePage = ( props ) => {
+    const { viewer, cart } = props;
     const [ activeCategory, activateCategory ] = useState( );
     const [ activeProduct, activateProduct ] = useState( );
     const selectCategory = ( category ) => {
         activateCategory( category );
     };
     const selectProduct = ( product ) => {
+        // const { product_id } = product;
+        // if ( product_id == activeProduct.product_id ) {
+        //     activateProduct( null );
+        // }
         activateProduct( product );
     };
-    const { viewer } = props;
+    // console.log( 'StorePage.props:', props );
     return (
         <div className={ styles.StorePage }>
             <ProductList 
@@ -25,15 +32,26 @@ const Store = ( props ) => {
             { activeProduct &&
                 <ActiveProduct
                     { ...props }
-                    activeProduct={ activeProduct } />
+                    activeProduct={ activeProduct }
+                    selectProduct={ selectProduct } />
             }
-            { viewer &&
+            { !activeProduct &&
                 <Cart 
                     { ...props }
-                    cart={ viewer }/>
+                    cart={ viewer }
+                    isEditable={ true } />
             }
         </div>
     )
 };
 
-export default Store;
+export default createFragmentContainer( StorePage, {
+    viewer: graphql`
+        fragment StorePage_viewer on User @argumentDefinitions (
+            id: { type: "Int" }
+        ) {
+            user_id
+            ...Cart_cart
+        }
+    `
+});

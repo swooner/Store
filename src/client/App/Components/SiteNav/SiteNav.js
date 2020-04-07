@@ -7,7 +7,7 @@ import styles from './SiteNav.css';
 const SiteNav = ( props ) => {
     const { viewer, isPortalPage } = props;
     const employee_info = viewer ? viewer.employee_info : null;
-    console.log( 'viewer:', viewer );
+    // console.log( 'viewer:', viewer );
     return (
         <nav className={ styles.SiteNav }>
             <ul className={ styles.HomeNav }>
@@ -28,7 +28,7 @@ const SiteNav = ( props ) => {
                 </ul>
             ) : (
                     <ul className={ styles.EmployeeNav }>
-                        { employee_info.role === 'manager' &&
+                        { employee_info && employee_info.role === 'manager' &&
                             <li>
                                 <Link to={ '/portal/employees' }>Employees</Link>
                             </li>
@@ -39,7 +39,7 @@ const SiteNav = ( props ) => {
                         <li>
                             <Link to={ '/portal/products' }>Products</Link>
                         </li>
-                        { ( employee_info.role === 'manager' && employee_info.role === 'inventory' ) &&
+                        { employee_info && ( employee_info.role === 'manager' && employee_info.role === 'inventory' ) &&
                             <li>
                                 <Link to={ '/portal/inventory-orders' }>Orders</Link>
                             </li>

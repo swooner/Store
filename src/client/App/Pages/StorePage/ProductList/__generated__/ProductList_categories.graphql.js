@@ -18,12 +18,18 @@ export type ProductList_categories = {|
     +products: ?{|
       +edges: ?$ReadOnlyArray<?{|
         +node: ?{|
+          +product_id: ?number,
           +category: ?{|
             +name: ?string
           |},
           +name: ?string,
           +description: ?string,
           +price: ?number,
+          +sizes: ?$ReadOnlyArray<?{|
+            +product_size_id: ?number,
+            +name: ?string,
+            +surcharge: ?number,
+          |}>,
         |}
       |}>
     |},
@@ -109,6 +115,13 @@ return {
                   "plural": false,
                   "selections": [
                     {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "product_id",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
                       "kind": "LinkedField",
                       "alias": null,
                       "name": "category",
@@ -128,6 +141,32 @@ return {
                       "name": "price",
                       "args": null,
                       "storageKey": null
+                    },
+                    {
+                      "kind": "LinkedField",
+                      "alias": null,
+                      "name": "sizes",
+                      "storageKey": null,
+                      "args": null,
+                      "concreteType": "ProductSize",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "product_size_id",
+                          "args": null,
+                          "storageKey": null
+                        },
+                        (v0/*: any*/),
+                        {
+                          "kind": "ScalarField",
+                          "alias": null,
+                          "name": "surcharge",
+                          "args": null,
+                          "storageKey": null
+                        }
+                      ]
                     },
                     {
                       "kind": "ScalarField",
@@ -180,6 +219,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '5c3306fa65e99c7993fdaaeb4f14de70';
+(node/*: any*/).hash = 'fd94dd882933e46edaa6b9569a9cadae';
 
 module.exports = node;

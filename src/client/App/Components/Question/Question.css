@@ -1,0 +1,9 @@
+
+
+.Choice {
+    cursor: pointer;
+}
+
+.Choice--state-active {
+    font-weight: bold;
+}

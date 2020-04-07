@@ -7,17 +7,24 @@ import AboutPage from './Pages/AboutPage/AboutPage';
 import PortalPage from './Pages/PortalPage/PortalPage';
 import LoginPage from './Pages/LoginPage/LoginPage';
 import SignUpPage from './Pages/SignUpPage/SignUpPage';
-import ProductPage from './Pages/ProductPage/ProductPage';
+import CheckoutPage from './Pages/CheckoutPage/CheckoutPage';
 import ProductListPage from './Pages/PortalPage/ProductsPage/ProductsPage';
 
 const Routes = ( props ) => {
     /* The <Switch> is for grouping multiple routes. If a route matches one of the paths listed
     below, the component that is being returned in that route will be chosen  */
+    const { viewer } = props;
     return (
         <Switch>
             <Route exact path='/' render={ ( ) => {
                 return (
                     <StorePage
+                        { ...props } />
+                )
+            }} />
+            <Route path='/checkout' render={ ( ) => {
+                return (
+                    <CheckoutPage
                         { ...props } />
                 )
             }} />

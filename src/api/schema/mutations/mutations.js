@@ -26,11 +26,13 @@ import { deleteEmployee } from '../../database/mutations/employee';
 import { addCategory, deleteCategory } from '../../database/mutations/category';
 import { addProduct, deleteProduct } from '../../database/mutations/product';
 import { deleteInventoryOrder } from '../../database/mutations/inventory';
+import { addCartItem, deleteCartItem, updateCartItem, submitOrder, savePayment, validatePayment } from '../../database/mutations/cart';
 
 import GraphQLCategory from '../types/category';
 import GraphQLUser from '../types/user';
 import GraphQLProduct from '../types/product';
 import GraphQLInventoryOrder from '../types/inventory_order';
+import Cart from '../types/cart';
 
 
 
@@ -41,7 +43,7 @@ export const SignUpMutation = mutationWithClientMutationId({
 		last_name: { type: GraphQLString },
 		account_name: { type: GraphQLString },
 		password: { type: GraphQLString },
-		address: { type: GraphQLString },
+		street: { type: GraphQLString },
 		city: { type: GraphQLString },
 		state: { type: GraphQLString },
 		zip_code: { type: GraphQLString },
@@ -230,6 +232,146 @@ export const DeleteInventoryOrderMutation = mutationWithClientMutationId({
 	},
 	mutateAndGetPayload: ( args ) => {
 		return deleteInventoryOrder( args );
+	},
+});
+
+export const AddCartItemMutation = mutationWithClientMutationId({
+	name: 'AddCartItem',
+	inputFields: {
+		product_id: { type: GraphQLInt },
+		quantity: { type: GraphQLInt },
+		size_id: { type: GraphQLInt },
+		user_id: { type: GraphQLInt },
+	},
+	outputFields: {
+		product: {
+			type: GraphQLProduct,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return addCartItem( args );
+	},
+});
+
+export const DeleteCartItemMutation = mutationWithClientMutationId({
+	name: 'DeleteCartItem',
+	inputFields: {
+		order_id: { type: GraphQLInt },
+		product_id: { type: GraphQLInt },
+	},
+	outputFields: {
+		product: {
+			type: GraphQLProduct,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return deleteCartItem( args );
+	},
+});
+  
+
+export const UpdateCartItemMutation = mutationWithClientMutationId({
+	name: 'UpdateCartItem',
+	inputFields: {
+		order_id: { type: GraphQLInt },
+		product_id: { type: GraphQLInt },
+		quantity: { type: GraphQLInt },
+		size_id: { type: GraphQLInt },
+	},
+	outputFields: {
+		product: {
+			type: GraphQLProduct,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return updateCartItem( args );
+	},
+});
+  
+  
+
+export const SubmitOrderMutation = mutationWithClientMutationId({
+	name: 'SubmitOrder',
+	inputFields: {
+		order_id: { type: GraphQLInt },
+		saleMethod: { type: GraphQLString },
+		paymentMethod: { type: GraphQLString },
+		addressType: { type: GraphQLString },
+		street: { type: GraphQLString },
+		city: { type: GraphQLString },
+		state: { type: GraphQLString },
+		zipCode: { type: GraphQLString },
+	},
+	outputFields: {
+		order: {
+			type: Cart,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return submitOrder( args );
+	},
+});
+  
+export const SavePaymentMutation = mutationWithClientMutationId({
+	name: 'SavePayment',
+	inputFields: {
+		user_id: { type: GraphQLInt },
+		card_name: { type: GraphQLString },
+		card_number: { type: GraphQLString },
+		expiration_month: { type: GraphQLInt },
+		expiration_year: { type: GraphQLInt },
+	},
+	outputFields: {
+		order: {
+			type: GraphQLUser,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return savePayment( args );
+	},
+});
+  
+  
+export const ValidatePaymentMutation = mutationWithClientMutationId({
+	name: 'ValidatePayment',
+	inputFields: {
+		card_name: { type: GraphQLString },
+		card_number: { type: GraphQLString },
+		expiration_month: { type: GraphQLInt },
+		expiration_year: { type: GraphQLInt },
+		security_code: { type: GraphQLInt },
+	},
+	outputFields: {
+		order: {
+			type: GraphQLUser,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getProduct({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return validatePayment( args );
 	},
 });
   

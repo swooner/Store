@@ -23,9 +23,8 @@ export const addProduct = ({
     threshold, 
     employee_id
 }) => {
-    return connection.query( 
+    return database.query(
         `
-            START TRANSACTION;
             INSERT INTO product ( P_Cat_ID, P_name, P_description, P_price, P_quantity, P_threshold, P_Cus_ID, P_createdAt ) 
             VALUES ( 
                 '${ category_id }', 
@@ -37,51 +36,54 @@ export const addProduct = ({
                 '${ employee_id }',
                 '${ DateTimeNow( ) }'
             );
-
-            SELECT  @product_id := LAST_INSERT_ID();
-
-            DELIMITER $$
-            CREATE PROCEDURE insertSizes( )
-            BEGIN
-            DECLARE i int DEFAULT ${ sizes.length };
-            WHILE ( i >= 0 ) DO
-                SET name := ${ sizes[ 0 ].name };
-                SET surcharge := ${ sizes[ 0 ].surcharge };
-                INSERT INTO product_size ( PS_P_ID, PS_name, PS_surcharge )
-                VALUES ( 
-                    @product_id, 
-                    @name, 
-                    @surcharge
-                );
-                SET i := i - 1;
-                SET shiftArray := ${ sizes.shift( ) };
-            END WHILE;
-            END;
-            $$
-
-            CALL insertSizes( );
-
-            COMMIT;
-        `, ( err, res ) => {
-            if ( err ) {
-                console.log( 'there was an error' );
-                throw err
-            }
-            console.log( 'res:', res );
-
+        `
+        ,{
+            raw: true,
+            type: Sequelize.QueryTypes.INSERT 
         })
-    //     , {
-    //     raw: true,
-    //     type: Sequelize.QueryTypes.INSERT 
-    // })
-    // .then( rows => {
-    //     console.log( 'addProduct rows:', rows );
-    //     // return rows;
-    // })
-    // .catch( err => console.error( err.stack ) );
+        .then( product => {
+            console.log( 'product:', product );
+            const product_id = product[ 0 ];
+            while ( sizes.length ) {
+                database.query(
+                `
+                    INSERT INTO product_size( PS_P_ID, PS_name, PS_surcharge )
+                    VALUES(
+                        '${ product_id }', 
+                        '${ sizes[ 0 ].name }', 
+                        '${ sizes[ 0 ].surcharge }' 
+                    )   
+                `, {
+                    raw: true,
+                    type: Sequelize.QueryTypes.INSERT 
+                })
+                .then( rows => {
+                    console.log( 'Successfully inserted size:', rows );
+                })
+                .catch( err => {
+                    // database.query(
+                    //     `
+                    //     DELETE FROM product 
+                    //     WHERE P_ID='${ product_id }'
+                    //     `, {
+                    //     raw: true,
+                    //     type: Sequelize.QueryTypes.DELETE 
+                    // })
+                    console.log( 'There was an error inserting a size:', err );
+                })
+                console.log( 'STILL HAVE WORK TO DO' );
+                sizes.shift( );
+                console.log( 'sizes.length:', sizes.length );
+            }
+    })
+    .then( rows => {
+        console.log( 'rows:', rows );
+        return rows
+    })
+    .catch( error => {
+        console.log( 'error:', error );
+    })
 };
-
-
 
 
 
@@ -94,11 +96,13 @@ export const deleteProduct = ({ product_id }) => {
         `
             DELETE FROM product 
             WHERE P_ID='${ product_id }'
-        ` ), {
+        `, {
             type: Sequelize.QueryTypes.DELETE 
-        }
+        })
         .then( rows => {
             console.log( 'Deleted rows:', rows );
         })
         .catch( err => console.error( err.stack ) );
 };
+
+

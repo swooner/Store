@@ -42,6 +42,42 @@ const GraphQLUser = new GraphQLObjectType({
 				return root.Cus_accName
 			}
 		},
+		street: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_street
+			}
+		},
+		city: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_city
+			}
+		},
+		state: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_state
+			}
+		},
+		zip_code: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_zipCode
+			}
+		},
+		phone_number: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_phone
+			}
+		},
+		email_address: {
+			type: GraphQLString,
+			resolve: root => {
+				return root.Cus_email
+			}
+		},
 		employee_info: {
 			type: EmployeeInfo,
 			resolve: root => {

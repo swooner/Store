@@ -6,10 +6,12 @@ const Sequelize = require('sequelize');
 // get a single product
 export const getProduct = ({ id }) => {
     // console.log( 'id:', id );
-    const sql = `SELECT * FROM product WHERE P_ID = ? `;
-    const replacements = [ id ];
-    return database.query( sql, {
-        replacements,
+    return database.query(
+        `
+            SELECT * 
+            FROM product 
+            WHERE P_ID = '${ id }'
+        `, {
         raw: true,
         type: Sequelize.QueryTypes.SELECT
     })
@@ -32,6 +34,44 @@ export const getProductList = ({ }) => {
         return rows
     })
 };
+
+export const getProductSize = ({ id }) => {
+    // console.log( 'id:', id );
+    return database.query(
+        `
+            SELECT *
+            FROM product_size
+            WHERE PS_ID=${ id }
+        `,{
+            raw: true,
+            type: Sequelize.QueryTypes.SELECT
+        }
+    )
+    .then( rows => {
+        // console.log( 'getProductSize rows:', rows[ 0 ] );
+        return rows[ 0 ]
+    })
+    .catch( err => console.error( err.stack ) )
+};
+
+export const getProductSizes = ({ product_id }) => {
+    return database.query(
+        `
+            SELECT *
+            FROM product_size
+            WHERE PS_P_ID=${ product_id }
+        `,{
+            raw: true,
+            type: Sequelize.QueryTypes.SELECT
+        }
+    )
+    .then( rows => {
+        // console.log( 'getProductSizes rows:', rows );
+        return rows
+    })
+    .catch( err => console.error( err.stack ) )
+};
+
 
 export const getProductsByCategoryId = ({ category_id }) => {
     return database.query(

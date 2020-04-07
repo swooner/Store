@@ -5,6 +5,7 @@ import environment from '../helpers/relay-environment';
 import {
     Link,
     useLocation,
+    useHistory
 } from 'react-router-dom';
 import SiteNav from './Components/SiteNav/SiteNav';
 import Routes from './Routes';
@@ -14,7 +15,7 @@ const App = ( ) => {
     let storage_viewer = localStorage.getItem( 'ACTIVE_USER' );
     storage_viewer = storage_viewer ? JSON.parse( storage_viewer ) : null;
     const user_id = storage_viewer ? storage_viewer.user_id : null; 
-    console.log( 'user_id:', user_id );
+    // console.log( 'user_id:', user_id );
 
     // react-router provides a function for getting the location from the Javascript Browser API. 
     // We could just as easily use window.location, but react-router's lcoation allows for passing a state object
@@ -25,6 +26,7 @@ const App = ( ) => {
     const [ ,...paths  ] = pathname.split( '/' )
     let isProductPage = false;
     let isStorePage = false;
+    let isCheckoutPage = false;
     let category_name = '';
 
     let isPortalPage = false;
@@ -60,6 +62,9 @@ const App = ( ) => {
             isInventoryOrdersPage = true;
         }
     }
+    else if ( page === 'checkout' ) {
+        isCheckoutPage = true;
+    }
     else {
         isStorePage = true;
         category_name = 'Burgers';
@@ -75,10 +80,8 @@ const App = ( ) => {
                 query AppQuery (
                     $user_id: Int
                     
-                    $product_id: Int
                     $isStorePage: Boolean!
-                    $isProductPage: Boolean!
-                    
+                    $isCheckoutPage: Boolean!
                     $isEmployeesPage: Boolean!
                     $isAddProductPage: Boolean!
                     $isAddEmployeePage: Boolean!
@@ -91,11 +94,11 @@ const App = ( ) => {
                         employee_info {
                             role
                         }
-                        ...Cart_cart @include ( if: $isStorePage )
+                        ...StorePage_viewer @include ( if: $isStorePage )
+                        ...CheckoutPage_viewer @include ( if: $isCheckoutPage )
                     }
                     # This object fragment is found in ProductPage.js. The product_id from the
                     # url is passed to it
-                    ...ProductPage_product @arguments( product_id: $product_id ) @include ( if: $isProductPage )
                     ...ProductList_categories @include ( if: $isStorePage )
 
                     ...AddEmployee_user_search @include ( if: $isAddEmployeePage )
@@ -108,15 +111,14 @@ const App = ( ) => {
             `}
             variables={{
                 user_id,
-                product_id,
                 isStorePage,
-                isProductPage,
                 
                 isProductsPage,
                 isEmployeesPage,
                 isAddEmployeePage,
                 isAddProductPage,
                 isCategoriesPage,
+                isCheckoutPage,
                 isInventoryOrdersPage,
             }}
             render={ ( { error, props } ) => {

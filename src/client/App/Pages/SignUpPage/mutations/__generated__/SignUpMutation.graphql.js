@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 54b6c80d96a5e8210968b2cee4f71660
+ * @relayHash 3deca58234eed969fd53957e9ae0ee79
  */
 
 /* eslint-disable */
@@ -14,7 +14,7 @@ export type SignUpInput = {|
   last_name?: ?string,
   account_name?: ?string,
   password?: ?string,
-  address?: ?string,
+  street?: ?string,
   city?: ?string,
   state?: ?string,
   zip_code?: ?string,

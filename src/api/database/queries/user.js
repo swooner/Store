@@ -14,7 +14,7 @@ export const getUser = ({ id }) => {
         type: Sequelize.QueryTypes.SELECT 
     })
     .then( rows => {
-        console.log( 'GET user rows:', rows ); 
+        // console.log( 'GET user rows:', rows ); 
         return rows[ 0 ];
     })
     .catch( err => console.error( err.stack ) );
