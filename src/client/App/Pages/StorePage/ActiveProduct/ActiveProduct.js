@@ -10,7 +10,7 @@ const NOT_APPLICABLE_SIZE_ID = 0;
 
 const ActiveProduct = ( props ) => {
     const { viewer, activeProduct } = props;
-    const { product_id, name, description, price, sizes } = activeProduct;
+    const { product_id, name, description, price, sizes, picture_url } = activeProduct;
     const [ productForm, updateProductForm ] = useState( { quantity: 1, size: sizes.length ? sizes[ 0 ] : null } );
     const [ dynamicPrice, updateDynamicPrice ] = useState( price );
 
@@ -43,13 +43,18 @@ const ActiveProduct = ( props ) => {
         AddCartItemMutation.commit( form );
         props.selectProduct( null );
     };
-    // console.log( 'activeProduct:', activeProduct );
+    console.log( 'activeProduct:', activeProduct );
     return (
         <div className={ styles.ActiveProduct }>
-            <button className={ styles.Close } onClick={ () => props.selectProduct( null ) }>Close</button>
+            <button className={ styles.Close } onClick={ ( e ) => props.selectProduct( e, null ) }>Close</button>
             <div className={ styles.name }>{ name }</div>
             <div className={ styles.description }>{ description }</div>
             <div className={ styles.price }>${ dynamicPrice }</div>
+            { picture_url &&
+                <div>
+                    <img className={ styles.image } src={ `${ picture_url }.jpeg` } alt=""/>
+                </div>
+            }
 
             { sizes && sizes.length > 0 && 
                 <SizeSelect sizes={ sizes } onChange={ ( e ) => updateSize( e ) } />

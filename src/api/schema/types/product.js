@@ -83,6 +83,12 @@ const GraphQLProduct = new GraphQLObjectType({
 			resolve: ( root ) => {
 				return getUser({ id: root.P_Cus_ID })
 			}
+		},
+		picture_url: {
+			type: GraphQLString,
+			resolve: ( root ) => {
+				return root.P_picture
+			}
 		}
 	}),
 });

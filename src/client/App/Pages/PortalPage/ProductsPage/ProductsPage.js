@@ -54,6 +54,9 @@ const Product = ({ product, deleteProduct }) => {
             <div className={ styles.Name }>{ product.name }</div>
             <div className={ styles.Description }>{ product.description }</div>
             <div className={ styles.Price }>{ product.price }</div>
+            <div className={ styles.Quantity }>quantity: { product.quantity }</div>
+            <div className={ styles.Threshold }>threshold: { product.threshold }</div>
+            <div className={ styles.TestElement }>Noble</div>
             <SubmitButton style={ 'delete' } onClick={ ( ) => deleteProduct( product ) } text={ 'Delete' } />
         </div>
     )
@@ -76,6 +79,8 @@ export default createFragmentContainer( ProductPage, {
                         product_id
                         name
                         price
+                        quantity
+                        threshold
                     }
                 }
             }

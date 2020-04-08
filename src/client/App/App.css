@@ -1,4 +1,15 @@
 
+
+body {
+    font-family: Schlubach;
+}
+
+@font-face {
+    font-family: Schlubach;
+    src: url( '../helpers/fonts/SchulbuchLock-Regular.f4ce4487.woff2' );
+    font-weight: bold;
+}
+
 .App nav {
     display: flex;
 }

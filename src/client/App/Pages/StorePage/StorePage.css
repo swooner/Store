@@ -1,29 +1,75 @@
 
-
 .ProductList {
     position: relative;
     top: 0;
     left: 0;
     width: 50vw;
     min-height: 100vh;
-    background: blue;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 
+.Category {
+    position: relative;
+    padding-left: 50px;
+    cursor: pointer;
+}
+
+.Category::before,
+.Category::after {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    content: '';
+    width: 35px;
+    height: 5px;
+    transform: translateY( -50% );
+    background-color: black;
+}
+
+.Category::before {
+    top: 22px;
+}
+
+.Category::after {
+    transform: rotate( 90deg )
+}
+
+.Category:not(:last-child) {
+    margin-bottom: 10px
+}
+
+.Category--state-active::after {
+    display: none;
+}
+
+.Category .Header .Name {
+    font-size: 50px;
+    line-height: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: black;
+}
+
+.Category .Body {
+}
 .ProductList .Product {
+    font-size: 36px;
     cursor: pointer;
 }
 
 
 .ActiveProduct {
+    margin-top: 30px;
     position: fixed;
     top: 0;
     right: 0;
     width: 50vw;
     height: 100vh;
-    background: red;
 }
 
 .Cart {
+    margin-top: 30px;
     position: fixed;
     top: 0;
     right: 0;
@@ -35,4 +81,8 @@ button.Close {
     position: absolute;
     top: 20px;
     right: 5px;
+}
+
+
+img.image {
 }

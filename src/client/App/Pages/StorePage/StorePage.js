@@ -9,12 +9,15 @@ import styles from './StorePage.css';
 
 const StorePage = ( props ) => {
     const { viewer, cart } = props;
-    const [ activeCategory, activateCategory ] = useState( );
+    const [ activeCategories, activateCategory ] = useState( { Entrees: { isActive: true } } );
     const [ activeProduct, activateProduct ] = useState( );
     const selectCategory = ( category ) => {
-        activateCategory( category );
+        const categoryState = activeCategories[ category.name ];
+        const categoryIsActive = categoryState ? categoryState.isActive : false ;
+        activateCategory({ ...activeCategories, [ category.name ]: { isActive: !categoryIsActive } });
     };
-    const selectProduct = ( product ) => {
+    const selectProduct = ( e, product ) => {
+        e.stopPropagation( );
         // const { product_id } = product;
         // if ( product_id == activeProduct.product_id ) {
         //     activateProduct( null );
@@ -27,6 +30,7 @@ const StorePage = ( props ) => {
             <ProductList 
                 { ...props } 
                 categories={ props }
+                activeCategories={ activeCategories }
                 selectProduct={ selectProduct }
                 selectCategory={ selectCategory } />
             { activeProduct &&

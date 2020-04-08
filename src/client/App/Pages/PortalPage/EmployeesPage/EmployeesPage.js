@@ -25,6 +25,7 @@ const EmployeePage = ( props ) => {
     };
     // console.log( 'Employee List page props:', props );
     const { employees_list } = props;
+    console.log( 'employees_list:', employees_list );
     return (
         <div className={ styles.EmployeeList }>
             <div>Employee List Page</div>

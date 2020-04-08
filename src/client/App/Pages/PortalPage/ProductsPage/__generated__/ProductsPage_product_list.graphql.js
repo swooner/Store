@@ -18,6 +18,8 @@ export type ProductsPage_product_list = {|
         +product_id: ?number,
         +name: ?string,
         +price: ?number,
+        +quantity: ?number,
+        +threshold: ?number,
       |}
     |}>
   |},
@@ -108,6 +110,20 @@ const node/*: ReaderFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
+                  "name": "quantity",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "threshold",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
                   "name": "__typename",
                   "args": null,
                   "storageKey": null
@@ -153,6 +169,6 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'f5578cd127bc8cdbdf0f5a991be3c7bf';
+(node/*: any*/).hash = '2930ae0476022b6d9823aee481579bbc';
 
 module.exports = node;
