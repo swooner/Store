@@ -11,7 +11,9 @@ const SignUpPage = (props) => {
     const handleInput = (e, name) => {
         updateForm({ ...form, [name]: e.target.value })
     };
-    const submitForm = () => {
+    const submitForm = ( e ) => {
+        e.preventDefault( );
+        // console.log( 'form:', form );
         SignUpMutatation.commit(form);
     };
     return (
@@ -119,7 +121,7 @@ const SignUpPage = (props) => {
 
                             </div>
 
-                            <SubmitButton text={'Submit'} onClick={() => submitForm()} />
+                            <SubmitButton text={'Submit'} onClick={( e ) => submitForm( e )} />
                         </form>
                     </div>
                 </div>
