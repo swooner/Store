@@ -53,13 +53,30 @@
 
 .Category .Body {
 }
+
 .ProductList .Product {
     font-size: 36px;
+    color: black;
     cursor: pointer;
 }
 
+.ProductList .Product:hover, 
+.ProductList .Product--state-active {
+    color: #FC4530;
+}
 
-.ActiveProduct {
+.ProductView .HoverProduct {
+    width: 100%;
+    height: 100%;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-end;
+    justify-content: flex-end;
+}
+
+
+.ProductView {
     margin-top: 30px;
     position: fixed;
     top: 0;

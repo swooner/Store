@@ -28,7 +28,9 @@ const ProductList = ( props ) => {
                         </div>
                         { activeCategories[ name ] && activeCategories[ name ].isActive &&
                             <div className={ styles.Body }>
-                                <Products products={ products } selectProduct={ props.selectProduct } />
+                                <Products 
+                                    { ...props }
+                                    products={ products } />
                             </div>
                         }
                     </div>
@@ -39,14 +41,24 @@ const ProductList = ( props ) => {
 };
 
 
-const Products = ({ products, selectProduct }) => {
+const Products = ({ products, activeProduct, hoverProduct, selectProduct }) => {
     return (
         <div className={ styles.Products }>
             { products.edges.map(( product, i ) => {
                 product = product.node;
                 const { name } = product;
+                const className = cx(
+                    'Product', {
+                        'Product--state-active': activeProduct && ( activeProduct.name === name )
+                    }
+                );
                 return (
-                    <div key={ i } className={ styles.Product } onClick={ ( e ) => selectProduct( e, product ) }>
+                    <div 
+                        key={ i } 
+                        className={ className } 
+                        onClick={ ( e ) => selectProduct( e, product ) }
+                        onMouseEnter={ ( e ) => hoverProduct( e, product, 'enter' ) }
+                        onMouseLeave={ ( e ) => hoverProduct( e, product, 'leave' ) }>
                         <div className={ styles.Name }>{ name }</div>
                         <div className={ styles.Quantity }></div>
                     </div>
