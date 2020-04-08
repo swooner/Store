@@ -50,28 +50,30 @@ const ActiveProduct = ( props ) => {
     // console.log( 'isHoverProduct:', isHoverProduct );
     return (
         <div className={ styles.ProductView }>
-            {/* { isActiveProduct ? (
+            { isActiveProduct ? (
                 <div className={ styles.ActiveProduct }>
                     <button className={ styles.Close } onClick={ ( e ) => props.selectProduct( e, null ) }>Close</button>
-                    <div className={ styles.name }>{ name }</div>
-                    <div className={ styles.description }>{ description }</div>
-                    <div className={ styles.price }>${ dynamicPrice }</div>
                     { picture_url &&
                         <div>
-                            <img className={ styles.image } src={ img_url } alt=""/>
+                            <img className={ styles.Photo } src={ img_url } alt=""/>
                         </div>
                     }
-                    { sizes && sizes.length > 0 && 
-                        <SizeSelect sizes={ sizes } onChange={ ( e ) => updateSize( e ) } />
-                    }
-                    <QuantitySelect onChange={ ( e ) => updateQuantity( e ) } />
+                    <div className={ styles.Name }>{ name }</div>
+                    <div className={ styles.Description }>{ description }</div>
+                    <div className={ styles.Price }>${ dynamicPrice }</div>
+                    <div className={ styles.SizeAndQuantity }>
+                        { sizes && sizes.length > 0 && 
+                            <SizeSelect sizes={ sizes } onChange={ ( e ) => updateSize( e ) } />
+                        }
+                        <QuantitySelect onChange={ ( e ) => updateQuantity( e ) } />
+                    </div>
                     <SubmitButton text={ 'Add to cart' } onClick={ () => submitForm( ) } />
                 </div>
-            ) : ( */}
+            ) : (
                 <div className={ styles.HoverProduct }>
                     <img className={ styles.image } src={ img_url } alt=""/>
                 </div>
-            {/* )} */}
+            )}
         </div>
     )
 };

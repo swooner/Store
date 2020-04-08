@@ -58,6 +58,7 @@
     font-size: 36px;
     color: black;
     cursor: pointer;
+    /* text-transform: uppercase; */
 }
 
 .ProductList .Product:hover, 
@@ -98,8 +99,4 @@ button.Close {
     position: absolute;
     top: 20px;
     right: 5px;
-}
-
-
-img.image {
 }

@@ -61,7 +61,7 @@ const Cart = ( props ) => {
                     <SubmitButton text={ 'Checkout' } onClick={ () => goCheckout() } />
                 </div>
             ) : (
-                <div>You have no items in your cart.</div> 
+                <div></div> 
             )}
         </div>
     )
