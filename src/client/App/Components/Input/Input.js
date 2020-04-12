@@ -4,7 +4,7 @@ import styles from './Input.css';
 
 class Input extends Component {
     render() {
-        const { id, type, placeholder, value, onChange, textarea, min, max, step } = this.props;
+        const { id, type, placeholder, value, onChange, onKeyDown, textarea, min, max, step } = this.props;
         return textarea ? (
             <textarea className={styles.Textarea} placeholder={placeholder} defaultValue={value} onChange={onChange}></textarea>
         ) : (
@@ -15,6 +15,7 @@ class Input extends Component {
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
+                    onKeyDown={ onKeyDown }
                     min={min}
                     max={max}
                     step={step} />

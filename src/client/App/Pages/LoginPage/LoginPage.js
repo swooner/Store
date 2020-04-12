@@ -11,8 +11,14 @@ const LoginPage = () => {
     const handleInput = (e, name) => {
         updateForm({ ...form, [name]: e.target.value })
     };
-    const submitForm = () => {
-        console.log('form:', form);
+    const handleKeyDown = ( e ) => {
+        if ( e.keyCode == 13 ) {
+            submitForm( e );
+        }
+    };
+    const submitForm = (e) => {
+        e.preventDefault( );
+        // console.log('form:', form);
         LoginMutation.commit(form);
     };
     return (
@@ -27,6 +33,7 @@ const LoginPage = () => {
                                 <ControlGroup title={'User name'} description={null}>
                                     <Input
                                         placeholder={'User name'}
+                                        onKeyDown={ ( e ) => handleKeyDown( e ) }
                                         onChange={(e) => handleInput(e, 'account_name')} />
                                 </ControlGroup>
                             </div>
@@ -35,11 +42,12 @@ const LoginPage = () => {
                                     <Input
                                         type={'password'}
                                         placeholder={'Password'}
+                                        onKeyDown={ ( e ) => handleKeyDown( e ) }
                                         onChange={(e) => handleInput(e, 'password')} />
                                 </ControlGroup>
                             </div>
                         </div>
-                        <SubmitButton text={'Submit'} onClick={() => submitForm()} />
+                        <SubmitButton text={'Submit'} onClick={(e) => submitForm(e)} />
                     </form>
                 </div>
 

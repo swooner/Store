@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import SizeSelect from '../../../Components/SizeSelect/SizeSelect';
 import QuantitySelect from '../../../Components/QuantitySelect/QuantitySelect';
 import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
@@ -10,6 +11,7 @@ const NOT_APPLICABLE_SIZE_ID = 0;
 
 const ActiveProduct = ( props ) => {
     const activeProduct = props.activeProduct || props.activeHoverProduct;
+    const history = useHistory( );
     const { viewer, activeProduct: isActiveProduct, activeHoverProduct: isHoverProduct } = props;
     const { product_id, name, description, price, sizes, picture_url } = activeProduct;
     const [ productForm, updateProductForm ] = useState( { quantity: 1, size: sizes.length ? sizes[ 0 ] : null } );
@@ -32,6 +34,10 @@ const ActiveProduct = ( props ) => {
         updateProductForm({ ...productForm, quantity: newQuantity })
     };
     const submitForm = ( ) => {
+        if ( !viewer ) {
+            history.push( '/login' );
+            return false;
+        }
         const { user_id } = viewer;
         const { size, quantity } = productForm;
         const form = {
@@ -48,6 +54,7 @@ const ActiveProduct = ( props ) => {
     const img_url = `public/${ picture_url }`;
     // console.log( 'isActiveProduct:', isActiveProduct );
     // console.log( 'isHoverProduct:', isHoverProduct );
+    console.log( 'viewer:', viewer );
     return (
         <div className={ styles.ProductView }>
             { isActiveProduct ? (
