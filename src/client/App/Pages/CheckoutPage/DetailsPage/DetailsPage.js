@@ -10,7 +10,7 @@ import styles from '../CheckoutPage.css';
 
 const DetailsPage = ( props ) => {
     const history = useHistory( );
-    const { viewer } = props;
+    const { viewer, checkoutData } = props;
     const [ cardInfo, updateCardInfo ] = useState( {} );
     // For some weird reasons Webpack does not permit calling ValidatePaymentMutation.commit
     // directly inside of validatePayment function
@@ -26,13 +26,19 @@ const DetailsPage = ( props ) => {
             expiration_month: +expiration_month,
             expiration_year: +expiration_year,
         };
+        console.log( 'form:', form );
         commitValidationPayment( form );
     };
     const goToSummary = ( ) => {
-        const validation = validatePayment( );
-        if ( validation.success ) {
-            history.push( '/checkout/summary' );
+        // console.log( 'checkoutData:', checkoutData );
+        const { paymentMethod } = checkoutData;
+        if ( paymentMethod != 'cash' ) {
+            const validation = validatePayment( );
+            if ( !validation.success ) {
+                return false;
+            }
         }
+        history.push( '/checkout/summary' );
     };
     return (
         <div className={ styles.DetailsPage }>
@@ -44,6 +50,7 @@ const DetailsPage = ( props ) => {
                 validatePayment={ validatePayment }
                 onCardFormChange={ updateCardForm } />
             <Cart 
+                { ...props }
                 cart={ viewer }
                 isEditable={ false } />
             <SubmitButton text={ 'Review order' } onClick={ goToSummary } />

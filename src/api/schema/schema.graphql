@@ -206,8 +206,14 @@ input SubmitOrderInput {
     street: String
     city: String
     state: String
-    zipCode: String
+    zip_code: String
+    products: [ ProductInput ]
     clientMutationId: String
+}
+input ProductInput {
+    product_id: Int
+    quantity: Int
+    name: String
 }
 
 type SubmitOrderPayload {

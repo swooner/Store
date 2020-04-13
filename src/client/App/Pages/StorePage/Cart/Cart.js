@@ -1,6 +1,7 @@
 
-import React from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import classnames from 'classnames/bind';
+import { useLocation, useHistory } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
 import SizeSelect from '../../../Components/SizeSelect/SizeSelect';
 import QuantitySelect from '../../../Components/QuantitySelect/QuantitySelect';
@@ -10,14 +11,32 @@ import DeleteCartItemMutation from '../mutations/DeleteCartItemMutation';
 import UpdateCartItemMutation from '../mutations/UpdateCartItemMutation';
 import styles from '../StorePage.css';
 
+const cx = classnames.bind( styles );
+
 const Cart = ( props ) => {
-    const { cart: { cart }, isEditable } = props;
+    const { cart: { cart }, isEditable, name, setCheckoutData } = props;
     if (!cart) {
         return null;
     }
 
     const { order_id, items, total } = cart;
+    useEffect( () => {
+        setCheckoutData( 'checkout-order-id', order_id );
+        const products = items.map( item => {
+            console.log( 'item:', item );
+            const { product, quantity } = item;
+            const { product_id, name } = product;
+            return {
+                product_id,
+                name,
+                quantity
+            }
+        });
+        setCheckoutData( 'checkout-products', JSON.stringify( products ) );
+    }, [])
     const history = useHistory();
+    const location = useLocation( );
+    console.log( 'location:', location );
     const deleteCartItem = ({ order_id, product_id }) => {
         const form = {
             order_id,
@@ -42,8 +61,12 @@ const Cart = ( props ) => {
         history.push( '/checkout' );
     };
     // console.log( 'Cart props:', props );
+    const className = cx(
+        'Cart',
+        `Cart--name-${ name }`
+    );
     return (
-        <div className={ styles.Cart }>
+        <div className={ className }>
             { cart ? (
                 <div>
                     <div className={ styles.Items }>
@@ -54,6 +77,7 @@ const Cart = ( props ) => {
                                 return (
                                     <CartItem 
                                         key={ i } 
+                                        location={ location }
                                         isEditable={ isEditable }
                                         cartItem={ cartItem }
                                         updateItem={ updateItem } 
@@ -63,7 +87,9 @@ const Cart = ( props ) => {
                         }
                     </div>
                     <div className={ styles.Total }>Total: { total }</div>
-                    <SubmitButton text={ 'Checkout' } onClick={ () => goCheckout() } />
+                    { location.pathname == '/' &&
+                        <SubmitButton text={ 'Checkout' } onClick={ () => goCheckout() } />
+                    }
                 </div>
             ) : (
                 <div></div> 

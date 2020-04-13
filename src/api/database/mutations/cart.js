@@ -69,7 +69,7 @@ export const addCartItem = ({ product_id, quantity, size_id, user_id }) => {
             throw new Error( );
         });
     })
-    then( rows => {
+    .then( rows => {
         console.log( 'addCartItem transaction:', rows  );
         return rows
     })
@@ -120,30 +120,69 @@ export const updateCartItem = ({ order_id, product_id, size_id, quantity }) => {
 };
 
 
-export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, street, city, state, zipCode }) => {
-    return database.query(
-        `
-            UPDATE cus_order
-            SET
-                O_status = 'COMPLETE',
-                O_saleMethod = ${ saleMethod },
-                O_payMethod = ${ paymentMethod },
-                O_addressType = ${ addressType },
-                O_street = ${ street },
-                O_city = ${ city },
-                O_state = ${ state },
-                O_zipCode = ${ zipCode },
-            WHERE
-                O_ID = ${ order_id }
-        `
-    , {
-        type: Sequelize.QueryTypes.UPDATE
-    })
-    .then( rows => {
-        console.log( 'submitOrder rows:', rows );
-        return rows
-    })
-    .catch( err => console.error( err.stack ) )
+export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, street, city, state, zip_code, products }) => {
+    // return database.transaction( t => {
+        return database.query(
+            `
+                UPDATE cus_order
+                SET
+                    O_status = 'COMPLETED',
+                    O_saleMethod = '${ saleMethod }',
+                    O_payMethod = '${ paymentMethod }',
+                    O_addressType = '${ addressType }',
+                    O_street = '${ street }',
+                    O_city = '${ city }',
+                    O_state = '${ state }',
+                    O_zipCode = '${ zip_code }'
+                WHERE
+                    O_ID = ${ order_id }
+            `
+        , {
+            // transaction: t,
+            raw: true,
+            type: Sequelize.QueryTypes.UPDATE
+        })
+        .then( rows => {
+            console.log( 'submitOrder rows:', rows );
+            // return rows
+            let i = 0;
+            while ( i < products.length ) {
+                console.log( 'product:', products[ i ] );
+                const { product_id, quantity } = products[ i ];
+                database.query(
+                    `
+                    UPDATE product
+                    SET
+                        P_QUANTITY = P_QUANTITY - ${ quantity }
+                    WHERE
+                        P_ID = ${ product_id }
+                    `, {
+                        // transaction: t,
+                        raw: true,
+                        type: Sequelize.QueryTypes.UPDATE
+                    }
+                )
+                .then( rows => {
+                    console.log( 'Updated product quantity:', rows );
+                    // return rows
+                })
+                .catch( err => {
+                    console.log( 'Error updating product quantity:', err.stack );
+                    // throw new Error( );
+                });
+
+                i++;
+            }
+        })
+        .catch( err => console.error( err.stack ) )
+    // })
+    // .then( rows => {
+    //     console.log( 'transaction rows:', rows );
+    // })
+    // .catch ( err => {
+    //     console.error( err.stack )
+    //     throw new Error( );
+    // })
 };
 
 export const savePayment = ({ user_id, card_name, card_number, expiration_month, expiration_year }) => {

@@ -7,14 +7,14 @@ import SubmitOrderMutation from '../mutations/SubmitOrderMutation';
 import styles from '../CheckoutPage.css';
 
 const SummaryPage = ( props ) => {
-    const { viewer, cart, checkoutData } = props;
+    const { viewer, checkoutData } = props;
+    const { cart } = viewer;
     const history = useHistory( );
     const submitOrder = ( ) => {
-        const { order_id } = cart;
-        const { saleMethod, paymentMethod, deliveryAddressOption: addressType, customDeliveryAddress } = checkoutData;
-        const { street, city, state, zip_code } = customDeliveryAddress || {};
+        const { order_id, saleMethod, paymentMethod, deliveryAddressOption: addressType, customDeliveryAddress, products } = checkoutData;
+        const { street, city, state, zip_code } = saleMethod === 'DELIVERY' && addressType == 'CUSTOM' ? customDeliveryAddress || {} : {};
         const form = {
-            order_id,
+            order_id: parseInt( order_id ),
             saleMethod,
             addressType,
             street,
@@ -22,18 +22,22 @@ const SummaryPage = ( props ) => {
             state,
             zip_code,
             paymentMethod,
+            products,
         };
-        // SubmitOrderMutation.commit( form );
+        console.log( 'form:', form ); 
+        SubmitOrderMutation.commit( form );
     };
     const goToConfirmation = ( ) => {
         // history.push( '/checkout/confirmation' );
     };
-    console.log( 'SummaryPage props:', props );
+    // console.log( 'SummaryPage props:', props );
     return (
         <div className={ styles.SummaryPage }>
             <Cart 
+                { ...props }
                 cart={ viewer }
-                isEditable={ false } />
+                isEditable={ false }
+                name={ 'SummaryCart' } />
             <SubmitButton text={ 'Submit order' } onClick={ submitOrder } />
         </div>
     )

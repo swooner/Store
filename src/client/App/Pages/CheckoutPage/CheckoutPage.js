@@ -34,13 +34,15 @@ const CheckoutPage = ( props ) => {
                     return (
                         <SummaryPage 
                             { ...props }
-                            checkoutData={ data } />
+                            checkoutData={ data }
+                            setCheckoutData={ setCheckoutData } />
                     )
                 }} />
                 <Route path={ '/checkout/confirmation' } render={ () => {
                     return (
                         <ConfirmationPage 
-                            { ...props } />
+                            { ...props }
+                            setCheckoutData={ setCheckoutData } />
                     )
                 }} />
             </Switch>
@@ -50,12 +52,14 @@ const CheckoutPage = ( props ) => {
 
 export const getStorageData = ( ) => {
     const customDeliveryAddress = localStorage.getItem( 'checkout-custom-delivery-address' );
-    const billingDeliveryAddress = localStorage.getItem( 'checkout-billing-delivery-address' );
+    const products = localStorage.getItem( 'checkout-products' );
     const data = Object.assign( {}, {
+        order_id: localStorage.getItem( 'checkout-order-id' ),
         saleMethod: localStorage.getItem( 'checkout-sale-method' ),
         deliveryAddressOption: localStorage.getItem( 'checkout-delivery-address-option' ),
         customDeliveryAddress: customDeliveryAddress ? JSON.parse( customDeliveryAddress ) : null,
         paymentMethod: localStorage.getItem( 'checkout-payment-method' ),
+        products: products ? JSON.parse( products ) : null,
     });
     return data;
 };

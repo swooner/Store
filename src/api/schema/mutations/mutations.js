@@ -302,6 +302,15 @@ export const UpdateCartItemMutation = mutationWithClientMutationId({
 });
   
   
+// bubble panel input
+const ProductInput = new GraphQLInputObjectType({
+    name: 'ProductInput',
+    fields: {
+        product_id: { type: GraphQLInt },
+        name: { type: GraphQLString },
+        quantity: { type: GraphQLInt }
+    }
+});
 
 export const SubmitOrderMutation = mutationWithClientMutationId({
 	name: 'SubmitOrder',
@@ -313,18 +322,20 @@ export const SubmitOrderMutation = mutationWithClientMutationId({
 		street: { type: GraphQLString },
 		city: { type: GraphQLString },
 		state: { type: GraphQLString },
-		zipCode: { type: GraphQLString },
+		zip_code: { type: GraphQLString },
+		products: { type: new GraphQLList( ProductInput ) },
 	},
 	outputFields: {
 		order: {
 			type: Cart,
 			resolve: ( payload, args, context ) => {
-			  //   console.log( 'payload:', payload );
+			    console.log( 'payload:', payload ); 
 				return payload//getProduct({ id: payload.Cat_ID })
 			}
 		},
 	},
 	mutateAndGetPayload: ( args ) => {
+		// console.log( 'args:', args );
 		return submitOrder( args );
 	},
 });

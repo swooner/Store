@@ -5,7 +5,7 @@ import QuantitySelect from '../../../Components/QuantitySelect/QuantitySelect';
 import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
 import styles from '../StorePage.css';
 
-const CartItem = ({ cartItem, updateItem, isEditable, deleteCartItem }) => {
+const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }) => {
     const { product, size, quantity, cost } = cartItem;
     return (
         <div className={ styles.CartItem }>
@@ -14,7 +14,7 @@ const CartItem = ({ cartItem, updateItem, isEditable, deleteCartItem }) => {
                 { isEditable ? (
                     <QuantitySelect onChange={ ( e ) => updateItem( e, cartItem, 'quantity' ) } defaultValue={ quantity } />
                 ) : (
-                    <div className={ styles.Value }>{ quantity }</div>
+                    <div className={ styles.Value }>Quantity: { quantity }</div>
                 )}
             </div>
             { size && size.name != 'N/A' &&
@@ -26,12 +26,14 @@ const CartItem = ({ cartItem, updateItem, isEditable, deleteCartItem }) => {
                             onChange={ ( e ) => updateItem( e, cartItem, 'size' ) } 
                             defaultValue={ getSizeIndex( product.sizes, size.name ) } />
                     ) : (
-                        <div className={ styles.Value }>{ size.name }</div>
+                        <div className={ styles.Value }>Size: { size.name }</div>
                     )}
                 </div>
             }
             <div className={ styles.Cost }>Cost: ${ cost }</div>
-            <SubmitButton style={ 'Delete' } onClick={ deleteCartItem } text={ 'Remove' } />
+            { location.pathname != '/checkout/summary' && location.pathname != '/checkout/confirmation' &&
+                <SubmitButton style={ 'Delete' } onClick={ deleteCartItem } text={ 'Remove' } />
+            }
         </div>
     )
 };

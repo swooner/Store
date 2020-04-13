@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash b462a5f08532f8c68fd4b1a41310e278
+ * @relayHash 11dbaedd41b68ebda43c8b995e660df7
  */
 
 /* eslint-disable */
@@ -17,8 +17,14 @@ export type SubmitOrderInput = {|
   street?: ?string,
   city?: ?string,
   state?: ?string,
-  zipCode?: ?string,
+  zip_code?: ?string,
+  products?: ?$ReadOnlyArray<?ProductInput>,
   clientMutationId?: ?string,
+|};
+export type ProductInput = {|
+  product_id?: ?number,
+  quantity?: ?number,
+  name?: ?string,
 |};
 export type SubmitOrderMutationVariables = {|
   input: SubmitOrderInput

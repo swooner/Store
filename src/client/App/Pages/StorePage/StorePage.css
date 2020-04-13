@@ -56,23 +56,27 @@
 }
 
 .Cart{
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 50vw;
+    margin: 20px;
+    margin-top: 70px;
     display: inline-block;
     background-color: #FFFDD0;
-    margin-top:10px;
-    width: 20px;
     border: 5px solid green;
     padding: 50px;
-    margin: 20px;
-      
 }
 
-.Category .Body {
+.Cart--name-SummaryCart {
+    position: relative;
 }
 
 .ProductList .Product {
     font-size: 20px;
     color: black;
     cursor: pointer;
+    display: inline-block;
     /* text-transform: uppercase; */
 }
 
@@ -99,14 +103,6 @@
     right: 0;
     width: 50vw;
     height: 100vh;
-}
-
-.Cart {
-    margin-top: 70px;
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 50vw;
 }
 
 
