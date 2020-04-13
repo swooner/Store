@@ -1,14 +1,18 @@
 
 .SiteNav {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    right: 0;
-    display: flex;
-    justify-content: flex-end; 
-    display: block;
-    z-index: 999;
+    /* position: absolute; */
+    background: #ac1a17;    
+    padding: 10px;
+    font-size: 20px;
 }
+
+.Brand{
+    font-size: 30px;
+    line-height: 50px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: black;
+    font-family: cursive;}
 
 .SiteNav ul {
     display:flex;
@@ -21,15 +25,17 @@
     text-decoration: none;
 }
 .SiteNav ul li a{
-    color: black;
+    color: white !important;
     text-decoration: none;
     display:block;
     padding: 10px;
 }
 .SiteNav ul li a:hover {
-    background-color: white;
-    color: #cf631b;
+    /* background-color: white; */
+    color: black !important;
 }
+
+
 /* .SiteNav ul:not(:last-child) {
     margin-right: 10px;
 }

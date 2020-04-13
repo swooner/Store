@@ -48,7 +48,7 @@ import GraphQLInventoryOrder, { InventoryOrderConnection } from './types/invento
 import {
 	ViewerQuery,
 	CategoriesQuery,
-
+	CartQuery,
 	UserSearchQuery,
 	EmployeeQuery,
 	CategoryQuery,
@@ -83,7 +83,7 @@ const Query = new GraphQLObjectType({
 		// node: nodeField,
 		viewer: ViewerQuery,
 		categories: CategoriesQuery,
-
+		cart: CartQuery,
 		user_search: UserSearchQuery,
 		employee_list: EmployeeQuery,
 		category_list: CategoryListQuery,

@@ -1,9 +1,12 @@
 
+.StorePage {
+    margin: 0;
+}
 .ProductList {
     position: relative;
     top: 0;
     left: 0;
-    width: 50vw;
+    /* width: 50vw; */
     min-height: 100vh;
     padding-left: 20px;
     padding-top: 20px;
@@ -11,7 +14,7 @@
 
 .Category {
     position: relative;
-    padding-left: 50px;
+    padding-left: 40px;
     cursor: pointer;
 }
 
@@ -21,7 +24,7 @@
     top: 20px;
     left: 0;
     content: '';
-    width: 35px;
+    width: 25px;
     height: 5px;
     transform: translateY( -50% );
     background-color: black;
@@ -44,18 +47,30 @@
 }
 
 .Category .Header .Name {
-    font-size: 50px;
+    font-size: 30px;
     line-height: 50px;
     font-weight: bold;
     text-transform: uppercase;
     color: black;
+    font-family: cursive;
+}
+
+.Cart{
+    display: inline-block;
+    background-color: #FFFDD0;
+    margin-top:10px;
+    width: 20px;
+    border: 5px solid green;
+    padding: 50px;
+    margin: 20px;
+      
 }
 
 .Category .Body {
 }
 
 .ProductList .Product {
-    font-size: 36px;
+    font-size: 20px;
     color: black;
     cursor: pointer;
     /* text-transform: uppercase; */
@@ -78,8 +93,8 @@
 
 
 .ProductView {
-    margin-top: 30px;
-    position: fixed;
+    /* margin-top: 30px;
+    position: fixed; */
     top: 0;
     right: 0;
     width: 50vw;
@@ -99,4 +114,5 @@ button.Close {
     position: absolute;
     top: 20px;
     right: 5px;
+    z-index: 999;
 }

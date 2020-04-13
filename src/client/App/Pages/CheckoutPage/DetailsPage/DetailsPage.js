@@ -12,6 +12,9 @@ const DetailsPage = ( props ) => {
     const history = useHistory( );
     const { viewer } = props;
     const [ cardInfo, updateCardInfo ] = useState( {} );
+    // For some weird reasons Webpack does not permit calling ValidatePaymentMutation.commit
+    // directly inside of validatePayment function
+    const commitValidationPayment = ValidatePaymentMutation.commit;
     const updateCardForm = ( e, name ) => {
         updateCardInfo({ ...cardInfo, [ name ]: e.target.value });
     };
@@ -20,10 +23,10 @@ const DetailsPage = ( props ) => {
         const form = {
             card_name: name,
             card_number: number,
-            expiration_month,
-            expiration_year,
+            expiration_month: +expiration_month,
+            expiration_year: +expiration_year,
         };
-        ValidatePaymentMutation.commmit( form );
+        commitValidationPayment( form );
     };
     const goToSummary = ( ) => {
         const validation = validatePayment( );

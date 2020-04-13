@@ -10,7 +10,7 @@ export const addCartItem = ({ product_id, quantity, size_id, user_id }) => {
             `
                 INSERT INTO cus_order( O_Cus_ID, O_status )
                 VALUES(
-                    '${ user_id }',
+                    ${ user_id },
                     'ACTIVE'
                 )
                 ON DUPLICATE KEY UPDATE O_ID=O_ID
@@ -42,7 +42,7 @@ export const addCartItem = ({ product_id, quantity, size_id, user_id }) => {
                             ${ product_id },
                             ${ size_id },
                             ${ quantity },
-                            ${ DateTimeNow( ) }
+                            '${ DateTimeNow( ) }'
                         )
                     `, {
                         transaction: t,
@@ -178,13 +178,14 @@ export const validatePayment = ({ card_name, card_number, expiration_month, expi
     else if ( parseInt( expiration_month ) < 1 || parseInt( expiration_month ) > 12 ) {
         throw new Error( 'Expiration month is not valid' );
     }
-    else if ( parseInt( expiration_year ) < 1 || parseInt( expiration_year ) > 12 ) {
+    else if ( parseInt( expiration_year ) < 20) {
         throw new Error( 'Expiration year is not valid' );
     }
     else if ( parseInt( security_code ) < 1 || parseInt( security_code ) > 3 ) {
         throw new Error( 'Security code is not valid' );
     }
     else {
+       
         return { success: true }
     }
 };

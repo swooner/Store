@@ -20,6 +20,7 @@ import {
 	GraphQLDateTime,
 } from 'graphql-iso-date';
 
+import { getCart, getCartItems } from '../../database/queries/cart';
 import { getCategory, getCategoryList } from '../../database/queries/category';
 import { getProduct, getProductList, getProductsByCategoryName } from '../../database/queries/product';
 import { getUser, searchUsers } from '../../database/queries/user';
@@ -27,9 +28,20 @@ import { getAllEmployees } from '../../database/queries/employee';
 import { getAllInventoryOrders } from '../../database/queries/inventory';
 
 import GraphQLCategory from '../types/category';
+import GraphQLCart from '../types/cart';
 import GraphQLUser, { UserConnection } from '../types/user';
 import GraphQLProduct, { ProductConnection } from '../types/product';
 import GraphQLInventoryOrder, { InventoryOrderConnection } from '../types/inventory_order';
+
+export const CartQuery = {
+	type: GraphQLCart,
+	args: {
+		order_id: { type: GraphQLInt }
+	},
+	resolve: (root, args) => {
+		return getCart(args);
+	}
+};
 
 export const CategoriesQuery = {
 	type: new GraphQLList( GraphQLCategory ),

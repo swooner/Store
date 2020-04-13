@@ -11,10 +11,13 @@ import UpdateCartItemMutation from '../mutations/UpdateCartItemMutation';
 import styles from '../StorePage.css';
 
 const Cart = ( props ) => {
-    const { cart, isEditable } = props;
-    const { order_id, items, total } = cart ? cart.cart : {};
+    const { cart: { cart }, isEditable } = props;
+    if (!cart) {
+        return null;
+    }
+
+    const { order_id, items, total } = cart;
     const history = useHistory();
-    // console.log( 'cart:', cart );
     const deleteCartItem = ({ order_id, product_id }) => {
         const form = {
             order_id,
@@ -41,21 +44,23 @@ const Cart = ( props ) => {
     // console.log( 'Cart props:', props );
     return (
         <div className={ styles.Cart }>
-            { cart && cart.cart ? (
+            { cart ? (
                 <div>
                     <div className={ styles.Items }>
-                        { cart.cart ? cart.cart.items.map(( cartItem, i ) => {
-                            const { product } = cartItem;
-                            const { product_id } = product;
-                            return (
-                                <CartItem 
-                                    key={ i } 
-                                    isEditable={ isEditable }
-                                    cartItem={ cartItem }
-                                    updateItem={ updateItem } 
-                                    deleteCartItem={ ( ) => deleteCartItem({ order_id, product_id }) } />
-                            )
-                        }) : [] }
+                        { 
+                            cart.items.map(( cartItem, i ) => {
+                                const { product } = cartItem;
+                                const { product_id } = product;
+                                return (
+                                    <CartItem 
+                                        key={ i } 
+                                        isEditable={ isEditable }
+                                        cartItem={ cartItem }
+                                        updateItem={ updateItem } 
+                                        deleteCartItem={ ( ) => deleteCartItem({ order_id, product_id }) } />
+                                )
+                            })
+                        }
                     </div>
                     <div className={ styles.Total }>Total: { total }</div>
                     <SubmitButton text={ 'Checkout' } onClick={ () => goCheckout() } />

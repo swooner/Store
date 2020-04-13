@@ -13,7 +13,9 @@ const SignUpPage = (props) => {
     };
     const submitForm = ( e ) => {
         e.preventDefault( );
-        // console.log( 'form:', form );
+
+         console.log('AM HERE MINDE', form );
+
         SignUpMutatation.commit(form);
     };
     return (
@@ -65,7 +67,7 @@ const SignUpPage = (props) => {
                                         <ControlGroup title={'Address'} description={null}>
                                             <Input
                                                 placeholder={'Address'}
-                                                onChange={(e) => handleInput(e, 'address')} />
+                                                onChange={(e) => handleInput(e, 'street')} />
                                         </ControlGroup>
                                     </div>
                                 </div>

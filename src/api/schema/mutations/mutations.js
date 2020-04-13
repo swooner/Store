@@ -42,6 +42,7 @@ export const SignUpMutation = mutationWithClientMutationId({
 		first_name: { type: GraphQLString },
 		last_name: { type: GraphQLString },
 		account_name: { type: GraphQLString },
+		address: {type: GraphQLString},
 		password: { type: GraphQLString },
 		street: { type: GraphQLString },
 		city: { type: GraphQLString },
@@ -362,7 +363,7 @@ export const ValidatePaymentMutation = mutationWithClientMutationId({
 		security_code: { type: GraphQLInt },
 	},
 	outputFields: {
-		order: {
+		user: {
 			type: GraphQLUser,
 			resolve: ( payload, args, context ) => {
 			  //   console.log( 'payload:', payload );

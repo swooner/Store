@@ -1,3 +1,5 @@
 .ControlGroup{
     display: inline-block;
+    width: 100%;
+    text-align: left;
 }

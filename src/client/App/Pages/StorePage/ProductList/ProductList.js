@@ -24,7 +24,7 @@ const ProductList = ( props ) => {
                     <div key={ i } className={ className } onClick={ () => props.selectCategory( category ) }>
                         <div className={ styles.Header }>
                             <div className={ styles.Indicator }></div>
-                            <div className={ styles.Name }>{ name }</div>
+                            <span className={ styles.Name }>{ name }</span>
                         </div>
                         { activeCategories[ name ] && activeCategories[ name ].isActive &&
                             <div className={ styles.Body }>

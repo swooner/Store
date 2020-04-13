@@ -18,7 +18,7 @@ const StorePage = ( props ) => {
         activateCategory({ ...activeCategories, [ category.name ]: { isActive: !categoryIsActive } });
     };
     const selectProduct = ( e, product ) => {
-        e.stopPropagation( );
+        e.preventDefault( );
         // const { product_id } = product;
         // if ( product_id == activeProduct.product_id ) {
         //     activateProduct( null );
@@ -39,27 +39,34 @@ const StorePage = ( props ) => {
     };
     // console.log( 'StorePage.props:', props );
     return (
-        <div className={ styles.StorePage }>
-            <ProductList 
-                { ...props } 
-                categories={ props }
-                activeProduct={ activeProduct }
-                hoverProduct={ hoverProduct }
-                activeCategories={ activeCategories }
-                selectProduct={ selectProduct }
-                selectCategory={ selectCategory } />
-            { ( activeProduct || activeHoverProduct ) &&
-                <ProductView
-                    { ...props }
+        <div className={"row " + styles.StorePage }>
+            <div className="col-md-3">
+                <ProductList 
+                    { ...props } 
+                    categories={ props }
                     activeProduct={ activeProduct }
+                    hoverProduct={ hoverProduct }
+                    activeCategories={ activeCategories }
                     selectProduct={ selectProduct }
-                    activeHoverProduct={ activeHoverProduct } />
-            }
+                    selectCategory={ selectCategory } 
+                />
+            </div>
+            <div className="col-md-9">
+                { ( activeProduct || activeHoverProduct ) &&
+                    <ProductView
+                        { ...props }
+                        activeProduct={ activeProduct }
+                        selectProduct={ selectProduct }
+                        activeHoverProduct={ activeHoverProduct } />
+                }
+            </div>
             { !activeProduct && !activeHoverProduct && 
+            <div className={styles.Cart}>
                 <Cart 
                     { ...props }
                     cart={ viewer }
                     isEditable={ true } />
+                    </div>
             }
         </div>
     )
