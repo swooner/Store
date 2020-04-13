@@ -54,7 +54,7 @@ const ActiveProduct = ( props ) => {
     const img_url = `public/${ picture_url }`;
     // console.log( 'isActiveProduct:', isActiveProduct );
     // console.log( 'isHoverProduct:', isHoverProduct );
-    console.log( 'viewer:', viewer );
+    // console.log( 'viewer:', viewer );
     return (
         <div className={ styles.ProductView }>
             { isActiveProduct ? (

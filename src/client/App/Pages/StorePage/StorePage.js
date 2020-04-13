@@ -60,13 +60,11 @@ const StorePage = ( props ) => {
                         activeHoverProduct={ activeHoverProduct } />
                 }
             </div>
-            { !activeProduct && !activeHoverProduct && 
-            <div className={styles.Cart}>
+            { viewer && !activeProduct && !activeHoverProduct && 
                 <Cart 
                     { ...props }
                     cart={ viewer }
                     isEditable={ true } />
-                    </div>
             }
         </div>
     )
