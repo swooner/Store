@@ -173,6 +173,7 @@ export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, 
 
                 i++;
             }
+            return { good: true }
         })
         .catch( err => console.error( err.stack ) )
     // })
