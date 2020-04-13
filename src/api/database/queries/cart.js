@@ -10,6 +10,7 @@ export const getCart = ({ user_id }) => {
             JOIN cus_order
                 ON cus_order.O_Cus_ID = ORDER_TOTAL.Cus_ID
             WHERE ORDER_TOTAL.Cus_ID = ${ user_id }
+                AND cus_order.O_status = 'ACTIVE'
         `
     , {
         type: Sequelize.QueryTypes.SELECT

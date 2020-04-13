@@ -21,18 +21,20 @@ const Cart = ( props ) => {
 
     const { order_id, items, total } = cart;
     useEffect( () => {
-        setCheckoutData( 'checkout-order-id', order_id );
-        const products = items.map( item => {
-            console.log( 'item:', item );
-            const { product, quantity } = item;
-            const { product_id, name } = product;
-            return {
-                product_id,
-                name,
-                quantity
-            }
-        });
-        setCheckoutData( 'checkout-products', JSON.stringify( products ) );
+        if ( setCheckoutData ) {
+            setCheckoutData( 'checkout-order-id', order_id );
+            const products = items.map( item => {
+                console.log( 'item:', item );
+                const { product, quantity } = item;
+                const { product_id, name } = product;
+                return {
+                    product_id,
+                    name,
+                    quantity
+                }
+            });
+            setCheckoutData( 'checkout-products', JSON.stringify( products ) );
+        }
     }, [])
     const history = useHistory();
     const location = useLocation( );
