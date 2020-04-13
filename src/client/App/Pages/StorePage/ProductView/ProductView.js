@@ -1,6 +1,5 @@
 
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import SizeSelect from '../../../Components/SizeSelect/SizeSelect';
 import QuantitySelect from '../../../Components/QuantitySelect/QuantitySelect';
 import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
@@ -11,7 +10,6 @@ const NOT_APPLICABLE_SIZE_ID = 0;
 
 const ActiveProduct = ( props ) => {
     const activeProduct = props.activeProduct || props.activeHoverProduct;
-    const history = useHistory( );
     const { viewer, activeProduct: isActiveProduct, activeHoverProduct: isHoverProduct } = props;
     const { product_id, name, description, price, sizes, picture_url } = activeProduct;
     const [ productForm, updateProductForm ] = useState( { quantity: 1, size: sizes.length ? sizes[ 0 ] : null } );
@@ -34,10 +32,6 @@ const ActiveProduct = ( props ) => {
         updateProductForm({ ...productForm, quantity: newQuantity })
     };
     const submitForm = ( ) => {
-        if ( !viewer ) {
-            history.push( '/login' );
-            return false;
-        }
         const { user_id } = viewer;
         const { size, quantity } = productForm;
         const form = {
@@ -54,33 +48,41 @@ const ActiveProduct = ( props ) => {
     const img_url = `public/${ picture_url }`;
     // console.log( 'isActiveProduct:', isActiveProduct );
     // console.log( 'isHoverProduct:', isHoverProduct );
-    // console.log( 'viewer:', viewer );
     return (
-        <div className={ styles.ProductView }>
-            { isActiveProduct ? (
-                <div className={ styles.ActiveProduct }>
-                    <button className={ styles.Close } onClick={ ( e ) => props.selectProduct( e, null ) }>Close</button>
-                    { picture_url &&
-                        <div>
-                            <img className={ styles.Photo } src={ img_url } alt=""/>
-                        </div>
-                    }
-                    <div className={ styles.Name }>{ name }</div>
-                    <div className={ styles.Description }>{ description }</div>
-                    <div className={ styles.Price }>${ dynamicPrice }</div>
-                    <div className={ styles.SizeAndQuantity }>
-                        { sizes && sizes.length > 0 && 
-                            <SizeSelect sizes={ sizes } onChange={ ( e ) => updateSize( e ) } />
+        // <div className={ styles.ProductView }>
+        <div className="card mb-3" style={{marginTop: 30}}>
+                { isActiveProduct ? (
+                    // <div className={ styles.ActiveProduct }>
+                    <div className="row no-gutters">
+                        <button className={ styles.Close } onClick={ ( e ) => props.selectProduct( e, null ) }>Close</button>
+                        { picture_url &&
+                            <div className="col-md-6">
+                                {/* <img className={ styles.Photo } src={ img_url } alt=""/> */}
+                                <img className="card-img" src={ img_url } alt=""/>
+                            </div>
                         }
-                        <QuantitySelect onChange={ ( e ) => updateQuantity( e ) } />
+                        <div className="col-md-6" style={{display:"flex", alignItems:"center"}}>
+                            <div className="card-body">
+                                <h3 className="card-title">{ name }</h3>
+                            {/* <div className={ styles.Name }>{ name }</div> */}
+                                <p className="card-text">{ description }</p>
+                            {/* <div className={ styles.Description }>{ description }</div> */}
+                            <div className={ styles.Price }>${ dynamicPrice }</div>
+                            <div className={ styles.SizeAndQuantity }>
+                                { sizes && sizes.length > 0 && 
+                                    <SizeSelect sizes={ sizes } onChange={ ( e ) => updateSize( e ) } />
+                                }
+                                <QuantitySelect onChange={ ( e ) => updateQuantity( e ) } />
+                            </div>
+                            <SubmitButton text={ 'Add to cart' } onClick={ () => submitForm( ) } />
+                            </div>
+                        </div>
                     </div>
-                    <SubmitButton text={ 'Add to cart' } onClick={ () => submitForm( ) } />
-                </div>
-            ) : (
-                <div className={ styles.HoverProduct }>
-                    <img className={ styles.image } src={ img_url } alt=""/>
-                </div>
-            )}
+                ) : (
+                    <div className={ styles.HoverProduct }>
+                        <img className={ styles.image } src={ img_url } alt=""/>
+                    </div>
+                )}
         </div>
     )
 };
