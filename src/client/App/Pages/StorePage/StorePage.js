@@ -19,6 +19,7 @@ const StorePage = ( props ) => {
     };
     const selectProduct = ( e, product ) => {
         e.preventDefault( );
+        e.stopPropagation( );
         // const { product_id } = product;
         // if ( product_id == activeProduct.product_id ) {
         //     activateProduct( null );

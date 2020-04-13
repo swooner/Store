@@ -9,7 +9,7 @@ const cx = classnames.bind( styles );
 const ProductList = ( props ) => {
     let { categories, activeCategories } = props;
     categories = categories.categories;
-    // console.log( 'activeCategories:', activeCategories );
+    console.log( 'activeCategories:', activeCategories );
     // console.log( 'ProductList props:', props );
     return (
         <div className={ styles.ProductList }>
