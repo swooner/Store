@@ -11,7 +11,6 @@ const NOT_APPLICABLE_SIZE_ID = 0;
 const ActiveProduct = ( props ) => {
     const history = useHistory( );
     const activeProduct = props.activeProduct || props.activeHoverProduct;
-    const history = useHistory( );
     const { viewer, activeProduct: isActiveProduct, activeHoverProduct: isHoverProduct } = props;
     const { product_id, name, description, price, sizes, picture_url } = activeProduct;
     const [ productForm, updateProductForm ] = useState( { quantity: 1, size: sizes.length ? sizes[ 0 ] : null } );
