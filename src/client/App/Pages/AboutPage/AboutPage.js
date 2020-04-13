@@ -15,7 +15,9 @@ class About extends Component {
                 <div className="card-body">
                     Established in February 2020, we aim to provide the best customer experience paired with delicious freshly made food.
                 </div>
+                
             </div>
+            
         )
     }
 };
