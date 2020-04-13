@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import SizeSelect from '../../../Components/SizeSelect/SizeSelect';
 import QuantitySelect from '../../../Components/QuantitySelect/QuantitySelect';
 import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
@@ -9,6 +10,7 @@ import styles from '../StorePage.css';
 const NOT_APPLICABLE_SIZE_ID = 0;
 
 const ActiveProduct = ( props ) => {
+    const history = useHistory( );
     const activeProduct = props.activeProduct || props.activeHoverProduct;
     const { viewer, activeProduct: isActiveProduct, activeHoverProduct: isHoverProduct } = props;
     const { product_id, name, description, price, sizes, picture_url } = activeProduct;
@@ -31,7 +33,11 @@ const ActiveProduct = ( props ) => {
         setDynamicPrice({ price, surcharge: currentSizeSurcharge, quantity: newQuantity });
         updateProductForm({ ...productForm, quantity: newQuantity })
     };
-    const submitForm = ( ) => {
+    const submitForm = ( e ) => {
+        if ( !viewer ) {
+            history.push( '/login' );
+            return false;
+        }
         const { user_id } = viewer;
         const { size, quantity } = productForm;
         const form = {
@@ -42,7 +48,7 @@ const ActiveProduct = ( props ) => {
         };
         // console.log( 'form:', form );
         AddCartItemMutation.commit( form );
-        props.selectProduct( null );
+        props.selectProduct( e, null );
     };
     // console.log( 'activeProduct:', activeProduct );
     const img_url = `public/${ picture_url }`;
@@ -74,7 +80,7 @@ const ActiveProduct = ( props ) => {
                                 }
                                 <QuantitySelect onChange={ ( e ) => updateQuantity( e ) } />
                             </div>
-                            <SubmitButton text={ 'Add to cart' } onClick={ () => submitForm( ) } />
+                            <SubmitButton text={ 'Add to cart' } onClick={ ( e ) => submitForm( e ) } />
                             </div>
                         </div>
                     </div>
