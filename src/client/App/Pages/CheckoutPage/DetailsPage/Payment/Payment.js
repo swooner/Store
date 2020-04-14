@@ -20,8 +20,10 @@ const Payment = ( props ) => {
             { paymentMethod == 'cash' ? (
                 <CashMessage saleMethod={ saleMethod } />
             ) : (
+                <div className="col-md-3">
                 <CardForm 
                     { ...props } />
+                    </div>
             )}
         </div>
     )

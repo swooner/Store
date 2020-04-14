@@ -8,6 +8,7 @@ import AddCartItemMutation from './mutations/AddCartItemMutation';
 import styles from './StorePage.css';
 
 const StorePage = ( props ) => {
+    console.log('props parent', props)
     const { viewer, cart } = props;
     const [ activeCategories, activateCategory ] = useState( { Entrees: { isActive: true } } );
     const [ activeProduct, activateProduct ] = useState( );
@@ -63,6 +64,7 @@ const StorePage = ( props ) => {
             </div>
             { viewer && !activeProduct && !activeHoverProduct && 
                 <Cart 
+                    data={props}
                     { ...props }
                     cart={ viewer }
                     isEditable={ true } />

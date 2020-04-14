@@ -6,7 +6,7 @@ class SubmitButton extends Component {
     render() {
         const { text, onClick } = this.props;
         return (
-            <button style={{margin: "10px 0px"}} className="btn btn-danger btn-inline" onClick={onClick}>{text || 'Submit'}</button>
+            <button style={{margin: "10px 0px"}} className="btn btn-danger " onClick={onClick}>{text || 'Submit'}</button>
         )
     }
 };

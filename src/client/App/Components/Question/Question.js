@@ -7,7 +7,7 @@ const cx = classnames.bind( styles );
 
 const Question = ( props ) => {
     return (
-        <div className={ styles.Question }>
+        <div className={ styles.pickupType }>
             { props.children }
         </div>
     )
@@ -20,7 +20,7 @@ export const Choice = ({ name, text, activeChoice, onClick }) => {
         }
     );
     return (
-        <div className={ className } onClick={ ( ) => onClick( name ) }>
+        <div className={ styles } onClick={ ( ) => onClick( name ) }>
             <div className={ styles.Circle }></div>
             <div className={ styles.Label }>{ text || name }</div>
         </div>

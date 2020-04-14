@@ -1,5 +1,14 @@
+.pickType{
+
+    display: flex;
+    padding-right: 24px;
+    font-size: 20px;
+}
 
 
+.pickupType{
+    display: flex;
+}
 .Choice {
     cursor: pointer;
 }

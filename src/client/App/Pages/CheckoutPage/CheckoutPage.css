@@ -1,0 +1,14 @@
+.saleMethodHeader{
+    padding: 30px 0;
+}
+.saleMethodHeader > span{
+    font-size: 41px;
+}
+
+.accountAddress{
+    margin-left: 13px;
+}
+
+.reviewOrder{
+    margin-left: 19px;
+}

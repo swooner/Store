@@ -1,9 +1,10 @@
 
 import React from 'react';
+import styles from '../../Pages/StorePage/StorePage.css'
 
 const QuantitySelect = ({ onChange, defaultValue }) => {
     return (
-        <select onChange={ onChange } defaultValue={ defaultValue }>
+        <select className={styles.sizeSelect} onChange={ onChange } defaultValue={ defaultValue }>
             { Array.from( Array( 10 ) ).map(( number, i ) => {
                 const index = i + 1;
                 return (

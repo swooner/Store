@@ -13,11 +13,16 @@ const DeliveryAddress = ( props ) => {
                 { ...props }
                 activeDeliveryAddressOption={ activeDeliveryAddressOption } />
             { activeDeliveryAddressOption == 'ACCOUNT' ? (
+                <div className={styles.accountAddress}>
                 <AccountAddress 
                     { ...props } />
+                    </div>
             ) : (
+                <div className="col-md-3">
+
                 <CustomAddressForm
                     { ...props } />
+                    </div>
             )}
         </div>
     )
@@ -26,16 +31,20 @@ const DeliveryAddress = ( props ) => {
 const AddressQuestion = ({ activeDeliveryAddressOption, onDeliveryAddressOptionClick }) => {
     return (
         <Question>
+           <button className="btn btn-outline-primary">
             <Choice 
                 name={ 'ACCOUNT' } 
                 text={ 'Send to account address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
+                </button>
+                <button className="btn btn-outline-primary">
             <Choice 
                 name={ 'CUSTOM' } 
                 text={ 'Send to custom address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
+                </button>
         </Question>
     )
 };

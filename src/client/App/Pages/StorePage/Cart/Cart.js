@@ -21,6 +21,7 @@ const Cart = ( props ) => {
 
     const { order_id, items, total } = cart;
     useEffect( () => {
+        console.log('confirming')
         if ( setCheckoutData ) {
             setCheckoutData( 'checkout-order-id', order_id );
             const products = items.map( item => {
@@ -71,7 +72,7 @@ const Cart = ( props ) => {
         <div className={ className }>
             { cart ? (
                 <div>
-                    <div className={ styles.Items }>
+                  
                         { 
                             cart.items.map(( cartItem, i ) => {
                                 const { product } = cartItem;
@@ -87,11 +88,17 @@ const Cart = ( props ) => {
                                 )
                             })
                         }
-                    </div>
-                    <div className={ styles.Total }>Total: { total }</div>
-                    { location.pathname == '/' &&
+                  
+                  <div className={ styles.costContainer }>
+                <span className={styles.costLabel}>
+                Total: { total }
+                </span>
+                <div>
+                { location.pathname == '/' &&
                         <SubmitButton text={ 'Checkout' } onClick={ () => goCheckout() } />
                     }
+                    </div>
+                    </div>
                 </div>
             ) : (
                 <div></div> 

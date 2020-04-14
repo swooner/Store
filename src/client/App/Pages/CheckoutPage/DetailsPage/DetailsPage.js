@@ -53,7 +53,9 @@ const DetailsPage = ( props ) => {
                 { ...props }
                 cart={ viewer }
                 isEditable={ false } />
+                <div className={styles.reviewOrder}>
             <SubmitButton text={ 'Review order' } onClick={ goToSummary } />
+            </div>
         </div>
     )
 };
