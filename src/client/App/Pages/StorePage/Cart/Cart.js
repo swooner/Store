@@ -91,7 +91,7 @@ const Cart = ( props ) => {
                   
                   <div className={ styles.costContainer }>
                 <span className={styles.costLabel}>
-                Total: { total }
+                Total: ${ total }
                 </span>
                 <div>
                 { location.pathname == '/' &&
