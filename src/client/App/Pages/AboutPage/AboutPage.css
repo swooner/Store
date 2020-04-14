@@ -3,10 +3,6 @@
 /* body {
 background-color: #222;
 } */
-.plate {
-width: 410px;
-margin: 10% auto;
-}
 .shadow {
 color: #fff;
 font-family: Arvo;
@@ -59,10 +55,10 @@ text-shadow:
   3px -3px 0 #222,
   -3px 3px 0 #222,
   3px 3px 0 #222,
-  4px 4px 0 #fff,
-  5px 5px 0 #fff,
-  6px 6px 0 #fff,
-  7px 7px 0 #fff;
+  4px 4px 0 rgb(216, 152, 152),
+  5px 5px 0 rgb(216, 152, 152),
+  6px 6px 0 rgb(216, 152, 152),
+  7px 7px 0 rgb(216, 152, 152);
 line-height: 0.8em;
 letter-spacing: 0.1em;
 transform: scaleY(0.7);

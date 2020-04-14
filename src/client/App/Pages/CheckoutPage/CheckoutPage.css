@@ -3,12 +3,20 @@
 }
 .saleMethodHeader > span{
     font-size: 41px;
+    font-family: "Seaweed Script";
+}
+
+.CardForm{
+    font-family: cursive;
+    font-style: bold;
 }
 
 .accountAddress{
+    font-family: cursive;
     margin-left: 13px;
 }
 
 .reviewOrder{
+    font-family: cursive;
     margin-left: 19px;
 }

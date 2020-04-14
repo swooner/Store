@@ -10,7 +10,7 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
     console.log('images', props)
     return (
         <div className={styles.item}>
-            <div className={styles.image}><img src="https://lh3.googleusercontent.com/proxy/xdrt6bB5LK-UVCKs4nCOQOE78xBLg5qtNmX7j5WiqeXX8itzqiR_qoXvNde25k2u2GWzSJVYk_XSs-IQox_KPylihGUtX3R-aQTueyGMWn6NOZI6YpZrn-LcwaYBYu8YW2nWViXIZg" /></div>
+            <div className={styles.image}><img src="public\burgercart.png" /></div>
             <Product product={ product } />
             <div className={ styles.quantity }>
                 { isEditable ? (

@@ -13,9 +13,11 @@ class About extends Component {
                     </div>
                 </div>
                 <div className="card-body">
-                    Established in February 2020, we aim to provide the best customer experience paired with delicious freshly made food.
+                    <center>Established in February 2020, we aim to provide the best customer experience paired with delicious freshly made food.</center>
                 </div>
-                
+                <video id="background-video" loop muted autoPlay>
+                <source src="public\video.mp4" type="video/mp4" />
+                </video>
             </div>
             
         )
