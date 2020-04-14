@@ -1,355 +1,356 @@
-
 scalar DateTime
 
 interface Node {
-    id: ID!
+  id: ID!
 }
 
 type PageInfo {
-    hasNextPage: Boolean!
-    hasPreviousPage: Boolean!
-    startCursor: String
-    endCursor: String
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
 }
 
 type UserConnection {
-    pageInfo: PageInfo,
-    edges: [ UserEdge ]
+  pageInfo: PageInfo
+  edges: [UserEdge]
 }
 type UserEdge {
-    node: User
-    cursor: String!
+  node: User
+  cursor: String!
 }
 type ProductConnection {
-    pageInfo: PageInfo,
-    edges: [ ProductEdge ]
+  pageInfo: PageInfo
+  edges: [ProductEdge]
 }
 type ProductEdge {
-    node: Product
-    cursor: String!
+  node: Product
+  cursor: String!
 }
 type InventoryOrderConnection {
-    pageInfo: PageInfo,
-    edges: [ InventoryOrderEdge ]
+  pageInfo: PageInfo
+  edges: [InventoryOrderEdge]
 }
 type InventoryOrderEdge {
-    node: InventoryOrder
-    cursor: String!
+  node: InventoryOrder
+  cursor: String!
 }
 
 type Category {
-    category_id: Int
-    name: String
-    description: String
-    products ( first: Int ): ProductConnection
+  category_id: Int
+  name: String
+  description: String
+  products(first: Int): ProductConnection
 }
 
 type Product {
-    product_id: Int
-    category: Category
-    brand: String
-    name: String
-    description: String
-    sizes: [ ProductSize ]
-    price: Float
-    threshold: Int
-    quantity: Int
-    created_at: DateTime
-    created_by: User
-    picture_url: String
+  product_id: Int
+  category: Category
+  brand: String
+  name: String
+  description: String
+  sizes: [ProductSize]
+  price: Float
+  threshold: Int
+  quantity: Int
+  created_at: DateTime
+  created_by: User
+  picture_url: String
 }
 
 type ProductSize {
-    product_size_id: Int
-    name: String
-    surcharge: Float
+  product_size_id: Int
+  name: String
+  surcharge: Float
 }
 
 type User {
-    user_id: Int
-    first_name: String
-    last_name: String
-    account_name: String
-    account_password: String
-    street: String
-    city: String
-    state: String
-    zip_code: String
-    phone_number: String
-    email_address: String
-    employee_info: EmployeeInfo
-    cart: Cart
+  user_id: Int
+  first_name: String
+  last_name: String
+  account_name: String
+  account_password: String
+  street: String
+  city: String
+  state: String
+  zip_code: String
+  phone_number: String
+  email_address: String
+  employee_info: EmployeeInfo
+  cart: Cart
+  created_at: DateTime
 }
 
 type Cart {
-    order_id: Int
-    items: [ CartItem ]
-    total: Float
+  order_id: Int
+  items: [CartItem]
+  total: Float
 }
 
 type CartItem {
-    product: Product
-    size: ProductSize
-    quantity: Int
-    cost: Float
+  product: Product
+  size: ProductSize
+  quantity: Int
+  cost: Float
 }
 
 type EmployeeInfo {
-    role: String
+  role: String
 }
 
 type InventoryOrder {
-    inventory_order_id: ID
-    status: String
-    product: Product
-    quantity: Int
-    created_at: DateTime
-    received_at: DateTime
+  inventory_order_id: ID
+  status: String
+  product: Product
+  quantity: Int
+  created_at: DateTime
+  received_at: DateTime
 }
 
 enum Admin_Status {
-    ACTIVE
-    SUSPENDED
-    TERMINATED
+  ACTIVE
+  SUSPENDED
+  TERMINATED
 }
 
 enum Admin_Role {
-    SUPERVISOR
-    EMPLOYEE
+  SUPERVISOR
+  EMPLOYEE
 }
 
 enum Payment_Method {
-    CASH
-    CARD
+  CASH
+  CARD
 }
 
 type Transaction {
-    id: ID
-    products: [ Product ]
-    payment_method: Payment_Method
-    card_number: String
-    total_cost: Float
-    employee: Employee
-    address: String
-    coupon_code: String
+  id: ID
+  products: [Product]
+  payment_method: Payment_Method
+  card_number: String
+  total_cost: Float
+  employee: Employee
+  address: String
+  coupon_code: String
 }
 
 type Payment {
-    id: ID
-    transaction_id: ID
-    method: Payment_Method
-    
+  id: ID
+  transaction_id: ID
+  method: Payment_Method
 }
 
 type Query {
-    node ( id: ID! ): Node
-    viewer ( id: Int ): User
-    categories: [ Category ]
+  node(id: ID!): Node
+  viewer(id: Int): User
+  categories: [Category]
 
-    user_search ( query: String, first: Int ): UserConnection
-    employee_list ( first: Int ) : UserConnection
-    category_list ( first: Int ): [ Category ]
-    product ( product_id: ID ): Product
-    product_list ( first: Int ): ProductConnection
-    inventory_order_list ( first: Int ): InventoryOrderConnection
+  user_search(query: String, first: Int): UserConnection
+  employee_list(first: Int): UserConnection
+  category_list(first: Int): [Category]
+  product(product_id: ID): Product
+  product_list(first: Int): ProductConnection
+  inventory_order_list(first: Int): InventoryOrderConnection
 }
 
 type Mutation {
-    signUp ( input: SignUpInput! ): SignUpPayload!
-    login ( input: LoginInput! ): LoginPayload!
-    updateRole ( input: UpdateRoleInput! ): UpdateRolePayload!
-    addCategory ( input: AddCategoryInput! ): AddCategoryPayload!
-    addProduct ( input: AddProductInput! ): AddProductPayload!
-    deleteEmployee ( input: DeleteEmployeeInput! ): DeleteEmployeePayload!
-    deleteCategory ( input: DeleteCategoryInput! ): DeleteCategoryPayload!
-    deleteProduct ( input: DeleteProductInput! ): DeleteProductPayload!
-    deleteInventoryOrder ( input: DeleteInventoryOrderInput! ): DeleteInventoryOrderPayload!
-    addCartItem ( input: AddCartItemInput! ): AddCartItemPayload!
-    deleteCartItem ( input: DeleteCartItemInput! ): DeleteCartItemPayload!
-    updateCartItem ( input: UpdateCartItemInput! ): UpdateCartItemPayload!
-    submitOrder ( input: SubmitOrderInput! ): SubmitOrderPayload!
-    savePayment ( input: SavePaymentInput! ): SavePaymentPayload!
-    validatePayment ( input: ValidatePaymentInput! ): ValidatePaymentPayload!
+  signUp(input: SignUpInput!): SignUpPayload!
+  login(input: LoginInput!): LoginPayload!
+  updateRole(input: UpdateRoleInput!): UpdateRolePayload!
+  addCategory(input: AddCategoryInput!): AddCategoryPayload!
+  addProduct(input: AddProductInput!): AddProductPayload!
+  deleteEmployee(input: DeleteEmployeeInput!): DeleteEmployeePayload!
+  deleteCategory(input: DeleteCategoryInput!): DeleteCategoryPayload!
+  deleteProduct(input: DeleteProductInput!): DeleteProductPayload!
+  deleteInventoryOrder(
+    input: DeleteInventoryOrderInput!
+  ): DeleteInventoryOrderPayload!
+  addCartItem(input: AddCartItemInput!): AddCartItemPayload!
+  deleteCartItem(input: DeleteCartItemInput!): DeleteCartItemPayload!
+  updateCartItem(input: UpdateCartItemInput!): UpdateCartItemPayload!
+  submitOrder(input: SubmitOrderInput!): SubmitOrderPayload!
+  savePayment(input: SavePaymentInput!): SavePaymentPayload!
+  validatePayment(input: ValidatePaymentInput!): ValidatePaymentPayload!
 }
 
 input ValidatePaymentInput {
-    card_name: String
-    card_number: String
-    expiration_month: Int
-    expiration_year: Int
-    security_code: Int
-    clientMutationId: String
+  card_name: String
+  card_number: String
+  expiration_month: Int
+  expiration_year: Int
+  security_code: Int
+  clientMutationId: String
 }
 
 type ValidatePaymentPayload {
-    user: User
+  user: User
 }
 
 input SavePaymentInput {
-    user_id: Int
-    card_name: String
-    card_number: String
-    expiration_month: Int
-    expiration_year: Int
-    clientMutationId: String
+  user_id: Int
+  card_name: String
+  card_number: String
+  expiration_month: Int
+  expiration_year: Int
+  clientMutationId: String
 }
 
 type SavePaymentPayload {
-    user: User
+  user: User
 }
 
 input SubmitOrderInput {
-    order_id: Int
-    saleMethod: String
-    paymentMethod: String
-    addressType: String
-    street: String
-    city: String
-    state: String
-    zip_code: String
-    products: [ ProductInput ]
-    clientMutationId: String
+  order_id: Int
+  saleMethod: String
+  paymentMethod: String
+  addressType: String
+  street: String
+  city: String
+  state: String
+  zip_code: String
+  products: [ProductInput]
+  clientMutationId: String
 }
 input ProductInput {
-    product_id: Int
-    quantity: Int
-    name: String
+  product_id: Int
+  quantity: Int
+  name: String
 }
 
 type SubmitOrderPayload {
-    order: Cart
+  order: Cart
 }
 
 input UpdateCartItemInput {
-    order_id: Int
-    product_id: Int
-    size_id: Int
-    quantity: Int
-    clientMutationId: String
+  order_id: Int
+  product_id: Int
+  size_id: Int
+  quantity: Int
+  clientMutationId: String
 }
 type UpdateCartItemPayload {
-    product: Product
+  product: Product
 }
 
 input DeleteCartItemInput {
-    order_id: Int
-    product_id: Int
-    clientMutationId: String
+  order_id: Int
+  product_id: Int
+  clientMutationId: String
 }
 type DeleteCartItemPayload {
-    product: Product
+  product: Product
 }
 
 input AddCartItemInput {
-    product_id: Int
-    quantity: Int
-    size_id: Int
-    user_id: Int
-    clientMutationId: String
+  product_id: Int
+  quantity: Int
+  size_id: Int
+  user_id: Int
+  clientMutationId: String
 }
 type AddCartItemPayload {
-    product: Product
+  product: Product
 }
 
 input DeleteEmployeeInput {
-    user_id: Int
-    clientMutationId: String
+  user_id: Int
+  clientMutationId: String
 }
 type DeleteEmployeePayload {
-    user: User!
+  user: User!
 }
 
 input UpdateRoleInput {
-    user_id: Int
-    role: String
-    clientMutationId: String
+  user_id: Int
+  role: String
+  clientMutationId: String
 }
 type UpdateRolePayload {
-    user: User!
+  user: User!
 }
 
 input SignUpInput {
-    first_name: String
-    last_name: String
-    account_name: String
-    password: String
-    street: String
-    city: String
-    state: String
-    zip_code: String
-    phone_number: String
-    email_address: String
-    clientMutationId: String
+  first_name: String
+  last_name: String
+  account_name: String
+  password: String
+  street: String
+  city: String
+  state: String
+  zip_code: String
+  phone_number: String
+  email_address: String
+  clientMutationId: String
 }
 type SignUpPayload {
-    user: User!
+  user: User!
 }
 
 input LoginInput {
-    account_name: String
-    password: String
-    clientMutationId: String
+  account_name: String
+  password: String
+  clientMutationId: String
 }
 type LoginPayload {
-    user: User!
+  user: User!
 }
 
 input AddCategoryInput {
-    name: String!
-    description: String
-    employee_id: Int
-    clientMutationId: String
+  name: String!
+  description: String
+  employee_id: Int
+  clientMutationId: String
 }
 type AddCategoryPayload {
-    category: Category!
-    clientMutationId: String
+  category: Category!
+  clientMutationId: String
 }
 input DeleteCategoryInput {
-    category_id: Int!
-    clientMutationId: String
+  category_id: Int!
+  clientMutationId: String
 }
 type DeleteCategoryPayload {
-    category: Category!
-    clientMutationId: String
+  category: Category!
+  clientMutationId: String
 }
 
 input AddProductInput {
-    category_id: Int
-    name: String!
-    description: String
-    price: Float!
-    quantity: Int!
-    sizes: ProductSizeInput
-    threshold: Int!
-    employee_id: Int
-    clientMutationId: String
+  category_id: Int
+  name: String!
+  description: String
+  price: Float!
+  quantity: Int!
+  sizes: ProductSizeInput
+  threshold: Int!
+  employee_id: Int
+  clientMutationId: String
 }
 input ProductSizeInput {
-    name: String
-    surcharge: Float
+  name: String
+  surcharge: Float
 }
 type AddProductPayload {
-    product: Product!
-    clientMutationId: String
+  product: Product!
+  clientMutationId: String
 }
 input DeleteProductInput {
-    product_id: Int!
-    clientMutationId: String
+  product_id: Int!
+  clientMutationId: String
 }
 type DeleteProductPayload {
-    product: Product!
-    clientMutationId: String
+  product: Product!
+  clientMutationId: String
 }
 input DeleteInventoryOrderInput {
-    inventory_order_id: Int!
-    clientMutationId: String
+  inventory_order_id: Int!
+  clientMutationId: String
 }
 type DeleteInventoryOrderPayload {
-    inventory_order: InventoryOrder!
-    clientMutationId: String
+  inventory_order: InventoryOrder!
+  clientMutationId: String
 }
 
 schema {
-    query: Query
-    mutation: Mutation
+  query: Query
+  mutation: Mutation
 }
