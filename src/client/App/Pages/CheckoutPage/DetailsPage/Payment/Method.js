@@ -7,13 +7,13 @@ const Method = ({ activeMethod, onMethodChange }) => {
     return (
         <div className={ styles.Method }>
             <Question>
-                <button className="btn btn-outline-primary">
+            <div className={ styles.button3 }>
                 <Choice name={ 'cash' } activeChoice={ activeMethod } onClick={ onMethodChange } />
-                </button>
-                <button className="btn btn-outline-primary">
+                </div>
+                <div className={ styles.button3 }>
 
                 <Choice name={ 'card' } activeChoice={ activeMethod } onClick={ onMethodChange } />
-                </button>
+                </div>
             </Question>
         </div>
     )

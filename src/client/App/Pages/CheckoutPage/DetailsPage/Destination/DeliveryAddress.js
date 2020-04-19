@@ -31,20 +31,20 @@ const DeliveryAddress = ( props ) => {
 const AddressQuestion = ({ activeDeliveryAddressOption, onDeliveryAddressOptionClick }) => {
     return (
         <Question>
-           <button className="btn btn-outline-primary">
+                <div className={ styles.button2 }>
             <Choice 
                 name={ 'ACCOUNT' } 
                 text={ 'Send to account address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
-                </button>
-                <button className="btn btn-outline-primary">
+                </div>
+                <div className={ styles.button2 }>
             <Choice 
                 name={ 'CUSTOM' } 
                 text={ 'Send to custom address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
-                </button>
+                </div>
         </Question>
     )
 };
@@ -54,11 +54,13 @@ const AccountAddress = ({ viewer }) => {
     const { street, city, state, zip_code } = viewer;
     return (
         <div className={ styles.AccountAddress }>
+            <div className={styles.AccountAddressBody}>
             <div className={ styles.Street }>{ street }</div>
             <div className={ styles.Location }>
                 <span className={ styles.City }>{ city },&nbsp;</span>
                 <span className={ styles.State }>{ state }&nbsp;</span>
                 <span className={ styles.Zip }>{ zip_code }</span>
+             </div>
             </div>
         </div>
     )
@@ -71,6 +73,7 @@ const CustomAddressForm = ({ checkoutData, onCustomAddressChange }) => {
     const { street = '', city = '', state = '', zip_code = '' } = customDeliveryAddress || {};
     return (
         <div className={ styles.CustomAddressForm }>
+            <div className={styles.AddressBody}>
             <ControlGroup title={ 'Street' }>
                 <Input name={ 'street' } placeholder={ 'Street' } onChange={ ( e ) => onCustomAddressChange( e, 'street' ) } value={ street } />
             </ControlGroup>
@@ -83,6 +86,7 @@ const CustomAddressForm = ({ checkoutData, onCustomAddressChange }) => {
             <ControlGroup title={ 'Zip Code' }>
                 <Input name={ 'zip_code' } placeholder={ 'Zip code' } onChange={ ( e ) => onCustomAddressChange( e, 'zip_code' ) } value={ zip_code }  />
             </ControlGroup>
+            </div>
         </div>
     )
 };

@@ -13,7 +13,7 @@ const Payment = ( props ) => {
     const { paymentMethod, saleMethod } = checkoutData;
     return (
         <div className={ styles.Payment }>
-            <div className={ styles.Title }>Payment</div>
+            <div className={ styles.Title }>Payment Method</div>
             <Method
                 onMethodChange={ changeMethod }
                 activeMethod={ paymentMethod } />
