@@ -28,9 +28,14 @@
     padding: 2rem;
 }
 
+.paymentSave{
+    margin-right: 40px;
+}
+
 .reviewOrder{
     font-family: cursive;
-    margin-left: 19px;
+    margin-top: 15px;
+    margin-left: 230px;
 }
 
 .Title{

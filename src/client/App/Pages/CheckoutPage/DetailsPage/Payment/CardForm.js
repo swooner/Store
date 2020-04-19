@@ -40,7 +40,9 @@ const CardForm = ( props ) => {
             <ControlGroup title={ 'Security code' }>
                 <Input type={ 'number' } placeholder={ 'Code' } onChange={ ( e ) => onCardFormChange( e, 'security_code' ) } />
             </ControlGroup>
+            <div className={styles.paymentSave}>
             <SubmitButton text={ 'Save payment' } onClick={ ( e ) => savePayment( ) } />
+            </div>
             </div>
         </div>
     )
