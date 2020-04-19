@@ -161,8 +161,11 @@ type Query {
   product_list(first: Int): ProductConnection
   inventory_order_list(first: Int): InventoryOrderConnection
   get_report: Report
-  get_report_by_month(monthCount: Int): Report
-  get_each_product_by_month(monthCount: Int): [EachProductReport]
+  get_report_by_month(byMonth: String, monthCount: Int): Report
+  get_each_product_report_by_month(
+    byMonth: String
+    monthCount: Int
+  ): [EachProductReport]
 }
 
 type Mutation {

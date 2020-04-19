@@ -150,6 +150,7 @@ export const ProductReportOverall = {
 export const ProductReportOverallByMonth = {
   type: GraphQLReport,
   args: {
+    byMonth: { type: GraphQLString },
     monthCount: { type: GraphQLInt }
   },
   resolve: (root, args, context) => {
@@ -160,6 +161,7 @@ export const ProductReportOverallByMonth = {
 export const EachProductReportByMonth = {
   type: new GraphQLList(GraphQLReportEachProduct),
   args: {
+    byMonth: { type: GraphQLString },
     monthCount: { type: GraphQLInt }
   },
   resolve: (root, args, context) => {

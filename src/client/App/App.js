@@ -106,6 +106,8 @@ const App = () => {
             @include(if: $isInventoryOrdersPage)
           # ...ReportPage_report_data @include(if: $isReportPage)
           ...ReportPage_report_data_by_month @include(if: $isReportPage)
+          ...ReportPage_each_product_report_data_by_month
+            @include(if: $isReportPage)
           # ...ReportPage_report_data_by_month_refetch @include(if: $isReportPage)
         }
       `}

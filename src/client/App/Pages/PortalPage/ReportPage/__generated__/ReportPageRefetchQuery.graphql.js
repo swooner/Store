@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 19b98d17aa11c6308921e9a3a89e9ea3
+ * @relayHash 2b8826e4590940fb74668b660dc01bcf
  */
 
 /* eslint-disable */
@@ -9,12 +9,14 @@
 
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
+type ReportPage_each_product_report_data_by_month$ref = any;
 type ReportPage_report_data_by_month$ref = any;
 export type ReportPageRefetchQueryVariables = {|
-  monthCount?: ?number
+  byMonth?: ?string,
+  monthCount?: ?number,
 |};
 export type ReportPageRefetchQueryResponse = {|
-  +$fragmentRefs: ReportPage_report_data_by_month$ref
+  +$fragmentRefs: ReportPage_report_data_by_month$ref & ReportPage_each_product_report_data_by_month$ref
 |};
 export type ReportPageRefetchQuery = {|
   variables: ReportPageRefetchQueryVariables,
@@ -25,13 +27,23 @@ export type ReportPageRefetchQuery = {|
 
 /*
 query ReportPageRefetchQuery(
+  $byMonth: String
   $monthCount: Int
 ) {
-  ...ReportPage_report_data_by_month_1wEd0Z
+  ...ReportPage_report_data_by_month_13VLqQ
+  ...ReportPage_each_product_report_data_by_month_13VLqQ
 }
 
-fragment ReportPage_report_data_by_month_1wEd0Z on Query {
-  get_report_by_month(monthCount: $monthCount) {
+fragment ReportPage_each_product_report_data_by_month_13VLqQ on Query {
+  get_each_product_report_by_month(byMonth: $byMonth, monthCount: $monthCount) {
+    product_id
+    product_name
+    total_sale
+  }
+}
+
+fragment ReportPage_report_data_by_month_13VLqQ on Query {
+  get_report_by_month(byMonth: $byMonth, monthCount: $monthCount) {
     total_sale
     total_sale_cash
     total_sale_card
@@ -44,6 +56,12 @@ const node/*: ConcreteRequest*/ = (function(){
 var v0 = [
   {
     "kind": "LocalArgument",
+    "name": "byMonth",
+    "type": "String",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
     "name": "monthCount",
     "type": "Int",
     "defaultValue": null
@@ -52,10 +70,22 @@ var v0 = [
 v1 = [
   {
     "kind": "Variable",
+    "name": "byMonth",
+    "variableName": "byMonth"
+  },
+  {
+    "kind": "Variable",
     "name": "monthCount",
     "variableName": "monthCount"
   }
-];
+],
+v2 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "total_sale",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Request",
   "fragment": {
@@ -68,6 +98,11 @@ return {
       {
         "kind": "FragmentSpread",
         "name": "ReportPage_report_data_by_month",
+        "args": (v1/*: any*/)
+      },
+      {
+        "kind": "FragmentSpread",
+        "name": "ReportPage_each_product_report_data_by_month",
         "args": (v1/*: any*/)
       }
     ]
@@ -86,13 +121,7 @@ return {
         "concreteType": "Report",
         "plural": false,
         "selections": [
-          {
-            "kind": "ScalarField",
-            "alias": null,
-            "name": "total_sale",
-            "args": null,
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
@@ -115,6 +144,32 @@ return {
             "storageKey": null
           }
         ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "get_each_product_report_by_month",
+        "storageKey": null,
+        "args": (v1/*: any*/),
+        "concreteType": "EachProductReport",
+        "plural": true,
+        "selections": [
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "product_id",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "product_name",
+            "args": null,
+            "storageKey": null
+          },
+          (v2/*: any*/)
+        ]
       }
     ]
   },
@@ -122,12 +177,12 @@ return {
     "operationKind": "query",
     "name": "ReportPageRefetchQuery",
     "id": null,
-    "text": "query ReportPageRefetchQuery(\n  $monthCount: Int\n) {\n  ...ReportPage_report_data_by_month_1wEd0Z\n}\n\nfragment ReportPage_report_data_by_month_1wEd0Z on Query {\n  get_report_by_month(monthCount: $monthCount) {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n",
+    "text": "query ReportPageRefetchQuery(\n  $byMonth: String\n  $monthCount: Int\n) {\n  ...ReportPage_report_data_by_month_13VLqQ\n  ...ReportPage_each_product_report_data_by_month_13VLqQ\n}\n\nfragment ReportPage_each_product_report_data_by_month_13VLqQ on Query {\n  get_each_product_report_by_month(byMonth: $byMonth, monthCount: $monthCount) {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month_13VLqQ on Query {\n  get_report_by_month(byMonth: $byMonth, monthCount: $monthCount) {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '40217601f38114ee34552cb1d562a51b';
+(node/*: any*/).hash = 'f41f89cae32642396cf1552ceee82872';
 
 module.exports = node;

@@ -45,7 +45,13 @@ const PortalPage = props => {
         <Route
           path="/portal/report"
           render={() => {
-            return <ReportPage {...props} report_data_by_month={props} />;
+            return (
+              <ReportPage
+                {...props}
+                report_data_by_month={props}
+                each_product_report_data_by_month={props}
+              />
+            );
           }}
         />
       </Switch>
