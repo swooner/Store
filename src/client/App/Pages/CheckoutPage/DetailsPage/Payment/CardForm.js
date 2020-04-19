@@ -25,7 +25,8 @@ const CardForm = ( props ) => {
         }
     };
     return (
-        <div className={ styles.CardForm }>
+        <div className={ styles.PaymentForm }>
+            <div className={styles.PaymentBody}>
             <ControlGroup title={ 'Name on card' }>
                 <Input placeholder={ 'Name on card' } onChange={ ( e ) => onCardFormChange( e, 'name' ) } />
             </ControlGroup>
@@ -39,7 +40,10 @@ const CardForm = ( props ) => {
             <ControlGroup title={ 'Security code' }>
                 <Input type={ 'number' } placeholder={ 'Code' } onChange={ ( e ) => onCardFormChange( e, 'security_code' ) } />
             </ControlGroup>
+            <div className={styles.paymentSave}>
             <SubmitButton text={ 'Save payment' } onClick={ ( e ) => savePayment( ) } />
+            </div>
+            </div>
         </div>
     )
 };
