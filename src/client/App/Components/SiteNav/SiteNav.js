@@ -2,16 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./SiteNav.css";
 
-const SiteNav = (props) => {
+const SiteNav = props => {
   const { viewer, isPortalPage } = props;
   const employee_info = viewer ? viewer.employee_info : null;
   // console.log( 'viewer:', viewer );
   return (
     <nav
-      className={
-        "navbar navbar-expand-lg navbar-light " + styles.SiteNav
-      }
-      style={{padding: 0}}
+      className={"navbar navbar-expand-lg navbar-light " + styles.SiteNav}
+      style={{ padding: 0 }}
     >
       <a className={styles.Brand} href=".">
         <h3>Calhoun Burger Stop</h3>
@@ -27,7 +25,10 @@ const SiteNav = (props) => {
       >
         <span className="navbar-toggler-icon"></span>
       </button>
-      <div className={"collapse navbar-collapse " + styles.SiteNav} id="navbarSupportedContent">
+      <div
+        className={"collapse navbar-collapse " + styles.SiteNav}
+        id="navbarSupportedContent"
+      >
         <ul className="navbar-nav ml-auto">
           <li className="nav-item">
             <Link className="nav-link active" to="/">
@@ -62,6 +63,9 @@ const SiteNav = (props) => {
                   <Link className="nav-link" to={"/portal/employees"}>
                     Employees
                   </Link>
+                  <Link className="nav-link" to={"/portal/report"}>
+                    Report
+                  </Link>
                 </li>
               )}
               <li className="nav-item">
@@ -76,7 +80,7 @@ const SiteNav = (props) => {
               </li>
               {employee_info &&
                 employee_info.role === "manager" &&
-                  employee_info.role === "inventory" && (
+                employee_info.role === "inventory" && (
                   <li className="nav-item">
                     <Link className="nav-link" to={"/portal/inventory-orders"}>
                       Orders

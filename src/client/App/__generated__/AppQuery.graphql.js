@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 7357ca36ca88a37c1a7ce874187017e8
+ * @relayHash 5a2783234e978044c189b0d2a378e196
  */
 
 /* eslint-disable */
@@ -17,6 +17,7 @@ type EmployeesPage_employee_list$ref = any;
 type InventoryOrdersPage_inventory_order_list$ref = any;
 type ProductList_categories$ref = any;
 type ProductsPage_product_list$ref = any;
+type ReportPage_report_data_by_month$ref = any;
 type StorePage_viewer$ref = any;
 export type AppQueryVariables = {|
   user_id?: ?number,
@@ -28,6 +29,7 @@ export type AppQueryVariables = {|
   isCategoriesPage: boolean,
   isProductsPage: boolean,
   isInventoryOrdersPage: boolean,
+  isReportPage: boolean,
 |};
 export type AppQueryResponse = {|
   +viewer: ?{|
@@ -37,7 +39,7 @@ export type AppQueryResponse = {|
     |},
     +$fragmentRefs: StorePage_viewer$ref & CheckoutPage_viewer$ref,
   |},
-  +$fragmentRefs: ProductList_categories$ref & AddEmployee_user_search$ref & EmployeesPage_employee_list$ref & CategoriesPage_category_list$ref & ProductsPage_product_list$ref & AddProduct_category_list$ref & InventoryOrdersPage_inventory_order_list$ref,
+  +$fragmentRefs: ProductList_categories$ref & AddEmployee_user_search$ref & EmployeesPage_employee_list$ref & CategoriesPage_category_list$ref & ProductsPage_product_list$ref & AddProduct_category_list$ref & InventoryOrdersPage_inventory_order_list$ref & ReportPage_report_data_by_month$ref,
 |};
 export type AppQuery = {|
   variables: AppQueryVariables,
@@ -57,6 +59,7 @@ query AppQuery(
   $isCategoriesPage: Boolean!
   $isProductsPage: Boolean!
   $isInventoryOrdersPage: Boolean!
+  $isReportPage: Boolean!
 ) {
   viewer(id: $user_id) {
     user_id
@@ -73,6 +76,7 @@ query AppQuery(
   ...ProductsPage_product_list @include(if: $isProductsPage)
   ...AddProduct_category_list @include(if: $isAddProductPage)
   ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)
+  ...ReportPage_report_data_by_month @include(if: $isReportPage)
 }
 
 fragment AddEmployee_user_search on Query {
@@ -244,6 +248,15 @@ fragment ProductsPage_product_list on Query {
   }
 }
 
+fragment ReportPage_report_data_by_month on Query {
+  get_report_by_month {
+    total_sale
+    total_sale_cash
+    total_sale_card
+    total_customer
+  }
+}
+
 fragment StorePage_viewer on User {
   user_id
   ...Cart_cart
@@ -303,6 +316,12 @@ var v0 = [
   {
     "kind": "LocalArgument",
     "name": "isInventoryOrdersPage",
+    "type": "Boolean!",
+    "defaultValue": null
+  },
+  {
+    "kind": "LocalArgument",
+    "name": "isReportPage",
     "type": "Boolean!",
     "defaultValue": null
   }
@@ -659,6 +678,18 @@ return {
           {
             "kind": "FragmentSpread",
             "name": "InventoryOrdersPage_inventory_order_list",
+            "args": null
+          }
+        ]
+      },
+      {
+        "kind": "Condition",
+        "passingValue": true,
+        "condition": "isReportPage",
+        "selections": [
+          {
+            "kind": "FragmentSpread",
+            "name": "ReportPage_report_data_by_month",
             "args": null
           }
         ]
@@ -1157,6 +1188,52 @@ return {
             "filters": null
           }
         ]
+      },
+      {
+        "kind": "Condition",
+        "passingValue": true,
+        "condition": "isReportPage",
+        "selections": [
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "get_report_by_month",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Report",
+            "plural": false,
+            "selections": [
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "total_sale",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "total_sale_cash",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "total_sale_card",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "total_customer",
+                "args": null,
+                "storageKey": null
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -1164,12 +1241,12 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_inventory_order_list on Query {\n  inventory_order_list(first: 10) {\n    edges {\n      node {\n        product {\n          name\n        }\n        quantity\n        status\n        created_at\n        received_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        name\n        price\n        quantity\n        threshold\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
+    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_inventory_order_list on Query {\n  inventory_order_list(first: 10) {\n    edges {\n      node {\n        product {\n          name\n        }\n        quantity\n        status\n        created_at\n        received_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        name\n        price\n        quantity\n        threshold\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'f18e9bae3ac561b39e1aa221158d0415';
+(node/*: any*/).hash = 'c7d6f9065be77b02a7a7fabd78830c16';
 
 module.exports = node;

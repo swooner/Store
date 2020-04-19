@@ -139,18 +139,30 @@ type Payment {
   transaction_id: ID
   method: Payment_Method
 }
-
+type Report {
+  total_sale: Float
+  total_sale_cash: Float
+  total_sale_card: Float
+  total_customer: Int
+}
+type EachProductReport {
+  product_id: Int
+  product_name: String
+  total_sale: Float
+}
 type Query {
   node(id: ID!): Node
   viewer(id: Int): User
   categories: [Category]
-
   user_search(query: String, first: Int): UserConnection
   employee_list(first: Int): UserConnection
   category_list(first: Int): [Category]
   product(product_id: ID): Product
   product_list(first: Int): ProductConnection
   inventory_order_list(first: Int): InventoryOrderConnection
+  get_report: Report
+  get_report_by_month(monthCount: Int): Report
+  get_each_product_by_month(monthCount: Int): [EachProductReport]
 }
 
 type Mutation {
