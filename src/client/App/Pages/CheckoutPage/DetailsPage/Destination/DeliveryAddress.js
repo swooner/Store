@@ -31,20 +31,16 @@ const DeliveryAddress = ( props ) => {
 const AddressQuestion = ({ activeDeliveryAddressOption, onDeliveryAddressOptionClick }) => {
     return (
         <Question>
-                <div className={ styles.button2 }>
             <Choice 
                 name={ 'ACCOUNT' } 
                 text={ 'Send to account address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
-                </div>
-                <div className={ styles.button2 }>
             <Choice 
                 name={ 'CUSTOM' } 
                 text={ 'Send to custom address' } 
                 activeChoice={ activeDeliveryAddressOption } 
                 onClick={ onDeliveryAddressOptionClick } />
-                </div>
         </Question>
     )
 };

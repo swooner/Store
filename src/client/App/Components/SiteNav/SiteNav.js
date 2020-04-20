@@ -11,9 +11,9 @@ const SiteNav = props => {
       className={"navbar navbar-expand-lg navbar-light " + styles.SiteNav}
       style={{ padding: 0 }}
     >
-      <a className={styles.Brand} href=".">
+      <Link className={styles.Brand} to="/">
         <h3>Calhoun Burger Stop</h3>
-      </a>
+      </Link>
       <button
         className="navbar-toggler"
         type="button"

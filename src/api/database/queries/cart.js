@@ -8,9 +8,9 @@ export const getCart = ({ user_id }) => {
             SELECT ORDER_TOTAL.total, cus_order.O_ID
             FROM ORDER_TOTAL
             JOIN cus_order
-                ON cus_order.O_Cus_ID = ORDER_TOTAL.Cus_ID
+                ON cus_order.O_status = 'ACTIVE'
             WHERE ORDER_TOTAL.Cus_ID = ${ user_id }
-                AND cus_order.O_status = 'ACTIVE'
+                AND ORDER_TOTAL.OI_O_ID = cus_order.O_ID
         `
     , {
         type: Sequelize.QueryTypes.SELECT

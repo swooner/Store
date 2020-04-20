@@ -9,6 +9,7 @@ import styles from '../StorePage.css';
 const NOT_APPLICABLE_SIZE_ID = 0;
 
 const ActiveProduct = ( props ) => {
+    // console.log( 'props:', props );
     const history = useHistory( );
     const activeProduct = props.activeProduct || props.activeHoverProduct;
     const { viewer, activeProduct: isActiveProduct, activeHoverProduct: isHoverProduct } = props;
@@ -45,15 +46,15 @@ const ActiveProduct = ( props ) => {
             product_id,
             user_id,
         };
-        // console.log( 'form:', form );
+        console.log( 'form:', form );
         AddCartItemMutation.commit( form );
         props.selectProduct( e, null );
     };
     // console.log( 'activeProduct:', activeProduct );
-    const img_url = `public/${ picture_url }`;
+    const img_url = `/public/${ picture_url }`;
     // console.log( 'isActiveProduct:', isActiveProduct );
     // console.log( 'isHoverProduct:', isHoverProduct );
-    console.log( 'viewer:', viewer );
+    // console.log( 'viewer:', viewer );
     return (
         // <div className={ styles.ProductView }>
         <div className="card mb-3" style={{marginTop: 30}}>

@@ -9,14 +9,14 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
     // console.log( 'cartItem:', cartItem );
     const { product, size, quantity, cost } = cartItem;
     const { picture_url } = product;
-    const image_url = `public/${ picture_url }`;
+    const image_url = `/public/${ picture_url }`;
     // console.log('images', props)
     return (
         <div className={styles.item}>
             <div className={styles.image}>
                 <img src={ image_url } />
             </div>
-            <Product product={ product } />
+            <Product product={ product } size={ size } />
             <div className={ styles.quantity }>
                 { isEditable ? (
                     <QuantitySelect onChange={ ( e ) => updateItem( e, cartItem, 'quantity' ) } defaultValue={ quantity } />
@@ -29,7 +29,7 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
                     { isEditable ? (
                         <SizeSelect 
                             sizes={ product.sizes }
-                            isEditable={ isEditable } 
+                            isEditable={ isEditable }
                             onChange={ ( e ) => updateItem( e, cartItem, 'size' ) } 
                             defaultValue={ getSizeIndex( product.sizes, size.name ) } />
                     ) : (
@@ -52,21 +52,26 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
     )
 };
 
-const Product = ({ product }) => {
+const Product = ({ product, size }) => {
     const { name, price } = product;
+    const adjustedPrice =  price + ( size ? size.surcharge : 0 );
     return (
         <div className={ styles.description }>
             <span>{name}</span>   
-            <span>${ price }</span> 
+            <span>${ adjustedPrice }</span> 
         </div>
     )
 };
 
 const getSizeIndex = ( sizes, sizeName ) => {
-    const correctSize = sizes.filter( size => {
-        return size.name == sizeName;
+    let correctIndex;
+    const correctSizeIndex = sizes.map(( size, i ) => {
+        if ( size.name == sizeName ) {
+            correctIndex = i;
+        }
+        return;
     });
-    return correctSize[ 0 ]
+    return correctIndex
 };
 
 export default CartItem;

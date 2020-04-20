@@ -20,7 +20,7 @@ export const Choice = ({ name, text, activeChoice, onClick }) => {
         }
     );
     return (
-        <div className={ styles } onClick={ ( ) => onClick( name ) }>
+        <div className={ className } onClick={ ( ) => onClick( name ) }>
             <div className={ styles.Circle }></div>
             <div className={ styles.Label }>{ text || name }</div>
         </div>

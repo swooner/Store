@@ -27,7 +27,7 @@ const DetailsPage = ( props ) => {
             expiration_year: +expiration_year,
         };
         console.log( 'form:', form );
-        commitValidationPayment( form );
+        // commitValidationPayment( form );
     };
     const goToSummary = ( ) => {
         // console.log( 'checkoutData:', checkoutData );

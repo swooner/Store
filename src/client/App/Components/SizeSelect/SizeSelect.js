@@ -3,7 +3,8 @@ import React, {Fragment} from 'react';
 import styles from '../../Pages/StorePage/StorePage.css'
 
 
-const SizeSelect = ({ sizes, defaultValue, onChange }) => {
+const SizeSelect = ({ sizes, activeSize, defaultValue, onChange }) => {
+    // console.log( 'defaultValue:', defaultValue );
     return (
         <Fragment>
         <select className={styles.sizeSelector} onChange={ onChange } defaultValue={ defaultValue }>

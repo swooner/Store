@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 8b792b0e3f4fddff9dfad986714f3efb
+ * @relayHash d77ff362ea4380f8124a23786d2da5a5
  */
 
 /* eslint-disable */
@@ -129,6 +129,7 @@ fragment Cart_cart on User {
       size {
         product_size_id
         name
+        surcharge
       }
       quantity
       cost
@@ -410,7 +411,14 @@ v9 = {
 },
 v10 = [
   (v9/*: any*/),
-  (v6/*: any*/)
+  (v6/*: any*/),
+  {
+    "kind": "ScalarField",
+    "alias": null,
+    "name": "surcharge",
+    "args": null,
+    "storageKey": null
+  }
 ],
 v11 = {
   "kind": "ScalarField",
@@ -465,7 +473,10 @@ v12 = {
               "args": null,
               "concreteType": "ProductSize",
               "plural": true,
-              "selections": (v10/*: any*/)
+              "selections": [
+                (v9/*: any*/),
+                (v6/*: any*/)
+              ]
             }
           ]
         },
@@ -878,17 +889,7 @@ return {
                             "args": null,
                             "concreteType": "ProductSize",
                             "plural": true,
-                            "selections": [
-                              (v9/*: any*/),
-                              (v6/*: any*/),
-                              {
-                                "kind": "ScalarField",
-                                "alias": null,
-                                "name": "surcharge",
-                                "args": null,
-                                "storageKey": null
-                              }
-                            ]
+                            "selections": (v10/*: any*/)
                           },
                           (v19/*: any*/)
                         ]
@@ -1288,7 +1289,7 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    role\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_inventory_order_list on Query {\n  inventory_order_list(first: 10) {\n    edges {\n      node {\n        product {\n          name\n        }\n        quantity\n        status\n        created_at\n        received_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
+    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    role\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n        surcharge\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_inventory_order_list on Query {\n  inventory_order_list(first: 10) {\n    edges {\n      node {\n        product {\n          name\n        }\n        quantity\n        status\n        created_at\n        received_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
     "metadata": {}
   }
 };

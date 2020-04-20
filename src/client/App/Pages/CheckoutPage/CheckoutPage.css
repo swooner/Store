@@ -215,3 +215,10 @@
     font-family: "Seaweed Script";
     padding: 2rem;
 }
+
+
+.ConfirmationPage .Message {
+    margin-top: 50px;
+    font-size: 50px;
+    text-align: center;
+}

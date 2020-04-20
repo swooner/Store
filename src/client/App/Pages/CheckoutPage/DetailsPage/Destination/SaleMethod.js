@@ -12,12 +12,8 @@ const SaleMethod = ({ activeSaleMethod, onSaleMethodOptionClick }) => {
             </div>
             <React.Fragment>
                 <Question>
-                <div className={ styles.button1 }>
                     <Choice name={ 'DELIVERY' } text={ 'delivery' } activeChoice={ activeSaleMethod } onClick={ onSaleMethodOptionClick } />
-                    </div>
-                    <div className={ styles.button1 }>
                     <Choice name={ 'TAKEOUT' }  text={ 'pick-up' } activeChoice={ activeSaleMethod } onClick={ onSaleMethodOptionClick } />
-                </div>
                 </Question>
             </React.Fragment>
         </React.Fragment>

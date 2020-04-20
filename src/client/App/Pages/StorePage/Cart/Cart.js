@@ -25,7 +25,7 @@ const Cart = ( props ) => {
         if ( setCheckoutData ) {
             setCheckoutData( 'checkout-order-id', order_id );
             const products = items.map( item => {
-                console.log( 'item:', item );
+                // console.log( 'item:', item );
                 const { product, quantity } = item;
                 const { product_id, name } = product;
                 return {
@@ -127,6 +127,7 @@ export default createFragmentContainer( Cart, {
                     size {
                         product_size_id
                         name
+                        surcharge
                     }
                     quantity
                     cost

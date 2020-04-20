@@ -28,6 +28,7 @@ export type Cart_cart = {|
       +size: ?{|
         +product_size_id: ?number,
         +name: ?string,
+        +surcharge: ?number,
       |},
       +quantity: ?number,
       +cost: ?number,
@@ -53,16 +54,13 @@ var v0 = {
   "args": null,
   "storageKey": null
 },
-v1 = [
-  {
-    "kind": "ScalarField",
-    "alias": null,
-    "name": "product_size_id",
-    "args": null,
-    "storageKey": null
-  },
-  (v0/*: any*/)
-];
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "product_size_id",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Fragment",
   "name": "Cart_cart",
@@ -134,7 +132,10 @@ return {
                   "args": null,
                   "concreteType": "ProductSize",
                   "plural": true,
-                  "selections": (v1/*: any*/)
+                  "selections": [
+                    (v1/*: any*/),
+                    (v0/*: any*/)
+                  ]
                 }
               ]
             },
@@ -146,7 +147,17 @@ return {
               "args": null,
               "concreteType": "ProductSize",
               "plural": false,
-              "selections": (v1/*: any*/)
+              "selections": [
+                (v1/*: any*/),
+                (v0/*: any*/),
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "surcharge",
+                  "args": null,
+                  "storageKey": null
+                }
+              ]
             },
             {
               "kind": "ScalarField",
@@ -177,6 +188,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'fb01f6a14d31e440e9d39b7ed48a9ea6';
+(node/*: any*/).hash = 'a185a8f6452a52f73c7fb6f0ca313d43';
 
 module.exports = node;

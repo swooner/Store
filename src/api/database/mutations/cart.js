@@ -5,29 +5,58 @@ import { DateTimeNow } from '../../helpers';
 
 
 export const addCartItem = ({ product_id, quantity, size_id, user_id }) => {
+
     return database.transaction( t => {
+        // check if an order for this user is already active
         return database.query(
             `
-                INSERT INTO cus_order( O_Cus_ID, O_status )
-                VALUES(
-                    ${ user_id },
-                    'ACTIVE'
-                )
-                ON DUPLICATE KEY UPDATE O_ID=O_ID
+                SELECT *
+                FROM cus_order
+                WHERE O_status = 'ACTIVE'
+                AND O_Cus_ID = ${ user_id }
             `, {
                 transaction: t,
                 raw: true,
-                type: Sequelize.QueryTypes.INSERT 
+                type: Sequelize.QueryTypes.SELECT 
             }
         )
-        .then( order => {
+        .then( rows => {
+            console.log( 'Select existing order rows:', rows );
+            if ( !rows.length ) {
+                // if there isn't an active order already, insert a new order
+                database.query(
+                    `
+                        INSERT INTO cus_order( O_Cus_ID, O_status )
+                        VALUES(
+                            ${ user_id },
+                            'ACTIVE'
+                        )
+                    `, {
+                        transaction: t,
+                        raw: true,
+                        type: Sequelize.QueryTypes.INSERT 
+                    }
+                )
+                .then( rows => {
+                    console.log( 'Order insertion rows:', rows );
+                })
+                .catch( err => {
+                    console.log( 'Error inserting new order:', err.stack );
+                    throw new Error( );
+                })
+            }
+
+            // now select the active order, whether it was just inserted
+            // or already existed beforehand
             return database.query(
                 `
                     SELECT O_ID
                     FROM cus_order
                     WHERE O_Cus_ID=${ user_id }
+                        AND O_status = 'ACTIVE'
                 `, {
                     transaction: t,
+                    raw: true,
                     type: Sequelize.QueryTypes.SELECT 
                 }
             )
@@ -60,12 +89,12 @@ export const addCartItem = ({ product_id, quantity, size_id, user_id }) => {
                 });
             })
             .catch( err => {
-                console.log( 'Error selecting order:', err.stack );
+                console.log( 'Error finding active order:', err.stack );
                 throw new Error( );
-            })
+            });
         })
         .catch( err => {
-            console.log( 'Error inserting order:', err.stack );
+            console.log( 'Error selecting existing order:', err.stack );
             throw new Error( );
         });
     })
@@ -121,6 +150,7 @@ export const updateCartItem = ({ order_id, product_id, size_id, quantity }) => {
 
 
 export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, street, city, state, zip_code, products }) => {
+    console.log( 'order_id:', order_id );
     // return database.transaction( t => {
         return database.query(
             `
