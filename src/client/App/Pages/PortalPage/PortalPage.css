@@ -2,3 +2,30 @@
 .TestElement {
     font-size: 33px
 }
+
+
+.ProductPage .Header,
+.ProductPage .Product {
+    display: grid;
+    grid-template-columns: 3fr 6fr 2fr 2fr 2fr 2fr;
+    padding: 0px 20px;
+}
+
+.Header {
+    margin-top: 80px;
+    padding-bottom: 3px;
+    border-bottom: 1px solid black;
+}
+.Body {
+    padding-top: 5px;
+}
+.Product:hover {
+    background-color: grey;
+}
+
+.DeleteButton {
+    cursor: pointer;
+}
+.DeleteButton:hover {
+    color: red;
+}

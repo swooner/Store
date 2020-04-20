@@ -16,6 +16,9 @@ export type ProductsPage_product_list = {|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
         +product_id: ?number,
+        +category: ?{|
+          +name: ?string
+        |},
         +name: ?string,
         +price: ?number,
         +quantity: ?number,
@@ -34,7 +37,15 @@ export type ProductsPage_product_list$key = {
 */
 
 
-const node/*: ReaderFragment*/ = {
+const node/*: ReaderFragment*/ = (function(){
+var v0 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "name",
+  "args": null,
+  "storageKey": null
+};
+return {
   "kind": "Fragment",
   "name": "ProductsPage_product_list",
   "type": "Query",
@@ -94,12 +105,18 @@ const node/*: ReaderFragment*/ = {
                   "storageKey": null
                 },
                 {
-                  "kind": "ScalarField",
+                  "kind": "LinkedField",
                   "alias": null,
-                  "name": "name",
+                  "name": "category",
+                  "storageKey": null,
                   "args": null,
-                  "storageKey": null
+                  "concreteType": "Category",
+                  "plural": false,
+                  "selections": [
+                    (v0/*: any*/)
+                  ]
                 },
+                (v0/*: any*/),
                 {
                   "kind": "ScalarField",
                   "alias": null,
@@ -168,7 +185,8 @@ const node/*: ReaderFragment*/ = {
     }
   ]
 };
+})();
 // prettier-ignore
-(node/*: any*/).hash = '2930ae0476022b6d9823aee481579bbc';
+(node/*: any*/).hash = '7064e0087403ac5a79f4701be039480d';
 
 module.exports = node;

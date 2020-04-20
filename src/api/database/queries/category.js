@@ -2,12 +2,12 @@
 import database from '../../../../mysql/connection';
 const Sequelize = require('sequelize');
 
-export const getCategory = ({ name }) => {
+export const getCategory = ({ id }) => {
     return database.query( 
         `
             SELECT * 
             FROM prod_category
-            WHERE Cat_name = '${ name }'
+            WHERE Cat_ID = '${ id }'
         `
     , {
         type: Sequelize.QueryTypes.SELECT

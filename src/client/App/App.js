@@ -35,7 +35,7 @@ const App = () => {
   let isReportPage = false;
   // when a user goes to the page for viewing specific products, we assign the product's id that is
   // passed in the url and feed to our API.
-  console.log("paths:", paths);
+  // console.log("paths:", paths);
   if (page === "portal") {
     isPortalPage = true;
     if (paths[1] === "employees") {
@@ -131,9 +131,9 @@ const App = () => {
         if (!props) {
           return <div>Loading...</div>;
         }
-        console.log("[App.js] props:", props);
+        // console.log("[App.js] props:", props);
         const { viewer } = props;
-        console.log("[App.js] Viewer:", viewer);
+        // console.log("[App.js] Viewer:", viewer);
         return (
           /* styles.App references the import styles statement above. Since global styling is bad practice, our styling will be
                     component-based. if you want to style an element, you need to match that element directly to a specific stylesheet. 

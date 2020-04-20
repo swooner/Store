@@ -24,7 +24,10 @@ export const getProduct = ({ id }) => {
 // get a list of products
 export const getProductList = ({ }) => {
     return database.query(
-            `SELECT * FROM product`
+            `
+            SELECT * 
+            FROM product
+            ORDER BY P_Cat_ID`
         , {
         raw: true,
         type: Sequelize.QueryTypes.SELECT

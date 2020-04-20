@@ -1,53 +1,7 @@
 import {
-  GraphQLID,
-  GraphQLInt,
-  GraphQLBoolean,
-  GraphQLFloat,
-  GraphQLString,
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLNonNull,
-  GraphQLList
 } from "graphql";
-
-import {
-  fromGlobalId,
-  globalIdField,
-  nodeDefinitions,
-  connectionArgs,
-  connectionDefinitions,
-  connectionFromArray,
-  connectionFromPromisedArray,
-  mutationWithClientMutationId
-} from "graphql-relay";
-
-import { GraphQLDateTime } from "graphql-iso-date";
-
-import { getCategory, getCategoryList } from "../database/queries/category";
-import {
-  getProduct,
-  getProductList,
-  getProductsByCategoryId,
-  getProductsByCategoryName
-} from "../database/queries/product";
-import { getUser, searchUsers } from "../database/queries/user";
-import { getEmployee, getAllEmployees } from "../database/queries/employee";
-import { getCart, getCartItems } from "../database/queries/cart";
-import { getAllInventoryOrders } from "../database/queries/inventory";
-
-import { updateRole } from "../database/mutations/user";
-import { signUp, login } from "../database/mutations/auth";
-import { deleteEmployee } from "../database/mutations/employee";
-import { addCategory, deleteCategory } from "../database/mutations/category";
-import { addProduct, deleteProduct } from "../database/mutations/product";
-import { deleteInventoryOrder } from "../database/mutations/inventory";
-
-import GraphQLCategory from "./types/category";
-import GraphQLUser, { UserConnection } from "./types/user";
-import GraphQLProduct, { ProductConnection } from "./types/product";
-import GraphQLInventoryOrder, {
-  InventoryOrderConnection
-} from "./types/inventory_order";
 
 import {
   ViewerQuery,

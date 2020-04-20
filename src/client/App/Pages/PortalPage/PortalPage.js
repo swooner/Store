@@ -8,13 +8,12 @@ import InventoryOrdersPage from "./InventoryOrdersPage/InventoryOrdersPage";
 import styles from "./PortalPage.css";
 
 const PortalPage = props => {
-  console.log("props from ProtalPage: ", props);
+  // console.log("props from ProtalPage: ", props);
   const { viewer } = props;
-  console.log("viewer from ProtalPage: ", viewer);
+  // console.log("viewer from ProtalPage: ", viewer);
   const { employee_info } = viewer;
   return (
     <div className={styles.PortalPage}>
-      <div>Portal Page</div>
       <Switch>
         <Route
           path="/portal/employees"
