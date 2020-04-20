@@ -12,9 +12,18 @@ const DetailsPage = ( props ) => {
     const history = useHistory( );
     const { viewer, checkoutData } = props;
     const [ cardInfo, updateCardInfo ] = useState( {} );
+    const [ cardError, updateCardError ] = useState( );
     // For some weird reasons Webpack does not permit calling ValidatePaymentMutation.commit
     // directly inside of validatePayment function
-    const commitValidationPayment = ValidatePaymentMutation.commit;
+    const commitValidationPayment = ( form ) => {
+        return ValidatePaymentMutation.commit( form )
+            .then( res => {
+                console.log( 'res:', res );
+            })
+            .catch ( err => {
+                console.error( 'promise error:', JSON.parse ( err[ 0 ].message ) )
+            })
+    };
     const updateCardForm = ( e, name ) => {
         updateCardInfo({ ...cardInfo, [ name ]: e.target.value });
     };
@@ -25,15 +34,17 @@ const DetailsPage = ( props ) => {
             card_number: number,
             expiration_month: +expiration_month,
             expiration_year: +expiration_year,
+            security_code: +security_code,
         };
-        console.log( 'form:', form );
-        // commitValidationPayment( form );
+        // console.log( 'form:', form );
+        return commitValidationPayment( form );
     };
     const goToSummary = ( ) => {
         // console.log( 'checkoutData:', checkoutData );
         const { paymentMethod } = checkoutData;
         if ( paymentMethod != 'cash' ) {
             const validation = validatePayment( );
+            console.log( 'validation:', validation );
             if ( !validation.success ) {
                 return false;
             }
@@ -47,6 +58,7 @@ const DetailsPage = ( props ) => {
             <Payment 
                 { ...props }
                 cardInfo={ cardInfo }
+                cardError={ cardError }
                 validatePayment={ validatePayment }
                 onCardFormChange={ updateCardForm } />
             <Cart 

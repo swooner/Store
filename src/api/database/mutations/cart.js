@@ -239,23 +239,22 @@ export const savePayment = ({ user_id, card_name, card_number, expiration_month,
 };
 
 export const validatePayment = ({ card_name, card_number, expiration_month, expiration_year, security_code }) => {
-    if ( card_name.length < 4 ) {
+    if ( !card_name || card_name.length < 4 ) {
         throw new Error( 'Credit card name is not valid' );
     }
-    else if ( card_number.length != 16 ) {
+    else if ( !card_number || card_number.length != 16 ) {
         throw new Error( 'Credit card number is not valid' );
     }
-    else if ( parseInt( expiration_month ) < 1 || parseInt( expiration_month ) > 12 ) {
+    else if ( !expiration_month || parseInt( expiration_month ) < 1 || parseInt( expiration_month ) > 12 ) {
         throw new Error( 'Expiration month is not valid' );
     }
-    else if ( parseInt( expiration_year ) < 20) {
+    else if ( !expiration_year || parseInt( expiration_year ) < 20) {
         throw new Error( 'Expiration year is not valid' );
     }
-    else if ( parseInt( security_code ) < 1 || parseInt( security_code ) > 3 ) {
+    else if ( !security_code || parseInt( security_code ) < 1 || parseInt( security_code ) > 3 ) {
         throw new Error( 'Security code is not valid' );
     }
     else {
-       
-        return { success: true }
+        return { name: 'success', success: true }
     }
 };

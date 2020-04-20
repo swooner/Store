@@ -46,6 +46,7 @@ const Cart = ( props ) => {
             product_id
         };
         DeleteCartItemMutation.commit( form );
+        window.location.replace( '/' )
     };
     const updateItem = ( e, cartItem, action ) => {
         const { size, product } = cartItem

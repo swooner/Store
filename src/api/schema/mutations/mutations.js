@@ -348,6 +348,7 @@ export const SavePaymentMutation = mutationWithClientMutationId({
 		card_number: { type: GraphQLString },
 		expiration_month: { type: GraphQLInt },
 		expiration_year: { type: GraphQLInt },
+		expiration_year: { type: GraphQLInt },
 	},
 	outputFields: {
 		order: {
@@ -383,6 +384,7 @@ export const ValidatePaymentMutation = mutationWithClientMutationId({
 		},
 	},
 	mutateAndGetPayload: ( args ) => {
+		console.log( 'args:', args );
 		return validatePayment( args );
 	},
 });

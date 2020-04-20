@@ -66,6 +66,7 @@ const ProductPage = props => {
         <div className={ styles.Price }>Price ($)</div>
         <div className={ styles.Quantity }>Quantity</div>
         <div className={ styles.Threshold }>Threshold</div>
+        <div className={ styles.Restock }>Need restock?</div>
       </div>
       <div className={ styles.Body }>
         {renderProducts()}
@@ -76,7 +77,7 @@ const ProductPage = props => {
 
 const Product = ({ product, newCategory, deleteProduct }) => {
   // console.log( 'product:', product );
-  const { category, name: product_name, description, price, quantity, threshold } = product;
+  const { category, name: product_name, description, price, quantity, threshold, restock_status } = product;
   const { name: category_name } = category;
   return (
     <div className={styles.Product}>
@@ -86,6 +87,7 @@ const Product = ({ product, newCategory, deleteProduct }) => {
       <div className={styles.Price}>{price}</div>
       <div className={styles.Quantity}>{quantity}</div>
       <div className={styles.Threshold}>{threshold}</div>
+      <div className={styles.Restock}>{restock_status ? 'Yes' : 'No' }</div>
       <div
         className={ styles.DeleteButton }
         onClick={() => deleteProduct(product)}>Delete</div>
@@ -112,6 +114,7 @@ export default createFragmentContainer(ProductPage, {
             price
             quantity
             threshold
+            restock_status
           }
         }
       }

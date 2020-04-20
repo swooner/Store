@@ -130,7 +130,7 @@ const App = () => {
           return <div>Error!</div>;
         }
         if (!props) {
-          return <div>Loading...</div>;
+          return <div></div>;
         }
         // console.log("[App.js] props:", props);
         const { viewer } = props;

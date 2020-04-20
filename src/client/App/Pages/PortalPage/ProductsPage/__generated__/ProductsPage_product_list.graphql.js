@@ -23,6 +23,7 @@ export type ProductsPage_product_list = {|
         +price: ?number,
         +quantity: ?number,
         +threshold: ?number,
+        +restock_status: ?boolean,
       |}
     |}>
   |},
@@ -141,6 +142,13 @@ return {
                 {
                   "kind": "ScalarField",
                   "alias": null,
+                  "name": "restock_status",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
                   "name": "__typename",
                   "args": null,
                   "storageKey": null
@@ -187,6 +195,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = '7064e0087403ac5a79f4701be039480d';
+(node/*: any*/).hash = 'ae9c0f0726d7e3231dcb5a9c3e7cbe0c';
 
 module.exports = node;

@@ -12,33 +12,31 @@ const mutation = graphql`
     }
 `;
 
-function commit( args, callback ) {
+function commit( args ) {
     // console.log(args)
-    return commitMutation(
-        environment,
-        {
-            mutation,
-            variables: {
-                input: args
-            },
-            onCompleted: ( res, err ) => {
-                console.log( 'res:', res );
-                const response = res.user;
-                if ( err ) {
-                    console.error( err )
-                    return
+    return new Promise( ( resolve, reject ) => {
+        commitMutation(
+            environment,
+            {
+                mutation,
+                variables: {
+                    input: args
+                },
+                onCompleted: ( res, err ) => {
+                    console.log( 'res:', res );
+                    if ( err ) {
+                        console.error( "There was an error:", err )
+                        return reject( err )
+                    }
+                    return resolve( res );
+                },
+                onError: err => {
+                    console.error( err.stack )
+                    return reject( err )
                 }
-                if ( response.error ) {
-                    console.error( response.error )
-                    return
-                }
-                if ( response.order ) {
-                }
-            },
-            onError: err => console.error( err.stack )
-        }
-    ),
-    callback
+            }
+        )
+    });
 }
 
 export default { commit };

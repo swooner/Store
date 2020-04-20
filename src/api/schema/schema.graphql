@@ -53,6 +53,7 @@ type Product {
   price: Float
   threshold: Int
   quantity: Int
+  restock_status: Boolean
   created_at: DateTime
   created_by: User
   picture_url: String

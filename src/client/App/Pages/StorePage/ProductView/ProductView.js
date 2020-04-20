@@ -49,6 +49,7 @@ const ActiveProduct = ( props ) => {
         console.log( 'form:', form );
         AddCartItemMutation.commit( form );
         props.selectProduct( e, null );
+        window.location.replace( '/' )
     };
     // console.log( 'activeProduct:', activeProduct );
     const img_url = `/public/${ picture_url }`;

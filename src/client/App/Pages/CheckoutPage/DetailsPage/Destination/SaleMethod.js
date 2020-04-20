@@ -1,6 +1,5 @@
 
 import React from 'react';
-import classnames from 'classnames/bind';
 import Question, { Choice } from '../../../../Components/Question/Question';
 import styles from '../../CheckoutPage.css';
 

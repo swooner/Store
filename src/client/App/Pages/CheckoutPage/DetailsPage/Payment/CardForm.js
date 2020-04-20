@@ -8,7 +8,7 @@ import ValidatePaymentMutation from '../../mutations/ValidatePaymentMutation';
 import styles from '../../CheckoutPage.css';
 
 const CardForm = ( props ) => {
-    const { cardInfo, onCardFormChange, validatePayment } = props;
+    const { cardInfo, onCardFormChange, cardError, validatePayment } = props;
     const savePayment = ( ) => {
         const validation = validatePayment( );
         if ( validation.success ) {
@@ -27,6 +27,7 @@ const CardForm = ( props ) => {
     return (
         <div className={ styles.PaymentForm }>
             <div className={styles.PaymentBody}>
+            <ErrorMessage error={ cardError } />
             <ControlGroup title={ 'Name on card' }>
                 <Input placeholder={ 'Name on card' } onChange={ ( e ) => onCardFormChange( e, 'name' ) } />
             </ControlGroup>
@@ -47,5 +48,14 @@ const CardForm = ( props ) => {
         </div>
     )
 };
+
+const ErrorMessage = ({ error }) => {
+    return error ? (
+        <div className={ styles.ErrorMessage }>
+            { error.message }
+        </div>
+    ) : null
+};
+
 
 export default CardForm;

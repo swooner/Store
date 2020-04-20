@@ -25,11 +25,9 @@ function commit( args, callback ) {
                 const response = res.deleteCartItem;
                 if ( err ) {
                     console.error( err )
-                    return
                 }
                 if ( response.error ) {
                     console.error( response.error )
-                    return
                 }
             },
             onError: err => console.error( err.stack )

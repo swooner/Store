@@ -5,6 +5,7 @@ import {
 	GraphQLFloat,
 	GraphQLString,
 	GraphQLList,
+	GraphQLBoolean,
 	GraphQLObjectType, 
 } from 'graphql';
 
@@ -50,6 +51,12 @@ const GraphQLProduct = new GraphQLObjectType({
 			type: GraphQLString,
 			resolve: ( root ) => {
 				return root.P_name
+			},
+		},
+		restock_status: {
+			type: GraphQLBoolean,
+			resolve: ( root ) => {
+				return root.P_restock
 			},
 		},
 		sizes: {
