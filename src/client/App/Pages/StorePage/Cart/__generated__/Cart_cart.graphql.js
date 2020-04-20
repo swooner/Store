@@ -19,6 +19,7 @@ export type Cart_cart = {|
         +product_id: ?number,
         +name: ?string,
         +price: ?number,
+        +picture_url: ?string,
         +sizes: ?$ReadOnlyArray<?{|
           +product_size_id: ?number,
           +name: ?string,
@@ -119,6 +120,13 @@ return {
                   "storageKey": null
                 },
                 {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "picture_url",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
                   "kind": "LinkedField",
                   "alias": null,
                   "name": "sizes",
@@ -169,6 +177,6 @@ return {
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'a861f027c231e026b28b7694e031b381';
+(node/*: any*/).hash = 'fb01f6a14d31e440e9d39b7ed48a9ea6';
 
 module.exports = node;

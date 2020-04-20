@@ -21,7 +21,7 @@ const Cart = ( props ) => {
 
     const { order_id, items, total } = cart;
     useEffect( () => {
-        console.log('confirming')
+        // console.log('confirming')
         if ( setCheckoutData ) {
             setCheckoutData( 'checkout-order-id', order_id );
             const products = items.map( item => {
@@ -39,7 +39,7 @@ const Cart = ( props ) => {
     }, [])
     const history = useHistory();
     const location = useLocation( );
-    console.log( 'location:', location );
+    // console.log( 'location:', location );
     const deleteCartItem = ({ order_id, product_id }) => {
         const form = {
             order_id,
@@ -118,6 +118,7 @@ export default createFragmentContainer( Cart, {
                         product_id
                         name
                         price
+                        picture_url
                         sizes {
                             product_size_id
                             name

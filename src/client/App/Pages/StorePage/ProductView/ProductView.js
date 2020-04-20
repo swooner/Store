@@ -45,9 +45,8 @@ const ActiveProduct = ( props ) => {
             product_id,
             user_id,
         };
-        localStorage.setItem( 'cart', JSON.stringify( form ) );
         // console.log( 'form:', form );
-        // AddCartItemMutation.commit( form );
+        AddCartItemMutation.commit( form );
         props.selectProduct( e, null );
     };
     // console.log( 'activeProduct:', activeProduct );

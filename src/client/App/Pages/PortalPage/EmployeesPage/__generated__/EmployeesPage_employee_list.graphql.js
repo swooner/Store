@@ -18,9 +18,7 @@ export type EmployeesPage_employee_list = {|
         +user_id: ?number,
         +first_name: ?string,
         +last_name: ?string,
-        +employee_info: ?{|
-          +role: ?string
-        |},
+        +role: ?string,
       |}
     |}>
   |},
@@ -109,22 +107,11 @@ const node/*: ReaderFragment*/ = {
                   "storageKey": null
                 },
                 {
-                  "kind": "LinkedField",
+                  "kind": "ScalarField",
                   "alias": null,
-                  "name": "employee_info",
-                  "storageKey": null,
+                  "name": "role",
                   "args": null,
-                  "concreteType": "EmployeeInfo",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "kind": "ScalarField",
-                      "alias": null,
-                      "name": "role",
-                      "args": null,
-                      "storageKey": null
-                    }
-                  ]
+                  "storageKey": null
                 },
                 {
                   "kind": "ScalarField",
@@ -174,6 +161,6 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '30b2ffe3a36d73d7d244acf84e0f1f59';
+(node/*: any*/).hash = 'ffed40611581fc84b996e5d822ae91ad';
 
 module.exports = node;

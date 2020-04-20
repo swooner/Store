@@ -24,11 +24,9 @@ const EmployeePage = ( props ) => {
         DeleteEmployeeMutation.commit( form );
     };
     // console.log( 'Employee List page props:', props );
-    const { employees_list } = props;
-    console.log( 'employees_list:', employees_list );
+    const { employee_list } = props;
     return (
         <div className={ styles.EmployeeList }>
-            <div>Employee List Page</div>
             <nav>
                 <li>
                     <Link to={ '/portal/employees/add-employee' }>Add Employee</Link>
@@ -43,32 +41,37 @@ const EmployeePage = ( props ) => {
                     )
                 }} />
             </Switch>
-            { employees_list ? employees_list.employee_list.edges.map(( employee, i ) => {
-                employee = employee.node;
-                return (
-                    <Employee 
-                        key={ i } 
-                        employee={ employee }
-                        changeRole={ changeRole }
-                        deleteEmployee={ deleteEmployee } />
-                )
-            }) : [] }
+            <div className={ styles.Header }>
+                <div className={ styles.Name }>Name</div>
+                <div className={ styles.Role }>Role</div>
+            </div>
+            <div className={ styles.Body }>
+                { employee_list ? employee_list.employee_list.edges.map(( employee, i ) => {
+                    employee = employee.node;
+                    return (
+                        <Employee 
+                            key={ i } 
+                            employee={ employee }
+                            changeRole={ changeRole }
+                            deleteEmployee={ deleteEmployee } />
+                    )
+                }) : [] }
+            </div>
         </div>
     )
 };
 
 const Employee = ({ employee, changeRole, deleteEmployee }) => {
-    const { user_id, first_name, last_name, employee_info } = employee;
+    const { user_id, first_name, last_name, role } = employee;
     return (
         <div className={ styles.Employee }>
-            <div className={ styles.FirstName }>{ first_name }</div>
-            <div className={ styles.LastName }>{ last_name }</div>
-            <select onChange={ ( e ) => changeRole( e, employee ) } value={ employee_info.role }>
+            <div className={ styles.Name }>{ first_name + " " + last_name }</div>
+            <select onChange={ ( e ) => changeRole( e, employee ) } value={ role }>
                 <option value={ 'employee' }>Employee</option>
                 <option value={ 'manager' }>Manager</option>
                 <option value={ 'inventory' }>Inventory</option>
             </select>
-            <SubmitButton style={ 'delete' } onClick={ ( ) => deleteEmployee( employee ) } text={ 'Delete employee' } />
+            <div className={ styles.DeleteButton } onClick={ ( ) => deleteEmployee( employee ) }>Delete</div>
         </div>
     )
 };
@@ -85,9 +88,7 @@ export default createFragmentContainer( EmployeePage, {
                         user_id
                         first_name
                         last_name
-                        employee_info {
-                            role
-                        }
+                        role
                     }
                 }
             }

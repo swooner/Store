@@ -87,6 +87,7 @@ const App = () => {
         ) {
           viewer(id: $user_id) {
             user_id
+            role
             employee_info {
               role
             }

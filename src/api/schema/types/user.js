@@ -21,13 +21,19 @@ const GraphQLUser = new GraphQLObjectType({
     first_name: {
       type: GraphQLString,
       resolve: root => {
-        return root.Cus_Fname;
+        return root.Cus_FName;
       }
     },
     last_name: {
       type: GraphQLString,
       resolve: root => {
-        return root.Cus_Lname;
+        return root.Cus_LName;
+      }
+    },
+    role: {
+      type: GraphQLString,
+      resolve: root => {
+        return root.E_role;
       }
     },
     account_name: {

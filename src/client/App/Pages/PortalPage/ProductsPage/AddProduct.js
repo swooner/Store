@@ -42,15 +42,17 @@ const AddProduct = ( props ) => {
     const { category_list } = props;
     return (
         <div className={ styles.AddProduct }>
-            <select onChange={ ( e ) => inputChange( e, 'category_id' ) }>
-                <option value={ null }>Select a category</option>
-                { category_list ? category_list.category_list.map(( category, i ) => {
-                    const { category_id, name } = category;
-                    return (
-                        <option key={ i } value={ category_id }>{ name }</option>
-                    )
-                }): [] }
-            </select>
+            <ControlGroup title={ 'Category' } description={ null }>
+                <select onChange={ ( e ) => inputChange( e, 'category_id' ) }>
+                    <option value={ null }>Select a category</option>
+                    { category_list ? category_list.category_list.map(( category, i ) => {
+                        const { category_id, name } = category;
+                        return (
+                            <option key={ i } value={ category_id }>{ name }</option>
+                        )
+                    }): [] }
+                </select>
+            </ControlGroup>
             <ControlGroup title={ 'Name' } description={ null }>
                 <Input placeholder={ 'Name' } onChange={ ( e ) => inputChange( e, 'name' ) } />
             </ControlGroup>

@@ -15,11 +15,10 @@ const CategoryPage = ( props ) => {
         };
         DeleteCategoryMutation.commit( form );
     };
-    console.log( 'Portal category page props:', props );
+    // console.log( 'Portal category page props:', props );
     let { category_list } = props;
     return (
         <div className={ styles.CategoryPage }>
-            <div>Portal Category Page</div>
             <nav>
                 <li>
                     <Link to={ '/portal/categories/add-category' }>Add Category</Link>
@@ -33,14 +32,20 @@ const CategoryPage = ( props ) => {
                     )
                 }} />
             </Switch>
-            { category_list ? category_list.category_list ? category_list.category_list.map(( category, i ) => {
-                return (
-                    <Category 
-                        key={ i } 
-                        category={ category }
-                        deleteCategory={ deleteCategory } />
-                )
-            }) : [] : [] }
+            <div className={ styles.Header }>
+                <div className={ styles.Name }>Name</div>
+                <div className={ styles.Description }>Description</div>
+            </div>
+            <div className={ styles.Body }>
+                { category_list ? category_list.category_list ? category_list.category_list.map(( category, i ) => {
+                    return (
+                        <Category 
+                            key={ i } 
+                            category={ category }
+                            deleteCategory={ deleteCategory } />
+                    )
+                }) : [] : [] }
+            </div>
         </div>
     )
 };
@@ -48,10 +53,10 @@ const CategoryPage = ( props ) => {
 const Category = ({ category, deleteCategory }) => {
     const { name, description } = category;
     return (
-        <div className={ styles.category }>
+        <div className={ styles.Category }>
             <div className={ styles.Name }>{ name }</div>
-            <div className={ styles.Description }>{ description }</div>
-            <SubmitButton style={ 'delete' } onClick={ ( ) => deleteCategory( category ) } text={ 'Delete category' } />
+            <div className={ styles.Description }>{ description || 'N/A' }</div>
+            <div className={ styles.DeleteButton } onClick={ ( ) => deleteCategory( category ) }>Delete</div>
         </div>
     )
 };

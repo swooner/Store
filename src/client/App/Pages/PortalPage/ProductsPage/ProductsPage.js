@@ -24,9 +24,6 @@ const ProductPage = props => {
           product = product.node;
           const { category } = product;
           const { name: category_name } = category;
-          console.log( '*************************' );
-          console.log( 'thisCategory:', thisCategory );
-          console.log( 'newCategory:', newCategory );
           if ( thisCategory == category_name ) {
             newCategory = false;
           }

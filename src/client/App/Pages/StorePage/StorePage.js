@@ -8,7 +8,7 @@ import AddCartItemMutation from './mutations/AddCartItemMutation';
 import styles from './StorePage.css';
 
 const StorePage = ( props ) => {
-    console.log('props parent', props)
+    // console.log('props parent', props)
     const { viewer, cart } = props;
     const [ activeCategories, activateCategory ] = useState( { Entrees: { isActive: true } } );
     const [ activeProduct, activateProduct ] = useState( );
