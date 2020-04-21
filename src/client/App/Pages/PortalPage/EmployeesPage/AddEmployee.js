@@ -46,6 +46,7 @@ const AddEmployee = ( props ) => {
             role: activeRole === 'none' ? 'employee' : activeRole,
         };
         UpdateRoleMutation.commit( form );
+        window.location.replace( '/portal/employees' );
     };
     const { user_search, name } = props;
     // console.log( 'AddEmployee props:', props );
