@@ -33,6 +33,10 @@ const ActiveProduct = ( props ) => {
         setDynamicPrice({ price, surcharge: currentSizeSurcharge, quantity: newQuantity });
         updateProductForm({ ...productForm, quantity: newQuantity })
     };
+    useEffect(() => {
+        const product = activeProduct;
+        setDynamicPrice({ price: product.price, surcharge: 0, quantity: 1 })
+    }, [ activeProduct ])
     const submitForm = ( e ) => {
         if ( !viewer ) {
             history.push( '/login' );
