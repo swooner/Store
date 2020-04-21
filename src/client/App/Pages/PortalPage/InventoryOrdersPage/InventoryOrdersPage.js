@@ -96,7 +96,7 @@ const PendingInventoryOrder = ({ viewer, inventory_order  }) => {
         };
         console.log( 'form:', form );
         FillInventoryOrderMutation.commit( form );
-        // window.location.reload( );
+        window.location.reload( );
     };
     const receiveDate = formatDate( created_at );
     return (
