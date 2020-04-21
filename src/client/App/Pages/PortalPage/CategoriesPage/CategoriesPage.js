@@ -61,7 +61,7 @@ const Category = ({ category, deleteCategory }) => {
     return (
         <div className={ styles.Category }>
             <div className={ styles.Name }>{ name }</div>
-            <div className={ styles.Description }>{ description || 'N/A' }</div>
+            <div className={ styles.Description }>{ description && description.length ? description : '---' }</div>
             <div className={ styles.DeleteButton } onClick={ ( ) => deleteCategory( category ) }>Delete</div>
         </div>
     )

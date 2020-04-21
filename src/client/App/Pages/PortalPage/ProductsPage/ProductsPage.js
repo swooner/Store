@@ -109,7 +109,7 @@ export default createFragmentContainer(ProductPage, {
   product_list: graphql`
     fragment ProductsPage_product_list on Query
       @argumentDefinitions(first: { type: "Int" }) {
-      product_list(first: 10) @connection(key: "ProductsPage_product_list") {
+      product_list(first: 100) @connection(key: "ProductsPage_product_list") {
         edges {
           node {
             product_id
