@@ -9,7 +9,7 @@ import InventoryOrdersPage from "./InventoryOrdersPage/InventoryOrdersPage";
 import styles from "./PortalPage.css";
 
 const PortalPage = props => {
-  // console.log("props from ProtalPage: ", props);
+  console.log("props from ProtalPage: ", props);
   const { viewer } = props;
   // console.log("viewer from ProtalPage: ", viewer);
   const { employee_info } = viewer;
@@ -55,7 +55,7 @@ const PortalPage = props => {
               <ReportPage
                 {...props}
                 report_data_by_month={props}
-                each_product_report_data_by_month={props}
+                each_product_report_data_by_month={ props }
               />
             );
           }}

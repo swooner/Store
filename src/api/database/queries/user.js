@@ -6,10 +6,8 @@ const Sequelize = require('sequelize');
 export const getUser = ({ id }) => {
     return database.query(
         `
-            SELECT *, E_role
-            FROM customer c
-            LEFT JOIN employee e
-                ON e.E_Cus_ID = ${ id }
+            SELECT *
+            FROM customer
             WHERE Cus_ID = ${ id }
         `, {
         raw: true,

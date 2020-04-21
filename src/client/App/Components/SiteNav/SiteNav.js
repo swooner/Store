@@ -61,7 +61,7 @@ const SiteNav = props => {
 				}
 				{ employee_info && employee_info.role === "manager" && 
 					<li className="nav-item">
-						<Link className="nav-link" to={"/portal/report"}>Reports</Link>
+						<Link className="nav-link" to={"/portal/reports"}>Reports</Link>
 					</li>
 				}
 				{ employee_info && employee_info.role === "inventory" && 

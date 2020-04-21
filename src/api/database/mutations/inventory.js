@@ -8,21 +8,23 @@ export const fillInventoryOrder = ({
     user_id,
     quantity
 }) => {
+    console.log( 'inventory_order_id:', inventory_order_id );
+    console.log( 'user_id:', user_id );
+    console.log( 'quantity:', quantity );
     return database.query(
         `
             UPDATE
                 inventory_order
             SET
-                IO_status = 'FILLED'
-                IO_quantity = ${ quantity }
-                IO_filledBy = ${ user_id }
-                IO_filledAt = ${ DateTimeNow( ) }
+                IO_status = 'FILLED',
+                IO_quantity = ${ quantity },
+                IO_filledBy = ${ user_id },
+                IO_filledAt = '${ DateTimeNow( ) }'
             WHERE 
-                IO_ID = '${ inventory_order_id }',
+                IO_ID = ${ inventory_order_id }
         `, {
         type: Sequelize.QueryTypes.UPDATE,
         raw: true,
-        transaction: t
     })
     .then( rows => {
         console.log( 'Updated inventory order status:', rows );

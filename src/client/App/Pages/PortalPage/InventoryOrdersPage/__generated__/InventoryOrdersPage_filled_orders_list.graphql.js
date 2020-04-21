@@ -20,6 +20,7 @@ export type InventoryOrdersPage_filled_orders_list = {|
           +name: ?string,
           +threshold: ?number,
         |},
+        +quantity: ?number,
         +created_at: ?any,
         +filled_at: ?any,
         +filled_by: ?{|
@@ -127,6 +128,13 @@ const node/*: ReaderFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
+                  "name": "quantity",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
+                  "kind": "ScalarField",
+                  "alias": null,
                   "name": "created_at",
                   "args": null,
                   "storageKey": null
@@ -211,6 +219,6 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = '8db9a306d1c1f02c4c2b0d219916bd03';
+(node/*: any*/).hash = '356075e938cd902b65ddd37b08707ec6';
 
 module.exports = node;
