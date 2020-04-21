@@ -5,7 +5,7 @@ const Sequelize = require('sequelize');
 export const getAllEmployees = ({ query, first }) => {
     return database.query(
         `
-            SELECT Cus_ID, Cus_FName, Cus_LName, E_role
+            SELECT Cus_ID, Cus_Fname, Cus_Lname, E_role
             FROM employee e
             LEFT JOIN customer c
                 ON e.E_Cus_ID = c.Cus_ID

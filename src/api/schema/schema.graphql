@@ -344,6 +344,7 @@ input AddProductInput {
   sizes: ProductSizeInput
   threshold: Int!
   employee_id: Int
+  picture_url: String
   clientMutationId: String
 }
 input ProductSizeInput {

@@ -21,11 +21,12 @@ export const addProduct = ({
     sizes,
     quantity,
     threshold, 
+    picture_url,
     employee_id
 }) => {
     return database.query(
         `
-            INSERT INTO product ( P_Cat_ID, P_name, P_description, P_price, P_quantity, P_threshold, P_Cus_ID, P_createdAt ) 
+            INSERT INTO product ( P_Cat_ID, P_name, P_description, P_price, P_quantity, P_threshold, P_picture, P_Cus_ID, P_createdAt ) 
             VALUES ( 
                 '${ category_id }', 
                 '${ name }', 
@@ -33,6 +34,7 @@ export const addProduct = ({
                 '${ price }', 
                 '${ quantity }', 
                 '${ threshold }', 
+                '${ picture_url }',
                 '${ employee_id }',
                 '${ DateTimeNow( ) }'
             );

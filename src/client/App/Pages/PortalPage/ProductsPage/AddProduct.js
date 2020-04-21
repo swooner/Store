@@ -36,7 +36,7 @@ const AddProduct = ( props ) => {
         let _form = { ...form };
         _form.employee_id = viewer.user_id;
         _form.sizes = sizes;
-        console.log( '_form:', _form );
+        // console.log( '_form:', _form );
         AddProductMutation.commit( _form );
         window.location.replace( '/portal/products' );
     };
@@ -80,6 +80,9 @@ const AddProduct = ( props ) => {
             </ControlGroup>
             <ControlGroup title={ 'Threshold' } description={ null }>
                 <Input type={ 'number' } placeholder={ 'Threshold' } onChange={ ( e ) => inputChange( e, 'threshold' ) } min={ 0 } />
+            </ControlGroup>
+            <ControlGroup title={ 'Picture' } description={ null }>
+                <Input placeholder={ 'Picture' } onChange={ ( e ) => inputChange( e, 'picture_url' ) } />
             </ControlGroup>
             <SubmitButton onClick={ ( ) => submitForm( ) } />
         </div>

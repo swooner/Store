@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 4b329a024ba963c78aaddaf6e8cd49f3
+ * @relayHash 84e7572268133e6b7ea11f2347d54cda
  */
 
 /* eslint-disable */
@@ -18,6 +18,7 @@ export type AddProductInput = {|
   sizes?: ?ProductSizeInput,
   threshold: number,
   employee_id?: ?number,
+  picture_url?: ?string,
   clientMutationId?: ?string,
 |};
 export type ProductSizeInput = {|

@@ -183,6 +183,7 @@ export const AddProductMutation = mutationWithClientMutationId({
 		sizes: { type: new GraphQLList( ProductSizeInput ) },
 		quantity: { type: new GraphQLNonNull(  GraphQLInt ) },
 		threshold: { type: new GraphQLNonNull( GraphQLInt ) },
+		picture_url: { type: GraphQLString },
 		employee_id: { type: GraphQLInt },
 	},
 	outputFields: {
