@@ -19,49 +19,53 @@ const InventoryOrdersPage = ( props ) => {
     const { viewer, pending_orders_list, filled_orders_list } = props;
     return (
         <div className={ styles.InventoryOrdersPage }>
-            <div className={ styles.PendingList }>
-                <div className={ styles.Title }>Pending Orders</div>
-                <div className={ styles.Header }>
-                    <div className={ styles.Id }>Product ID</div>
-                    <div className={ styles.Name }>Product Name</div>
-                    <div className={ styles.CurrentQuantity }>Current Quantity</div>
-                    <div className={ styles.Threshold }>Threshold</div>
-                    <div className={ styles.ReceiveDate }>Receive Date</div>
-                    <div className={ styles.Form }></div>
-                </div>
-                <div className={ styles.Body }>
-                    { pending_orders_list ? pending_orders_list.pending_orders_list.edges.map(( inventory_order, i ) => {
-                        inventory_order = inventory_order.node;
-                        return (
-                            <PendingInventoryOrder 
-                                key={ i } 
-                                viewer={ viewer }
-                                inventory_order={ inventory_order }
-                                deleteInventoryOrder={ deleteInventoryOrder } />
-                        )
-                    }) : 'There are no pending inventory orders.' }
+            <div className={ styles.Table }>
+                <div className={ styles.PendingList }>
+                    <div className={ styles.Title }>Pending Inventory Orders</div>
+                    <div className={ styles.Header }>
+                        <div className={ styles.Id }>Product ID</div>
+                        <div className={ styles.Name }>Product Name</div>
+                        <div className={ styles.CurrentQuantity }>Current Quantity</div>
+                        <div className={ styles.Threshold }>Threshold</div>
+                        <div className={ styles.ReceiveDate }>Receive Date</div>
+                        <div className={ styles.Form }></div>
+                    </div>
+                    <div className={ styles.Body }>
+                        { pending_orders_list ? pending_orders_list.pending_orders_list.edges.map(( inventory_order, i ) => {
+                            inventory_order = inventory_order.node;
+                            return (
+                                <PendingInventoryOrder 
+                                    key={ i } 
+                                    viewer={ viewer }
+                                    inventory_order={ inventory_order }
+                                    deleteInventoryOrder={ deleteInventoryOrder } />
+                            )
+                        }) : 'There are no pending inventory orders.' }
+                    </div>
                 </div>
             </div>
-            <div className={ styles.FilledList }>
-                <div className={ styles.Title }>Filled Orders</div>
-                <div className={ styles.Header }>
-                    <div className={ styles.Id }>Product ID</div>
-                    <div className={ styles.Name }>Product Name</div>
-                    <div className={ styles.Quantity }>Quantity Filled</div>
-                    <div className={ styles.ReceiveDate }>Receive Date</div>
-                    <div className={ styles.FillDate }>Fill Date</div>
-                    <div className={ styles.FilledBy }>Filled By</div>
-                </div>
-                <div className={ styles.Body }>
-                    { filled_orders_list ? filled_orders_list.filled_orders_list.edges.map(( inventory_order, i ) => {
-                        inventory_order = inventory_order.node;
-                        return (
-                            <FilledInventoryOrder 
-                                key={ i } 
-                                inventory_order={ inventory_order }
-                                deleteInventoryOrder={ deleteInventoryOrder } />
-                        )
-                    }) : 'There are no filled inventory orders.' }
+            <div className={ styles.Table }>
+                <div className={ styles.FilledList }>
+                    <div className={ styles.Title }>Filled Inventory Orders</div>
+                    <div className={ styles.Header }>
+                        <div className={ styles.Id }>Product ID</div>
+                        <div className={ styles.Name }>Product Name</div>
+                        <div className={ styles.Quantity }>Quantity Filled</div>
+                        <div className={ styles.ReceiveDate }>Receive Date</div>
+                        <div className={ styles.FillDate }>Fill Date</div>
+                        <div className={ styles.FilledBy }>Filled By</div>
+                    </div>
+                    <div className={ styles.Body }>
+                        { filled_orders_list ? filled_orders_list.filled_orders_list.edges.map(( inventory_order, i ) => {
+                            inventory_order = inventory_order.node;
+                            return (
+                                <FilledInventoryOrder 
+                                    key={ i } 
+                                    inventory_order={ inventory_order }
+                                    deleteInventoryOrder={ deleteInventoryOrder } />
+                            )
+                        }) : 'There are no filled inventory orders.' }
+                    </div>
                 </div>
             </div>
         </div>

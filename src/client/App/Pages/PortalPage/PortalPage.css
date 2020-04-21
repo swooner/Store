@@ -11,7 +11,8 @@
 }
 .InventoryOrdersPage .Title {
     margin-bottom: 10px;
-    font-size: 30px;
+    font-size: 26px;
+    margin-left: 20px;
 }
 
 .InventoryOrdersPage .Filledist {
@@ -57,8 +58,11 @@
     grid-template-columns: 200px 6fr 2fr 2fr 2fr 2fr 2fr;
 }
 
-.Header {
+.Table {
     margin-top: 100px;
+}
+
+.Header {
     padding-bottom: 3px;
     border-bottom: 1px solid black;
 }

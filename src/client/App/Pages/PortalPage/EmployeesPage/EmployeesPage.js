@@ -45,21 +45,23 @@ const EmployeePage = ( props ) => {
                     ) : <Redirect to={ '/' } />
                 }} />
             </Switch>
-            <div className={ styles.Header }>
-                <div className={ styles.Name }>Name</div>
-                <div className={ styles.Role }>Role</div>
-            </div>
-            <div className={ styles.Body }>
-                { employee_list ? employee_list.employee_list.edges.map(( employee, i ) => {
-                    employee = employee.node;
-                    return (
-                        <Employee 
-                            key={ i } 
-                            employee={ employee }
-                            changeRole={ changeRole }
-                            deleteEmployee={ deleteEmployee } />
-                    )
-                }) : [] }
+            <div className={ styles.Table }>
+                <div className={ styles.Header }>
+                    <div className={ styles.Name }>Name</div>
+                    <div className={ styles.Role }>Role</div>
+                </div>
+                <div className={ styles.Body }>
+                    { employee_list ? employee_list.employee_list.edges.map(( employee, i ) => {
+                        employee = employee.node;
+                        return (
+                            <Employee 
+                                key={ i } 
+                                employee={ employee }
+                                changeRole={ changeRole }
+                                deleteEmployee={ deleteEmployee } />
+                        )
+                    }) : [] }
+                </div>
             </div>
         </div>
     )

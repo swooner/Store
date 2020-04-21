@@ -36,19 +36,21 @@ const CategoryPage = ( props ) => {
                     ) : <Redirect to={ '/' } />
                 }} />
             </Switch>
-            <div className={ styles.Header }>
-                <div className={ styles.Name }>Name</div>
-                <div className={ styles.Description }>Description</div>
-            </div>
-            <div className={ styles.Body }>
-                { category_list ? category_list.category_list ? category_list.category_list.map(( category, i ) => {
-                    return (
-                        <Category 
-                            key={ i } 
-                            category={ category }
-                            deleteCategory={ deleteCategory } />
-                    )
-                }) : [] : [] }
+            <div className={ styles.Table }>
+                <div className={ styles.Header }>
+                    <div className={ styles.Name }>Name</div>
+                    <div className={ styles.Description }>Description</div>
+                </div>
+                <div className={ styles.Body }>
+                    { category_list ? category_list.category_list ? category_list.category_list.map(( category, i ) => {
+                        return (
+                            <Category 
+                                key={ i } 
+                                category={ category }
+                                deleteCategory={ deleteCategory } />
+                        )
+                    }) : [] : [] }
+                </div>
             </div>
         </div>
     )

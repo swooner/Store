@@ -64,16 +64,18 @@ const ProductPage = props => {
           }}
         />
       </Switch>
-      <div className={ styles.Header }>
-        <div className={ styles.Category }>Category</div>
-        <div className={ styles.Name }>Name</div>
-        <div className={ styles.Price }>Price ($)</div>
-        <div className={ styles.Quantity }>Quantity</div>
-        <div className={ styles.Threshold }>Threshold</div>
-        <div className={ styles.Restock }>Need restock?</div>
-      </div>
-      <div className={ styles.Body }>
-        {renderProducts()}
+      <div className={ styles.Table }>
+        <div className={ styles.Header }>
+          <div className={ styles.Category }>Category</div>
+          <div className={ styles.Name }>Name</div>
+          <div className={ styles.Price }>Price ($)</div>
+          <div className={ styles.Quantity }>Quantity</div>
+          <div className={ styles.Threshold }>Threshold</div>
+          <div className={ styles.Restock }>Need restock?</div>
+        </div>
+        <div className={ styles.Body }>
+          {renderProducts()}
+        </div>
       </div>
     </div>
   );
