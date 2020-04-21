@@ -9,19 +9,21 @@ import DeleteEmployeeMutation from '../mutations/DeleteEmployeeMutation';
 import styles from '../PortalPage.css';
 
 const EmployeePage = ( props ) => {
-    const changeRole = ( value, employee ) => {
-        console.log( 'value:', value );
+    const changeRole = ( e, employee ) => {
         const form = {
-            E_Cus_ID: employee.user_id,
-            E_role: value,
+            user_id: employee.user_id,
+            role: e.target.value,
         };
+        // console.log( 'form:', form );
         UpdateRoleMutation.commit( form );
+        window.location.replace( '/portal/employees' );
     };
     const deleteEmployee = ( employee ) => {
         const form = {
-            E_Cus_ID: employee.user_id,
+            user_id: employee.user_id,
         };
         DeleteEmployeeMutation.commit( form );
+        window.location.replace( '/portal/employees' );
     };
     // console.log( 'Employee List page props:', props );
     const { employee_list } = props;
@@ -62,6 +64,7 @@ const EmployeePage = ( props ) => {
 };
 
 const Employee = ({ employee, changeRole, deleteEmployee }) => {
+    // console.log( 'employee:', employee );
     const { user_id, first_name, last_name, role } = employee;
     return (
         <div className={ styles.Employee }>

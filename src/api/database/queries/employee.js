@@ -6,9 +6,9 @@ export const getAllEmployees = ({ query, first }) => {
     return database.query(
         `
             SELECT Cus_ID, Cus_FName, Cus_LName, E_role
-            FROM customer c
-            LEFT JOIN employee e
-            ON e.E_Cus_ID = c.Cus_ID
+            FROM employee e
+            LEFT JOIN customer c
+                ON e.E_Cus_ID = c.Cus_ID
         `, {
         raw: true,
         type: Sequelize.QueryTypes.SELECT

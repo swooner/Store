@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route, Link } from "react-router-dom";
+import Menu from "./Menu";
 import CategoriesPage from "./CategoriesPage/CategoriesPage";
 import ProductsPage from "./ProductsPage/ProductsPage";
 import EmployeesPage from "./EmployeesPage/EmployeesPage";
@@ -15,6 +16,12 @@ const PortalPage = props => {
   return (
     <div className={styles.PortalPage}>
       <Switch>
+        <Route
+          exact path="/portal"
+          render={() => {
+            return <Menu {...props} />;
+          }}
+        />
         <Route
           path="/portal/employees"
           render={() => {
@@ -42,7 +49,7 @@ const PortalPage = props => {
           }}
         />
         <Route
-          path="/portal/report"
+          path="/portal/reports"
           render={() => {
             return (
               <ReportPage

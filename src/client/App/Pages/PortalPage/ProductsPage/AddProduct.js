@@ -38,6 +38,7 @@ const AddProduct = ( props ) => {
         _form.sizes = sizes;
         console.log( '_form:', _form );
         AddProductMutation.commit( _form );
+        window.location.replace( '/portal/products' );
     };
     const { category_list } = props;
     return (

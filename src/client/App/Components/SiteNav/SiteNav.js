@@ -5,7 +5,7 @@ import styles from "./SiteNav.css";
 const SiteNav = props => {
   const { viewer, isPortalPage } = props;
   const employee_info = viewer ? viewer.employee_info : null;
-  // console.log( 'viewer:', viewer );
+//   console.log( 'viewer:', viewer );
   return (
     <nav className={"navbar navbar-expand-lg navbar-light " + styles.SiteNav} style={{ padding: 0 }}>
 		<Link className={styles.Brand} to="/">
@@ -31,9 +31,11 @@ const SiteNav = props => {
 			</div>
           }
 		  <div className={ styles.NavGroup }>
-			<li className="nav-item">
-				<Link className="nav-link active" to="/">Store</Link>
-			</li>
+          	{isPortalPage &&
+				<li className="nav-item">
+					<Link className="nav-link active" to="/portal">Portal</Link>
+				</li>
+			}
 		  </div>
           {!isPortalPage ? (
             <div className={ styles.NavGroup }>
@@ -52,12 +54,21 @@ const SiteNav = props => {
             </div>
           ) : (
             <div className={ styles.NavGroup }>
-				{employee_info && employee_info.role === "manager" && (
+				{ employee_info && employee_info.role === "manager" && 
 					<li className="nav-item">
 						<Link className="nav-link" to={"/portal/employees"}>Employees</Link>
-						<Link className="nav-link" to={"/portal/report"}>Report</Link>
 					</li>
-				)}
+				}
+				{ employee_info && employee_info.role === "manager" && 
+					<li className="nav-item">
+						<Link className="nav-link" to={"/portal/report"}>Reports</Link>
+					</li>
+				}
+				{ employee_info && employee_info.role === "inventory" && 
+					<li className="nav-item">
+						<Link className="nav-link" to={ "/portal/inventory-orders" }>Inventory</Link>
+					</li>
+				}
 				<li className="nav-item">
 					<Link className="nav-link" to={"/portal/categories"}>Categories</Link>
 				</li>

@@ -34,8 +34,8 @@ const ActiveProduct = ( props ) => {
         updateProductForm({ ...productForm, quantity: newQuantity })
     };
     useEffect(() => {
-        const product = activeProduct;
-        setDynamicPrice({ price: product.price, surcharge: 0, quantity: 1 })
+        setDynamicPrice({ price: activeProduct.price, surcharge: 0, quantity: 1 });
+        updateProductForm({ size: sizes.length ? sizes[ 0 ] : null, quantity: 1 })
     }, [ activeProduct ])
     const submitForm = ( e ) => {
         if ( !viewer ) {

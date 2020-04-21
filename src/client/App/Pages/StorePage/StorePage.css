@@ -72,6 +72,16 @@
     position: relative;
 }
 
+.Cart--name-DetailsPage {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    margin: 0px;
+    margin-top: 20px;
+    box-sizing: border-box;
+}
+
 .ProductList .Product {
     font-size: 20px;
     color: black;

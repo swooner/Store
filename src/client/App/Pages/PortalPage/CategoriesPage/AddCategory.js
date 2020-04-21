@@ -17,6 +17,7 @@ const AddCategory = ( props ) => {
         _form.employee_id = viewer.user_id;
         // console.log( 'form:', form );
         AddCategoryMutation.commit( _form );
+        window.location.replace( '/portal/categories' );
     };
     return (
         <div className={ styles.AddCategory }>

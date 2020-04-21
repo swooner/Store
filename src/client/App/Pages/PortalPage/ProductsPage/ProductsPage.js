@@ -14,6 +14,7 @@ const ProductPage = props => {
       product_id
     };
     DeleteProductMutation.commit(form);
+    window.location.replace( '/portal/products' );
   };
   const renderProducts = () => {
     const { product_list } = props.product_list;

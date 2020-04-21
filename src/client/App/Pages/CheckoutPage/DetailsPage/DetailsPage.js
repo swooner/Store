@@ -19,12 +19,15 @@ const DetailsPage = ( props ) => {
         return ValidatePaymentMutation.commit( form )
             .then( res => {
                 console.log( 'res:', res );
+                return { success: true }
             })
             .catch ( err => {
-                console.error( 'promise error:', JSON.parse ( err[ 0 ].message ) )
+                console.error( 'promise error:', err[ 0 ].message )
+                updateCardError( err[ 0 ].message );
             })
     };
     const updateCardForm = ( e, name ) => {
+        updateCardError( null );
         updateCardInfo({ ...cardInfo, [ name ]: e.target.value });
     };
     const validatePayment = ( ) => {
@@ -43,31 +46,36 @@ const DetailsPage = ( props ) => {
         // console.log( 'checkoutData:', checkoutData );
         const { paymentMethod } = checkoutData;
         if ( paymentMethod != 'cash' ) {
-            const validation = validatePayment( );
-            console.log( 'validation:', validation );
-            if ( !validation.success ) {
-                return false;
-            }
+            validatePayment( )
+                .then( res => {
+                    console.log( 'res:', res );
+                    if ( res.success ) {
+                        history.push( '/checkout/summary' );
+                    }
+                });
+            return false;
         }
-        history.push( '/checkout/summary' );
     };
     return (
         <div className={ styles.DetailsPage }>
-            <Destination 
-                { ...props } />
-            <Payment 
-                { ...props }
-                cardInfo={ cardInfo }
-                cardError={ cardError }
-                validatePayment={ validatePayment }
-                onCardFormChange={ updateCardForm } />
+            <div className={ styles.FormSide }>
+                <Destination 
+                    { ...props } />
+                <Payment 
+                    { ...props }
+                    cardInfo={ cardInfo }
+                    cardError={ cardError }
+                    validatePayment={ validatePayment }
+                    onCardFormChange={ updateCardForm } />
+                <div className={styles.reviewOrder}>
+                    <SubmitButton text={ 'Review order' } onClick={ goToSummary } />
+                </div>
+             </div>
             <Cart 
                 { ...props }
                 cart={ viewer }
+                name={ 'DetailsPage' }
                 isEditable={ false } />
-                <div className={styles.reviewOrder}>
-            <SubmitButton text={ 'Review order' } onClick={ goToSummary } />
-            </div>
         </div>
     )
 };

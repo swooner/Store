@@ -46,7 +46,7 @@ const Cart = ( props ) => {
             product_id
         };
         DeleteCartItemMutation.commit( form );
-        window.location.replace( '/' )
+        window.location.reload( );
     };
     const updateItem = ( e, cartItem, action ) => {
         const { size, product } = cartItem
@@ -60,6 +60,7 @@ const Cart = ( props ) => {
         };
         // console.log( 'form:', form );
         UpdateCartItemMutation.commit( form );
+        window.location.reload( );
     };
     const goCheckout = () => {
         history.push( '/checkout' );

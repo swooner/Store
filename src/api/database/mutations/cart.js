@@ -317,7 +317,7 @@ export const validatePayment = ({ card_name, card_number, expiration_month, expi
     else if ( !expiration_year || parseInt( expiration_year ) < 20) {
         throw new Error( 'Expiration year is not valid' );
     }
-    else if ( !security_code || parseInt( security_code ) < 1 || parseInt( security_code ) > 3 ) {
+    else if ( !security_code || parseInt( security_code ) < 1 || parseInt( security_code ) >= 1000 ) {
         throw new Error( 'Security code is not valid' );
     }
     else {

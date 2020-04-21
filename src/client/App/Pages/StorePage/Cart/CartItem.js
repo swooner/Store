@@ -11,6 +11,7 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
     const { picture_url } = product;
     const image_url = `/public/${ picture_url }`;
     // console.log('images', props)
+    // console.log( 'size:', size );
     return (
         <div className={styles.item}>
             <div className={styles.image}>
@@ -42,9 +43,9 @@ const CartItem = ({ cartItem, location, updateItem, isEditable, deleteCartItem }
                 Cost: ${ cost }
                 </span>
                 <div>
-                { location.pathname != '/checkout/summary' && location.pathname != '/checkout/confirmation' &&
-                <SubmitButton style={ 'Delete' } onClick={ deleteCartItem } text={ 'Remove' } />
-            }
+                { location.pathname == '/' &&
+                    <SubmitButton style={ 'Delete' } onClick={ deleteCartItem } text={ 'Remove' } />
+                }
                 </div>
             </div>
          

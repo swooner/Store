@@ -14,6 +14,7 @@ const CategoryPage = ( props ) => {
             category_id,
         };
         DeleteCategoryMutation.commit( form );
+        window.location.replace( '/portal/categories' );
     };
     // console.log( 'Portal category page props:', props );
     let { category_list } = props;
