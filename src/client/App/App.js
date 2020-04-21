@@ -2,6 +2,7 @@ import React from "react";
 import { QueryRenderer, graphql } from "react-relay";
 import environment from "../helpers/relay-environment";
 import { Link, useLocation, useHistory } from "react-router-dom";
+import { getViewerRole } from '../helpers/functions';
 import SiteNav from "./Components/SiteNav/SiteNav";
 import Routes from "./Routes";
 import styles from "./App.css";
@@ -56,7 +57,7 @@ const App = () => {
     if (paths[1] === "inventory-orders") {
       isInventoryOrdersPage = true;
     }
-    if (paths[1] === "report") {
+    if (paths[1] === "reports") {
       isReportPage = true;
     }
   } else if (page === "checkout") {
@@ -65,6 +66,7 @@ const App = () => {
     isStorePage = true;
     category_name = "Burgers";
   }
+  // console.log( 'isReportPage:', isReportPage );
   // console.log( 'product_id:', product_id );
   // <QueryRenderer> here is for bridging our API to our views. Whenever we need data from our
   // database, we create an object in the page file and paste the name of that object into AppQuery below.
@@ -87,7 +89,6 @@ const App = () => {
         ) {
           viewer(id: $user_id) {
             user_id
-            role
             rank
             employee_info {
               role
@@ -136,15 +137,17 @@ const App = () => {
         }
         // console.log("[App.js] props:", props);
         const { viewer } = props;
-        console.log("[App.js] Viewer:", viewer);
+        let _viewer = { ...viewer };
+        _viewer.role = viewer ? getViewerRole( viewer ) : null;
+        // console.log("[App.js] Viewer:", _viewer);
         return (
           /* styles.App references the import styles statement above. Since global styling is bad practice, our styling will be
                     component-based. if you want to style an element, you need to match that element directly to a specific stylesheet. 
                     The stylesheet for this component is called App.css and is imported at the top of this file. In the App.css file, 
                     you would then style like normal  */
           <div className={styles.App}>
-            <SiteNav viewer={viewer} isPortalPage={isPortalPage} />
-            <Routes {...props} viewer={viewer} />
+            <SiteNav viewer={ _viewer} isPortalPage={isPortalPage} />
+            <Routes {...props} viewer={ _viewer} />
           </div>
         );
       }}

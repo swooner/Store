@@ -81,10 +81,11 @@ const PendingInventoryOrder = ({ viewer, inventory_order  }) => {
             inventory_order_id,
             user_id: viewer.user_id,
             product_id,
-            quantity: formQuantity
+            quantity: +formQuantity
         };
         console.log( 'form:', form );
         FillInventoryOrderMutation.commit( form );
+        // window.location.reload( );
     };
     return (
         <div className={ styles.InventoryOrder }>
@@ -102,7 +103,8 @@ const PendingInventoryOrder = ({ viewer, inventory_order  }) => {
 };
 
 const FilledInventoryOrder = ({ inventory_order  }) => {
-    const { inventory_order_id, product, quantity, status, created_at, filled_at, filled_by } = inventory_order;
+    const { product, quantity, created_at, filled_at, filled_by } = inventory_order;
+    console.log( 'filled_by:', filled_by );
     const { first_name, last_name } = filled_by;
     const { product_id, name } = product;
     return (
@@ -151,6 +153,7 @@ export default createFragmentContainer( InventoryOrdersPage, {
                             name
                             threshold
                         }
+                        quantity
                         created_at
                         filled_at
                         filled_by {

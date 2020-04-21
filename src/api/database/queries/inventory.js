@@ -32,7 +32,7 @@ export const getPendingInventoryOrders = ({ }) => {
         type: Sequelize.QueryTypes.SELECT
     })
     .then( rows => {
-        console.log( 'Get pending inventory orders rows:', rows );
+        // console.log( 'Get pending inventory orders rows:', rows );
         return rows;
     })
     .catch( err => console.error( err.stack ) );

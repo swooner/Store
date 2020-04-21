@@ -33,6 +33,7 @@ class ReportPage extends React.Component {
         />
       );
     }
+    console.log( 'ReportPage props:', this.props );
     return (
       <div>
         <form

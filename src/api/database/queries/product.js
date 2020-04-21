@@ -119,7 +119,9 @@ export const getRestockStatus = ({ product_id }) => {
             FROM 
                 inventory_order
             WHERE
-                IO_P_ID = ${ product_id }
+                IO_P_ID = ${ product_id } AND
+                IO_status = 'PENDING'
+                
 
         `, {
             raw: true,
