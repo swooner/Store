@@ -315,6 +315,7 @@ const ProductInput = new GraphQLInputObjectType({
 export const SubmitOrderMutation = mutationWithClientMutationId({
 	name: 'SubmitOrder',
 	inputFields: {
+		user_id: { type: GraphQLInt },
 		order_id: { type: GraphQLInt },
 		saleMethod: { type: GraphQLString },
 		paymentMethod: { type: GraphQLString },

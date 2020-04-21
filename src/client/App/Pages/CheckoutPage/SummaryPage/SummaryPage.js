@@ -14,6 +14,7 @@ const SummaryPage = ( props ) => {
         const { order_id, saleMethod, paymentMethod, deliveryAddressOption: addressType, customDeliveryAddress, products } = checkoutData;
         const { street, city, state, zip_code } = saleMethod === 'DELIVERY' && addressType == 'CUSTOM' ? customDeliveryAddress || {} : {};
         const form = {
+            user_id: viewer.user_id,
             order_id: parseInt( order_id ),
             saleMethod,
             addressType,

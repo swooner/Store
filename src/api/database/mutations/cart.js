@@ -149,7 +149,7 @@ export const updateCartItem = ({ order_id, product_id, size_id, quantity }) => {
 };
 
 
-export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, street, city, state, zip_code, products }) => {
+export const submitOrder = ({ user_id, order_id, saleMethod, paymentMethod, addressType, street, city, state, zip_code, products }) => {
     console.log( 'order_id:', order_id );
     // return database.transaction( t => {
         return database.query(
@@ -203,6 +203,72 @@ export const submitOrder = ({ order_id, saleMethod, paymentMethod, addressType, 
 
                 i++;
             }
+
+            // database.query(
+            //     `
+            //         SELECT total
+            //         FROM ORDER_TOTAL
+            //         WHERE OI_O_ID = ${ order_id }
+            //     `, {
+            //         raw: true,
+            //         type: Sequelize.QueryTypes.SELECT
+            //     }
+            // )
+            // .then( rows => {
+            //     console.log( 'select order total rows:', rows );
+            //     const order_total = rows[ 0 ].total;
+
+            //     database.query(
+            //         `
+            //             UPDATE
+            //                 customer
+            //             SET
+            //                 Cus_totalSpend = Cus_totalSpend + ${ order_total }
+            //             WHERE
+            //                 customer.Cus_ID = ${ user_id }
+            //         `
+            //     )
+            //     .then( rows => {
+            //         console.log( 'Updated product quantity:', rows );
+            //         // return rows
+            //     })
+            //     .catch( err => {
+            //         console.log( 'Error updating product quantity:', err.stack );
+            //         // throw new Error( );
+            //     });
+            // })
+            // .catch( err => {
+            //     console.log( 'Error selecting order total:', err.stack );
+            //     // throw new Error( );
+            // });
+
+            database.query(
+                `
+                UPDATE 
+                    customer
+                SET 
+                    cus_totalSpend = cus_totalSpend + ( 
+                        SELECT sum(total) 
+                        FROM ORDER_TOTAL 
+                        WHERE OI_O_ID = ${ order_id }) 
+                WHERE Cus_ID = ${ user_id };
+            
+                        
+
+                `, {
+                    // transaction: t,
+                    raw: true,
+                    type: Sequelize.QueryTypes.UPDATE
+                }
+            )
+            .then( rows => {
+                console.log( 'Updated user total spent amont:', rows );
+                // return rows
+            })
+            .catch( err => {
+                console.log( 'Error updating user total spent amount:', err.stack );
+            });
+
             return { good: true }
         })
         .catch( err => console.error( err.stack ) )

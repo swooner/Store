@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash 11dbaedd41b68ebda43c8b995e660df7
+ * @relayHash 2ef640edc68f404aef502b0eafa21e7c
  */
 
 /* eslint-disable */
@@ -10,6 +10,7 @@
 /*::
 import type { ConcreteRequest } from 'relay-runtime';
 export type SubmitOrderInput = {|
+  user_id?: ?number,
   order_id?: ?number,
   saleMethod?: ?string,
   paymentMethod?: ?string,

@@ -14,20 +14,22 @@
     color: whitesmoke;
     font-family: cursive;}
 
+
+.NavGroup {
+    display: flex;
+}
 .SiteNav ul {
     display:flex;
     list-style-type: none;
     margin: 0;
     padding:0;
 }
-.SiteNav ul li{
-    display: block;
+.SiteNav ul li {
     text-decoration: none;
 }
-.SiteNav ul li a{
+.SiteNav ul li a, .Rank {
     color: white !important;
     text-decoration: none;
-    display:block;
     padding: 10px;
 }
 .SiteNav ul li a:hover {

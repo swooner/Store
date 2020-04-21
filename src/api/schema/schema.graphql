@@ -70,6 +70,7 @@ type User {
   first_name: String
   last_name: String
   role: String
+  rank: String
   account_name: String
   account_password: String
   street: String
@@ -217,6 +218,7 @@ type SavePaymentPayload {
 }
 
 input SubmitOrderInput {
+  user_id: Int
   order_id: Int
   saleMethod: String
   paymentMethod: String

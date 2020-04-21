@@ -30,6 +30,12 @@ const GraphQLUser = new GraphQLObjectType({
         return root.Cus_LName;
       }
     },
+    rank: {
+      type: GraphQLString,
+      resolve: root => {
+        return root.Cus_rank;
+      }
+    },
     role: {
       type: GraphQLString,
       resolve: root => {
