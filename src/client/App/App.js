@@ -90,6 +90,7 @@ const App = () => {
           viewer(id: $user_id) {
             user_id
             rank
+            role
             employee_info {
               role
             }
@@ -137,17 +138,15 @@ const App = () => {
         }
         // console.log("[App.js] props:", props);
         const { viewer } = props;
-        let _viewer = { ...viewer };
-        _viewer.role = viewer ? getViewerRole( viewer ) : null;
-        // console.log("[App.js] Viewer:", _viewer);
+        // console.log("[App.js] Viewer:", viewer);
         return (
           /* styles.App references the import styles statement above. Since global styling is bad practice, our styling will be
                     component-based. if you want to style an element, you need to match that element directly to a specific stylesheet. 
                     The stylesheet for this component is called App.css and is imported at the top of this file. In the App.css file, 
                     you would then style like normal  */
           <div className={styles.App}>
-            <SiteNav viewer={ _viewer} isPortalPage={isPortalPage} />
-            <Routes {...props} viewer={ _viewer} />
+            <SiteNav viewer={ viewer} isPortalPage={isPortalPage} />
+            <Routes {...props} viewer={ viewer} />
           </div>
         );
       }}
