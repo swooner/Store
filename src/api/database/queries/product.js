@@ -121,16 +121,14 @@ export const getRestockStatus = ({ product_id }) => {
             WHERE
                 IO_P_ID = ${ product_id } AND
                 IO_status = 'PENDING'
-                
-
         `, {
             raw: true,
             type: Sequelize.QueryTypes.SELECT
         }
     )
     .then( rows => {
-        console.log( 'getRestockStatus rows:', rows );
-        // return rows
+        // console.log( 'getRestockStatus rows:', rows );
+        return rows[ 0 ] ? true : false;
     })
     .catch( err => console.error( err.stack ) )
 }

@@ -21,12 +21,12 @@
 
 .InventoryOrdersPage .PendingList .Header,
 .InventoryOrdersPage .PendingList .InventoryOrder {
-    grid-template-columns: 2fr 4fr 2fr 2fr 2fr 4fr;
+    grid-template-columns: 2fr 3fr 2fr 2fr 4fr 4fr;
 }
 
 .InventoryOrdersPage .FilledList .Header,
 .InventoryOrdersPage .FilledList .InventoryOrder {
-    grid-template-columns: 2fr 4fr 2fr 2fr 4fr 3fr;
+    grid-template-columns: 2fr 3fr 2fr 2fr 4fr 4fr;
 }
 
 .InventoryOrdersPage .Form {
@@ -36,12 +36,14 @@
 .InventoryOrdersPage .Form input {
     width: 60px;
     margin-right: 10px;
-    height: 32px !important;
+    height: 30px !important;
 }
 
 .InventoryOrdersPage .Form button {
     margin: 0 !important;
-    height: 32px !important;
+    height: 30px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
 }
 
 .EmployeeList .Header,

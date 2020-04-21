@@ -64,7 +64,7 @@ const SiteNav = props => {
 						<Link className="nav-link" to={"/portal/reports"}>Reports</Link>
 					</li>
 				}
-				{ employee_info && employee_info.role === "inventory" && 
+				{ employee_info && ( employee_info.role === "inventory" || employee_info.role === "manager" ) && 
 					<li className="nav-item">
 						<Link className="nav-link" to={ "/portal/inventory-orders" }>Inventory</Link>
 					</li>
