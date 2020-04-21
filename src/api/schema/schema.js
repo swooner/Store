@@ -13,7 +13,9 @@ import {
   CategoryListQuery,
   ProductQuery,
   ProductListQuery,
-  InventoryOrderQuery,
+  // InventoryOrderQuery,
+  PendingInventoryOrderQuery,
+  FilledInventoryOrderQuery,
   ProductReportOverall,
   ProductReportOverallByMonth,
   EachProductReportByMonth
@@ -49,7 +51,8 @@ const Query = new GraphQLObjectType({
     category_list: CategoryListQuery,
     product: ProductQuery,
     product_list: ProductListQuery,
-    inventory_order_list: InventoryOrderQuery,
+    pending_orders_list: PendingInventoryOrderQuery,
+    filled_orders_list: FilledInventoryOrderQuery,
     get_report: ProductReportOverall,
     get_report_by_month: ProductReportOverallByMonth,
     get_each_product_report_by_month: EachProductReportByMonth

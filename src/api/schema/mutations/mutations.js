@@ -25,7 +25,7 @@ import { signUp, login } from '../../database/mutations/auth';
 import { deleteEmployee } from '../../database/mutations/employee';
 import { addCategory, deleteCategory } from '../../database/mutations/category';
 import { addProduct, deleteProduct } from '../../database/mutations/product';
-import { deleteInventoryOrder } from '../../database/mutations/inventory';
+import { deleteInventoryOrder, fillInventoryOrder } from '../../database/mutations/inventory';
 import { addCartItem, deleteCartItem, updateCartItem, submitOrder, savePayment, validatePayment } from '../../database/mutations/cart';
 
 import GraphQLCategory from '../types/category';
@@ -217,6 +217,28 @@ export const DeleteProductMutation = mutationWithClientMutationId({
 		return deleteProduct( args );
 	},
 });
+export const FillInventoryOrderMutation = mutationWithClientMutationId({
+	name: 'FillInventoryOrder',
+	inputFields: {
+		inventory_order_id: { type: GraphQLInt },
+		product_id: { type: GraphQLInt },
+		user_id: { type: GraphQLInt },
+		quantity: { type: GraphQLInt },
+	},
+	outputFields: {
+		inventory_order: {
+			type: GraphQLInventoryOrder,
+			resolve: ( payload, args, context ) => {
+			  //   console.log( 'payload:', payload );
+				return payload//getInventoryOrder({ id: payload.Cat_ID })
+			}
+		},
+	},
+	mutateAndGetPayload: ( args ) => {
+		return fillInventoryOrder( args );
+	},
+});
+
 export const DeleteInventoryOrderMutation = mutationWithClientMutationId({
 	name: 'DeleteInventoryOrder',
 	inputFields: {

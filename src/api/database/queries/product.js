@@ -110,3 +110,25 @@ export const getProductsByCategoryName = ({ category_name }) => {
         return rows
     })
 };
+
+export const getRestockStatus = ({ product_id }) => {
+    return database.query(
+        `
+            SELECT 
+                *
+            FROM 
+                inventory_order
+            WHERE
+                IO_P_ID = ${ product_id }
+
+        `, {
+            raw: true,
+            type: Sequelize.QueryTypes.SELECT
+        }
+    )
+    .then( rows => {
+        console.log( 'getRestockStatus rows:', rows );
+        // return rows
+    })
+    .catch( err => console.error( err.stack ) )
+}

@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
 import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
 import AddEmployee from './AddEmployee';
@@ -26,21 +26,23 @@ const EmployeePage = ( props ) => {
         window.location.replace( '/portal/employees' );
     };
     // console.log( 'Employee List page props:', props );
-    const { employee_list } = props;
+    const { viewer, employee_list } = props;
     return (
         <div className={ styles.EmployeeList }>
-            <nav>
-                <li>
-                    <Link to={ '/portal/employees/add-employee' }>Add Employee</Link>
-                </li>
-            </nav>
+            { viewer && viewer.role === 'manager' &&
+                <nav>
+                    <li>
+                        <Link to={ '/portal/employees/add-employee' }>Add Employee</Link>
+                    </li>
+                </nav>
+            }
             <Switch>
                 <Route path='/portal/employees/add-employee' render={ () => {
-                    return (
+                    return  viewer && viewer.role === 'manager' ? (
                         <AddEmployee
                             { ...props }
                             user_search={ props } />
-                    )
+                    ) : <Redirect to={ '/' } />
                 }} />
             </Switch>
             <div className={ styles.Header }>

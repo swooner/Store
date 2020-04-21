@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { graphql, createFragmentContainer } from "react-relay";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import SubmitButton from "../../../Components/SubmitButton/SubmitButton";
 import AddProduct from "./AddProduct";
 import DeleteProductMutation from "../mutations/DeleteProductMutation";
@@ -8,6 +8,7 @@ import styles from "../PortalPage.css";
 
 const ProductPage = props => {
   // console.log("[ProductPage] props: ", props);
+  const { viewer } = props;
   const deleteProduct = product => {
     const { product_id } = product;
     const form = {
@@ -47,17 +48,19 @@ const ProductPage = props => {
   // console.log( 'ProductListPage props:', props );
   return (
     <div className={styles.ProductPage}>
-      <nav>
-        <li>
-          <Link to={"/portal/products/add-product"}>Add Product</Link>
-        </li>
-      </nav>
+      { viewer && viewer.role === 'manager' &&
+        <nav>
+          <li>
+            <Link to={"/portal/products/add-product"}>Add Product</Link>
+          </li>
+        </nav>
+      }
       <Switch>
         <Route
           exact
           path="/portal/products/add-product"
           render={() => {
-            return <AddProduct {...props} category_list={props} />;
+            return viewer && viewer.role == 'manager' ? <AddProduct {...props} category_list={props} /> : <Redirect to={ '/' } />;
           }}
         />
       </Switch>

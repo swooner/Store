@@ -26,7 +26,9 @@ import {
 } from "../../database/queries/product";
 import { getUser, searchUsers } from "../../database/queries/user";
 import { getAllEmployees } from "../../database/queries/employee";
-import { getAllInventoryOrders } from "../../database/queries/inventory";
+// import { getAllInventoryOrders } from "../../database/queries/inventory";
+import { getPendingInventoryOrders, getFilledInventoryOrders } from "../../database/queries/inventory";
+
 import {
   getProductReportOverall,
   getProductReportOverallByMonth,
@@ -129,14 +131,35 @@ export const ViewerQuery = {
   }
 };
 
-export const InventoryOrderQuery = {
+// export const InventoryOrderQuery = {
+//   type: InventoryOrderConnection,
+//   args: {
+//     status: { type: GraphQLString },
+//     first: { type: GraphQLInt }
+//   },
+//   resolve: (root, args, context) => {
+//     // console.log( 'args:', args );
+//     return connectionFromPromisedArray(getInventoryOrders(args), args);
+//   }
+// };
+export const PendingInventoryOrderQuery = {
   type: InventoryOrderConnection,
   args: {
     first: { type: GraphQLInt }
   },
   resolve: (root, args, context) => {
     // console.log( 'args:', args );
-    return connectionFromPromisedArray(getAllInventoryOrders(args), args);
+    return connectionFromPromisedArray(getPendingInventoryOrders(args), args);
+  }
+};
+export const FilledInventoryOrderQuery = {
+  type: InventoryOrderConnection,
+  args: {
+    first: { type: GraphQLInt }
+  },
+  resolve: (root, args, context) => {
+    // console.log( 'args:', args );
+    return connectionFromPromisedArray(getFilledInventoryOrders(args), args);
   }
 };
 

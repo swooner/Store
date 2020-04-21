@@ -104,7 +104,8 @@ const App = () => {
           ...CategoriesPage_category_list @include(if: $isCategoriesPage)
           ...ProductsPage_product_list @include(if: $isProductsPage)
           ...AddProduct_category_list @include(if: $isAddProductPage)
-          ...InventoryOrdersPage_inventory_order_list
+          ...InventoryOrdersPage_pending_orders_list
+          ...InventoryOrdersPage_filled_orders_list
             @include(if: $isInventoryOrdersPage)
           # ...ReportPage_report_data @include(if: $isReportPage)
           ...ReportPage_report_data_by_month @include(if: $isReportPage)
@@ -135,7 +136,7 @@ const App = () => {
         }
         // console.log("[App.js] props:", props);
         const { viewer } = props;
-        // console.log("[App.js] Viewer:", viewer);
+        console.log("[App.js] Viewer:", viewer);
         return (
           /* styles.App references the import styles statement above. Since global styling is bad practice, our styling will be
                     component-based. if you want to style an element, you need to match that element directly to a specific stylesheet. 

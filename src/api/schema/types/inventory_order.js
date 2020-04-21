@@ -14,14 +14,16 @@ import {
 } from 'graphql-iso-date';
 
 import { getProduct } from '../../database/queries/product';
+import { getUser } from '../../database/queries/user';
 
 import GraphQLProduct from './product';
+import GraphQLUser from './user';
   
 
 const GraphQLInventoryOrder = new GraphQLObjectType({
 	name: 'InventoryOrder',
 	fields: () => ({
-		order_id: {
+		inventory_order_id: {
 			type: GraphQLInt,
 			resolve: root => {
 				return root.IO_ID
@@ -47,9 +49,15 @@ const GraphQLInventoryOrder = new GraphQLObjectType({
 			type: GraphQLDateTime,
 			resolve: ( root ) => root.IO_createdAt,
 		},
-		received_at: {
+		filled_at: {
 			type: GraphQLDateTime,
-			resolve: ( root ) => root.IO_receivedAt,
+			resolve: ( root ) => root.IO_filledAt,
+		},
+		filled_by: {
+			type: GraphQLUser,
+			resolve: ( root ) => {
+				return getUser({ id: root.IO_filledBy })
+			}
 		},
 	})
 });

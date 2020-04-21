@@ -107,7 +107,8 @@ type InventoryOrder {
   product: Product
   quantity: Int
   created_at: DateTime
-  received_at: DateTime
+  filled_at: DateTime
+  filled_by: User
 }
 
 enum Admin_Status {
@@ -162,7 +163,9 @@ type Query {
   category_list(first: Int): [Category]
   product(product_id: ID): Product
   product_list(first: Int): ProductConnection
-  inventory_order_list(first: Int): InventoryOrderConnection
+  # inventory_order_list (status: String, first: Int): InventoryOrderConnection
+  pending_orders_list (first: Int): InventoryOrderConnection
+  filled_orders_list (first: Int): InventoryOrderConnection
   get_report: Report
   get_report_by_month(byMonth: String, monthCount: Int): Report
   get_each_product_report_by_month(
@@ -180,9 +183,8 @@ type Mutation {
   deleteEmployee(input: DeleteEmployeeInput!): DeleteEmployeePayload!
   deleteCategory(input: DeleteCategoryInput!): DeleteCategoryPayload!
   deleteProduct(input: DeleteProductInput!): DeleteProductPayload!
-  deleteInventoryOrder(
-    input: DeleteInventoryOrderInput!
-  ): DeleteInventoryOrderPayload!
+  fillInventoryOrder( input: FillInventoryOrderInput! ): FillInventoryOrderPayload!
+  deleteInventoryOrder( input: DeleteInventoryOrderInput!): DeleteInventoryOrderPayload!
   addCartItem(input: AddCartItemInput!): AddCartItemPayload!
   deleteCartItem(input: DeleteCartItemInput!): DeleteCartItemPayload!
   updateCartItem(input: UpdateCartItemInput!): UpdateCartItemPayload!
@@ -358,6 +360,17 @@ input DeleteProductInput {
 }
 type DeleteProductPayload {
   product: Product!
+  clientMutationId: String
+}
+input FillInventoryOrderInput {
+  inventory_order_id: Int!
+  product_id: Int!
+  user_id: Int
+  quantity: Int!
+  clientMutationId: String
+}
+type FillInventoryOrderPayload {
+  inventory_order: InventoryOrder!
   clientMutationId: String
 }
 input DeleteInventoryOrderInput {

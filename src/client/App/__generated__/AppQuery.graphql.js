@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash db8238c9d5bb461e7c0acbdd296ca6c2
+ * @relayHash edebe2710f452a3947d58b32fa252de7
  */
 
 /* eslint-disable */
@@ -14,7 +14,8 @@ type AddProduct_category_list$ref = any;
 type CategoriesPage_category_list$ref = any;
 type CheckoutPage_viewer$ref = any;
 type EmployeesPage_employee_list$ref = any;
-type InventoryOrdersPage_inventory_order_list$ref = any;
+type InventoryOrdersPage_filled_orders_list$ref = any;
+type InventoryOrdersPage_pending_orders_list$ref = any;
 type ProductList_categories$ref = any;
 type ProductsPage_product_list$ref = any;
 type ReportPage_each_product_report_data_by_month$ref = any;
@@ -42,7 +43,7 @@ export type AppQueryResponse = {|
     |},
     +$fragmentRefs: StorePage_viewer$ref & CheckoutPage_viewer$ref,
   |},
-  +$fragmentRefs: ProductList_categories$ref & AddEmployee_user_search$ref & EmployeesPage_employee_list$ref & CategoriesPage_category_list$ref & ProductsPage_product_list$ref & AddProduct_category_list$ref & InventoryOrdersPage_inventory_order_list$ref & ReportPage_report_data_by_month$ref & ReportPage_each_product_report_data_by_month$ref,
+  +$fragmentRefs: ProductList_categories$ref & AddEmployee_user_search$ref & EmployeesPage_employee_list$ref & CategoriesPage_category_list$ref & ProductsPage_product_list$ref & AddProduct_category_list$ref & InventoryOrdersPage_pending_orders_list$ref & InventoryOrdersPage_filled_orders_list$ref & ReportPage_report_data_by_month$ref & ReportPage_each_product_report_data_by_month$ref,
 |};
 export type AppQuery = {|
   variables: AppQueryVariables,
@@ -80,7 +81,8 @@ query AppQuery(
   ...CategoriesPage_category_list @include(if: $isCategoriesPage)
   ...ProductsPage_product_list @include(if: $isProductsPage)
   ...AddProduct_category_list @include(if: $isAddProductPage)
-  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)
+  ...InventoryOrdersPage_pending_orders_list
+  ...InventoryOrdersPage_filled_orders_list @include(if: $isInventoryOrdersPage)
   ...ReportPage_report_data_by_month @include(if: $isReportPage)
   ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)
 }
@@ -180,17 +182,44 @@ fragment EmployeesPage_employee_list on Query {
   }
 }
 
-fragment InventoryOrdersPage_inventory_order_list on Query {
-  inventory_order_list(first: 10) {
+fragment InventoryOrdersPage_filled_orders_list on Query {
+  filled_orders_list(first: 10) {
     edges {
       node {
         product {
+          product_id
           name
+          threshold
         }
-        quantity
-        status
         created_at
-        received_at
+        filled_at
+        filled_by {
+          first_name
+          last_name
+        }
+        __typename
+      }
+      cursor
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}
+
+fragment InventoryOrdersPage_pending_orders_list on Query {
+  pending_orders_list(first: 10) {
+    edges {
+      node {
+        inventory_order_id
+        product {
+          product_id
+          name
+          threshold
+          quantity
+        }
+        created_at
         __typename
       }
       cursor
@@ -533,48 +562,42 @@ v15 = {
   "args": null,
   "storageKey": null
 },
-v16 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "description",
-  "args": null,
-  "storageKey": null
-},
-v17 = [
+v16 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   }
 ],
-v18 = [
-  (v7/*: any*/)
-],
-v19 = {
-  "kind": "LinkedField",
+v17 = {
+  "kind": "ScalarField",
   "alias": null,
-  "name": "category",
-  "storageKey": null,
+  "name": "threshold",
   "args": null,
-  "concreteType": "Category",
-  "plural": false,
-  "selections": (v18/*: any*/)
+  "storageKey": null
 },
-v20 = {
+v18 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "created_at",
+  "args": null,
+  "storageKey": null
+},
+v19 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "__typename",
   "args": null,
   "storageKey": null
 },
-v21 = {
+v20 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "cursor",
   "args": null,
   "storageKey": null
 },
-v22 = {
+v21 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "pageInfo",
@@ -599,14 +622,33 @@ v22 = {
     }
   ]
 },
+v22 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "description",
+  "args": null,
+  "storageKey": null
+},
 v23 = {
+  "kind": "LinkedField",
+  "alias": null,
+  "name": "category",
+  "storageKey": null,
+  "args": null,
+  "concreteType": "Category",
+  "plural": false,
+  "selections": [
+    (v7/*: any*/)
+  ]
+},
+v24 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "category_id",
   "args": null,
   "storageKey": null
 },
-v24 = {
+v25 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "total_sale",
@@ -734,13 +776,18 @@ return {
         ]
       },
       {
+        "kind": "FragmentSpread",
+        "name": "InventoryOrdersPage_pending_orders_list",
+        "args": null
+      },
+      {
         "kind": "Condition",
         "passingValue": true,
         "condition": "isInventoryOrdersPage",
         "selections": [
           {
             "kind": "FragmentSpread",
-            "name": "InventoryOrdersPage_inventory_order_list",
+            "name": "InventoryOrdersPage_filled_orders_list",
             "args": null
           }
         ]
@@ -845,6 +892,74 @@ return {
         ]
       },
       {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "pending_orders_list",
+        "storageKey": "pending_orders_list(first:10)",
+        "args": (v16/*: any*/),
+        "concreteType": "InventoryOrderConnection",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "edges",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "InventoryOrderEdge",
+            "plural": true,
+            "selections": [
+              {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "node",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "InventoryOrder",
+                "plural": false,
+                "selections": [
+                  {
+                    "kind": "ScalarField",
+                    "alias": null,
+                    "name": "inventory_order_id",
+                    "args": null,
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "LinkedField",
+                    "alias": null,
+                    "name": "product",
+                    "storageKey": null,
+                    "args": null,
+                    "concreteType": "Product",
+                    "plural": false,
+                    "selections": [
+                      (v6/*: any*/),
+                      (v7/*: any*/),
+                      (v17/*: any*/),
+                      (v12/*: any*/)
+                    ]
+                  },
+                  (v18/*: any*/),
+                  (v19/*: any*/)
+                ]
+              },
+              (v20/*: any*/)
+            ]
+          },
+          (v21/*: any*/)
+        ]
+      },
+      {
+        "kind": "LinkedHandle",
+        "alias": null,
+        "name": "pending_orders_list",
+        "args": (v16/*: any*/),
+        "handle": "connection",
+        "key": "InventoryOrdersPage_pending_orders_list",
+        "filters": null
+      },
+      {
         "kind": "Condition",
         "passingValue": true,
         "condition": "isStorePage",
@@ -859,13 +974,13 @@ return {
             "plural": true,
             "selections": [
               (v7/*: any*/),
-              (v16/*: any*/),
+              (v22/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
                 "name": "products",
                 "storageKey": "products(first:10)",
-                "args": (v17/*: any*/),
+                "args": (v16/*: any*/),
                 "concreteType": "ProductConnection",
                 "plural": false,
                 "selections": [
@@ -888,9 +1003,9 @@ return {
                         "plural": false,
                         "selections": [
                           (v6/*: any*/),
-                          (v19/*: any*/),
+                          (v23/*: any*/),
                           (v7/*: any*/),
-                          (v16/*: any*/),
+                          (v22/*: any*/),
                           (v9/*: any*/),
                           (v8/*: any*/),
                           {
@@ -903,20 +1018,20 @@ return {
                             "plural": true,
                             "selections": (v11/*: any*/)
                           },
-                          (v20/*: any*/)
+                          (v19/*: any*/)
                         ]
                       },
-                      (v21/*: any*/)
+                      (v20/*: any*/)
                     ]
                   },
-                  (v22/*: any*/)
+                  (v21/*: any*/)
                 ]
               },
               {
                 "kind": "LinkedHandle",
                 "alias": null,
                 "name": "products",
-                "args": (v17/*: any*/),
+                "args": (v16/*: any*/),
                 "handle": "connection",
                 "key": "ProductList_products",
                 "filters": null
@@ -968,13 +1083,13 @@ return {
                         "storageKey": null
                       },
                       (v5/*: any*/),
-                      (v20/*: any*/)
+                      (v19/*: any*/)
                     ]
                   },
-                  (v21/*: any*/)
+                  (v20/*: any*/)
                 ]
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ]
           },
           {
@@ -1000,7 +1115,7 @@ return {
             "alias": null,
             "name": "employee_list",
             "storageKey": "employee_list(first:10)",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "concreteType": "UserConnection",
             "plural": false,
             "selections": [
@@ -1026,20 +1141,20 @@ return {
                       (v14/*: any*/),
                       (v15/*: any*/),
                       (v3/*: any*/),
-                      (v20/*: any*/)
+                      (v19/*: any*/)
                     ]
                   },
-                  (v21/*: any*/)
+                  (v20/*: any*/)
                 ]
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "employee_list",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "handle": "connection",
             "key": "EmployeesPage_employee_list",
             "filters": null
@@ -1056,13 +1171,13 @@ return {
             "alias": null,
             "name": "category_list",
             "storageKey": "category_list(first:10)",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "concreteType": "Category",
             "plural": true,
             "selections": [
-              (v23/*: any*/),
+              (v24/*: any*/),
               (v7/*: any*/),
-              (v16/*: any*/)
+              (v22/*: any*/)
             ]
           }
         ]
@@ -1077,7 +1192,7 @@ return {
             "alias": null,
             "name": "product_list",
             "storageKey": "product_list(first:10)",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "concreteType": "ProductConnection",
             "plural": false,
             "selections": [
@@ -1100,17 +1215,11 @@ return {
                     "plural": false,
                     "selections": [
                       (v6/*: any*/),
-                      (v19/*: any*/),
+                      (v23/*: any*/),
                       (v7/*: any*/),
                       (v8/*: any*/),
                       (v12/*: any*/),
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "threshold",
-                        "args": null,
-                        "storageKey": null
-                      },
+                      (v17/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
@@ -1118,20 +1227,20 @@ return {
                         "args": null,
                         "storageKey": null
                       },
-                      (v20/*: any*/)
+                      (v19/*: any*/)
                     ]
                   },
-                  (v21/*: any*/)
+                  (v20/*: any*/)
                 ]
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "product_list",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "handle": "connection",
             "key": "ProductsPage_product_list",
             "filters": null
@@ -1148,11 +1257,11 @@ return {
             "alias": null,
             "name": "category_list",
             "storageKey": "category_list(first:10)",
-            "args": (v17/*: any*/),
+            "args": (v16/*: any*/),
             "concreteType": "Category",
             "plural": true,
             "selections": [
-              (v23/*: any*/),
+              (v24/*: any*/),
               (v7/*: any*/)
             ]
           }
@@ -1166,9 +1275,9 @@ return {
           {
             "kind": "LinkedField",
             "alias": null,
-            "name": "inventory_order_list",
-            "storageKey": "inventory_order_list(first:10)",
-            "args": (v17/*: any*/),
+            "name": "filled_orders_list",
+            "storageKey": "filled_orders_list(first:10)",
+            "args": (v16/*: any*/),
             "concreteType": "InventoryOrderConnection",
             "plural": false,
             "selections": [
@@ -1198,46 +1307,49 @@ return {
                         "args": null,
                         "concreteType": "Product",
                         "plural": false,
-                        "selections": (v18/*: any*/)
+                        "selections": [
+                          (v6/*: any*/),
+                          (v7/*: any*/),
+                          (v17/*: any*/)
+                        ]
                       },
-                      (v12/*: any*/),
+                      (v18/*: any*/),
                       {
                         "kind": "ScalarField",
                         "alias": null,
-                        "name": "status",
+                        "name": "filled_at",
                         "args": null,
                         "storageKey": null
                       },
                       {
-                        "kind": "ScalarField",
+                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "created_at",
+                        "name": "filled_by",
+                        "storageKey": null,
                         "args": null,
-                        "storageKey": null
+                        "concreteType": "User",
+                        "plural": false,
+                        "selections": [
+                          (v14/*: any*/),
+                          (v15/*: any*/)
+                        ]
                       },
-                      {
-                        "kind": "ScalarField",
-                        "alias": null,
-                        "name": "received_at",
-                        "args": null,
-                        "storageKey": null
-                      },
-                      (v20/*: any*/)
+                      (v19/*: any*/)
                     ]
                   },
-                  (v21/*: any*/)
+                  (v20/*: any*/)
                 ]
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ]
           },
           {
             "kind": "LinkedHandle",
             "alias": null,
-            "name": "inventory_order_list",
-            "args": (v17/*: any*/),
+            "name": "filled_orders_list",
+            "args": (v16/*: any*/),
             "handle": "connection",
-            "key": "InventoryOrdersPage_inventory_order_list",
+            "key": "InventoryOrdersPage_filled_orders_list",
             "filters": null
           }
         ]
@@ -1256,7 +1368,7 @@ return {
             "concreteType": "Report",
             "plural": false,
             "selections": [
-              (v24/*: any*/),
+              (v25/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -1297,7 +1409,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              (v24/*: any*/)
+              (v25/*: any*/)
             ]
           }
         ]
@@ -1308,12 +1420,12 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    role\n    rank\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_inventory_order_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n        surcharge\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_inventory_order_list on Query {\n  inventory_order_list(first: 10) {\n    edges {\n      node {\n        product {\n          name\n        }\n        quantity\n        status\n        created_at\n        received_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        restock_status\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
+    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    role\n    rank\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_pending_orders_list\n  ...InventoryOrdersPage_filled_orders_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n        surcharge\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_filled_orders_list on Query {\n  filled_orders_list(first: 10) {\n    edges {\n      node {\n        product {\n          product_id\n          name\n          threshold\n        }\n        created_at\n        filled_at\n        filled_by {\n          first_name\n          last_name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_pending_orders_list on Query {\n  pending_orders_list(first: 10) {\n    edges {\n      node {\n        inventory_order_id\n        product {\n          product_id\n          name\n          threshold\n          quantity\n        }\n        created_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        restock_status\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
     "metadata": {}
   }
 };
 })();
 // prettier-ignore
-(node/*: any*/).hash = 'fa205d7d8856ded05a91ba11dcb3ac3b';
+(node/*: any*/).hash = '3911ed924868d9c656f86e9c6c7ccf26';
 
 module.exports = node;

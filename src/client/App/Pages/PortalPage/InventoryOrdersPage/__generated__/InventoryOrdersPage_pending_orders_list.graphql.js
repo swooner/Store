@@ -9,28 +9,29 @@
 /*::
 import type { ReaderFragment } from 'relay-runtime';
 import type { FragmentReference } from "relay-runtime";
-declare export opaque type InventoryOrdersPage_inventory_order_list$ref: FragmentReference;
-declare export opaque type InventoryOrdersPage_inventory_order_list$fragmentType: InventoryOrdersPage_inventory_order_list$ref;
-export type InventoryOrdersPage_inventory_order_list = {|
-  +inventory_order_list: ?{|
+declare export opaque type InventoryOrdersPage_pending_orders_list$ref: FragmentReference;
+declare export opaque type InventoryOrdersPage_pending_orders_list$fragmentType: InventoryOrdersPage_pending_orders_list$ref;
+export type InventoryOrdersPage_pending_orders_list = {|
+  +pending_orders_list: ?{|
     +edges: ?$ReadOnlyArray<?{|
       +node: ?{|
+        +inventory_order_id: ?string,
         +product: ?{|
-          +name: ?string
+          +product_id: ?number,
+          +name: ?string,
+          +threshold: ?number,
+          +quantity: ?number,
         |},
-        +quantity: ?number,
-        +status: ?string,
         +created_at: ?any,
-        +received_at: ?any,
       |}
     |}>
   |},
-  +$refType: InventoryOrdersPage_inventory_order_list$ref,
+  +$refType: InventoryOrdersPage_pending_orders_list$ref,
 |};
-export type InventoryOrdersPage_inventory_order_list$data = InventoryOrdersPage_inventory_order_list;
-export type InventoryOrdersPage_inventory_order_list$key = {
-  +$data?: InventoryOrdersPage_inventory_order_list$data,
-  +$fragmentRefs: InventoryOrdersPage_inventory_order_list$ref,
+export type InventoryOrdersPage_pending_orders_list$data = InventoryOrdersPage_pending_orders_list;
+export type InventoryOrdersPage_pending_orders_list$key = {
+  +$data?: InventoryOrdersPage_pending_orders_list$data,
+  +$fragmentRefs: InventoryOrdersPage_pending_orders_list$ref,
   ...
 };
 */
@@ -38,7 +39,7 @@ export type InventoryOrdersPage_inventory_order_list$key = {
 
 const node/*: ReaderFragment*/ = {
   "kind": "Fragment",
-  "name": "InventoryOrdersPage_inventory_order_list",
+  "name": "InventoryOrdersPage_pending_orders_list",
   "type": "Query",
   "metadata": {
     "connection": [
@@ -47,7 +48,7 @@ const node/*: ReaderFragment*/ = {
         "cursor": null,
         "direction": "forward",
         "path": [
-          "inventory_order_list"
+          "pending_orders_list"
         ]
       }
     ]
@@ -63,8 +64,8 @@ const node/*: ReaderFragment*/ = {
   "selections": [
     {
       "kind": "LinkedField",
-      "alias": "inventory_order_list",
-      "name": "__InventoryOrdersPage_inventory_order_list_connection",
+      "alias": "pending_orders_list",
+      "name": "__InventoryOrdersPage_pending_orders_list_connection",
       "storageKey": null,
       "args": null,
       "concreteType": "InventoryOrderConnection",
@@ -89,6 +90,13 @@ const node/*: ReaderFragment*/ = {
               "plural": false,
               "selections": [
                 {
+                  "kind": "ScalarField",
+                  "alias": null,
+                  "name": "inventory_order_id",
+                  "args": null,
+                  "storageKey": null
+                },
+                {
                   "kind": "LinkedField",
                   "alias": null,
                   "name": "product",
@@ -100,7 +108,28 @@ const node/*: ReaderFragment*/ = {
                     {
                       "kind": "ScalarField",
                       "alias": null,
+                      "name": "product_id",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
                       "name": "name",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "threshold",
+                      "args": null,
+                      "storageKey": null
+                    },
+                    {
+                      "kind": "ScalarField",
+                      "alias": null,
+                      "name": "quantity",
                       "args": null,
                       "storageKey": null
                     }
@@ -109,28 +138,7 @@ const node/*: ReaderFragment*/ = {
                 {
                   "kind": "ScalarField",
                   "alias": null,
-                  "name": "quantity",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "status",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
                   "name": "created_at",
-                  "args": null,
-                  "storageKey": null
-                },
-                {
-                  "kind": "ScalarField",
-                  "alias": null,
-                  "name": "received_at",
                   "args": null,
                   "storageKey": null
                 },
@@ -182,6 +190,6 @@ const node/*: ReaderFragment*/ = {
   ]
 };
 // prettier-ignore
-(node/*: any*/).hash = 'b6ed6e3e5b859f214814607f5df9ca31';
+(node/*: any*/).hash = '373c88f43982f3358e5b26ec9c8840bb';
 
 module.exports = node;

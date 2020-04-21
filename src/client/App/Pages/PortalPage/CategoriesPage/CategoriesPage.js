@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
 import AddCategory from './AddCategory';
 import DeleteCategoryMutation from '../mutations/DeleteCategoryMutation';
@@ -8,29 +8,32 @@ import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
 import styles from '../PortalPage.css';
 
 const CategoryPage = ( props ) => {
+    const { viewer } = props;
     const deleteCategory = ( category ) => {
         const { category_id } = category;
         const form = {
             category_id,
         };
         DeleteCategoryMutation.commit( form );
-        window.location.replace( '/portal/categories' );
+        window.location.reload( );
     };
     // console.log( 'Portal category page props:', props );
     let { category_list } = props;
     return (
         <div className={ styles.CategoryPage }>
-            <nav>
-                <li>
-                    <Link to={ '/portal/categories/add-category' }>Add Category</Link>
-                </li>
-            </nav>
+            { viewer && viewer.role === 'manager' &&
+                <nav>
+                    <li>
+                        <Link to={ '/portal/categories/add-category' }>Add Category</Link>
+                    </li>
+                </nav>
+            }
             <Switch>
                 <Route exact path='/portal/categories/add-category' render={ () => {
-                    return (
+                    return viewer && viewer.role == 'manager' ? (
                         <AddCategory
                             { ...props } />
-                    )
+                    ) : <Redirect to={ '/' } />
                 }} />
             </Switch>
             <div className={ styles.Header }>

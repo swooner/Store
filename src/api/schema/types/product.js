@@ -23,7 +23,7 @@ import GraphQLCategory from './category';
 
 import { getCategory } from '../../database/queries/category';;
 import { getUser } from '../../database/queries/user';
-import { getProductSizes } from '../../database/queries/product';
+import { getProductSizes, getRestockStatus } from '../../database/queries/product';
 
 
 const GraphQLProduct = new GraphQLObjectType({
@@ -56,7 +56,7 @@ const GraphQLProduct = new GraphQLObjectType({
 		restock_status: {
 			type: GraphQLBoolean,
 			resolve: ( root ) => {
-				return root.P_restock
+				return getRestockStatus({ product_id: root.P_ID })
 			},
 		},
 		sizes: {

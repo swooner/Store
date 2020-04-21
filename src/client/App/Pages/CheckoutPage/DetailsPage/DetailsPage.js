@@ -55,6 +55,9 @@ const DetailsPage = ( props ) => {
                 });
             return false;
         }
+        else {
+            history.push( '/checkout/summary' );
+        }
     };
     return (
         <div className={ styles.DetailsPage }>

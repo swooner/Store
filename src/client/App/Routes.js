@@ -30,7 +30,7 @@ const Routes = ( props ) => {
             }} />
             <Route path='/portal' render={ () => {
                 const { viewer } = props;
-                return viewer ? (
+                return viewer && viewer.role ? (
                     <PortalPage
                         { ...props } />
                 ) : <Redirect to={ '/' } />

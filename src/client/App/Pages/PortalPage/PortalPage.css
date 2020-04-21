@@ -9,6 +9,39 @@
     display: grid;
     padding: 0px 20px;
 }
+.InventoryOrdersPage .Title {
+    margin-bottom: 10px;
+    font-size: 30px;
+}
+
+.InventoryOrdersPage .Filledist {
+    margin-top: 100px;
+}
+
+.InventoryOrdersPage .PendingList .Header,
+.InventoryOrdersPage .PendingList .InventoryOrder {
+    grid-template-columns: 2fr 4fr 2fr 2fr 2fr 4fr;
+}
+
+.InventoryOrdersPage .FilledList .Header,
+.InventoryOrdersPage .FilledList .InventoryOrder {
+    grid-template-columns: 2fr 4fr 2fr 2fr 4fr 3fr;
+}
+
+.InventoryOrdersPage .Form {
+    display: flex;
+}
+
+.InventoryOrdersPage .Form input {
+    width: 60px;
+    margin-right: 10px;
+    height: 32px !important;
+}
+
+.InventoryOrdersPage .Form button {
+    margin: 0 !important;
+    height: 32px !important;
+}
 
 .EmployeeList .Header,
 .EmployeeList .Employee {

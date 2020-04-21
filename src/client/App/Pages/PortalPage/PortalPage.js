@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, Redirect } from "react-router-dom";
 import Menu from "./Menu";
 import CategoriesPage from "./CategoriesPage/CategoriesPage";
 import ProductsPage from "./ProductsPage/ProductsPage";
@@ -43,9 +43,9 @@ const PortalPage = props => {
         <Route
           path="/portal/inventory-orders"
           render={() => {
-            return (
-              <InventoryOrdersPage {...props} inventory_orders_list={props} />
-            );
+            return viewer && ( viewer.role == 'manager' || viewer.role == 'inventory' ) ? (
+              <InventoryOrdersPage {...props} pending_orders_list={props} filled_orders_list={props} />
+            ) : <Redirect to={ '/' } />;
           }}
         />
         <Route
