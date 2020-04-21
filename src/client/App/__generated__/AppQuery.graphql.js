@@ -1,6 +1,6 @@
 /**
  * @flow
- * @relayHash cbc5b747e945200db6147cf7fc5a6b64
+ * @relayHash fab4bdfdce5693070ab1a6624dec38fd
  */
 
 /* eslint-disable */
@@ -265,7 +265,7 @@ fragment ProductList_categories on Query {
 }
 
 fragment ProductsPage_product_list on Query {
-  product_list(first: 10) {
+  product_list(first: 100) {
     edges {
       node {
         product_id
@@ -649,7 +649,14 @@ v24 = {
   "args": null,
   "storageKey": null
 },
-v25 = {
+v25 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 100
+  }
+],
+v26 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "total_sale",
@@ -1192,8 +1199,8 @@ return {
             "kind": "LinkedField",
             "alias": null,
             "name": "product_list",
-            "storageKey": "product_list(first:10)",
-            "args": (v16/*: any*/),
+            "storageKey": "product_list(first:100)",
+            "args": (v25/*: any*/),
             "concreteType": "ProductConnection",
             "plural": false,
             "selections": [
@@ -1241,7 +1248,7 @@ return {
             "kind": "LinkedHandle",
             "alias": null,
             "name": "product_list",
-            "args": (v16/*: any*/),
+            "args": (v25/*: any*/),
             "handle": "connection",
             "key": "ProductsPage_product_list",
             "filters": null
@@ -1370,7 +1377,7 @@ return {
             "concreteType": "Report",
             "plural": false,
             "selections": [
-              (v25/*: any*/),
+              (v26/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -1411,7 +1418,7 @@ return {
                 "args": null,
                 "storageKey": null
               },
-              (v25/*: any*/)
+              (v26/*: any*/)
             ]
           }
         ]
@@ -1422,7 +1429,7 @@ return {
     "operationKind": "query",
     "name": "AppQuery",
     "id": null,
-    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    rank\n    role\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_pending_orders_list\n  ...InventoryOrdersPage_filled_orders_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n        surcharge\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_filled_orders_list on Query {\n  filled_orders_list(first: 10) {\n    edges {\n      node {\n        product {\n          product_id\n          name\n          threshold\n        }\n        quantity\n        created_at\n        filled_at\n        filled_by {\n          first_name\n          last_name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_pending_orders_list on Query {\n  pending_orders_list(first: 10) {\n    edges {\n      node {\n        inventory_order_id\n        product {\n          product_id\n          name\n          threshold\n          quantity\n        }\n        created_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 10) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        restock_status\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
+    "text": "query AppQuery(\n  $user_id: Int\n  $isStorePage: Boolean!\n  $isCheckoutPage: Boolean!\n  $isEmployeesPage: Boolean!\n  $isAddProductPage: Boolean!\n  $isAddEmployeePage: Boolean!\n  $isCategoriesPage: Boolean!\n  $isProductsPage: Boolean!\n  $isInventoryOrdersPage: Boolean!\n  $isReportPage: Boolean!\n) {\n  viewer(id: $user_id) {\n    user_id\n    rank\n    role\n    employee_info {\n      role\n    }\n    ...StorePage_viewer @include(if: $isStorePage)\n    ...CheckoutPage_viewer @include(if: $isCheckoutPage)\n  }\n  ...ProductList_categories @include(if: $isStorePage)\n  ...AddEmployee_user_search @include(if: $isAddEmployeePage)\n  ...EmployeesPage_employee_list @include(if: $isEmployeesPage)\n  ...CategoriesPage_category_list @include(if: $isCategoriesPage)\n  ...ProductsPage_product_list @include(if: $isProductsPage)\n  ...AddProduct_category_list @include(if: $isAddProductPage)\n  ...InventoryOrdersPage_pending_orders_list\n  ...InventoryOrdersPage_filled_orders_list @include(if: $isInventoryOrdersPage)\n  ...ReportPage_report_data_by_month @include(if: $isReportPage)\n  ...ReportPage_each_product_report_data_by_month @include(if: $isReportPage)\n}\n\nfragment AddEmployee_user_search on Query {\n  user_search {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        account_name\n        employee_info {\n          role\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment AddProduct_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n  }\n}\n\nfragment Cart_cart on User {\n  cart {\n    order_id\n    items {\n      product {\n        product_id\n        name\n        price\n        picture_url\n        sizes {\n          product_size_id\n          name\n        }\n      }\n      size {\n        product_size_id\n        name\n        surcharge\n      }\n      quantity\n      cost\n    }\n    total\n  }\n}\n\nfragment CategoriesPage_category_list on Query {\n  category_list(first: 10) {\n    category_id\n    name\n    description\n  }\n}\n\nfragment CheckoutPage_viewer on User {\n  user_id\n  first_name\n  last_name\n  street\n  email_address\n  city\n  state\n  zip_code\n  phone_number\n  ...Cart_cart\n}\n\nfragment EmployeesPage_employee_list on Query {\n  employee_list(first: 10) {\n    edges {\n      node {\n        user_id\n        first_name\n        last_name\n        role\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_filled_orders_list on Query {\n  filled_orders_list(first: 10) {\n    edges {\n      node {\n        product {\n          product_id\n          name\n          threshold\n        }\n        quantity\n        created_at\n        filled_at\n        filled_by {\n          first_name\n          last_name\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment InventoryOrdersPage_pending_orders_list on Query {\n  pending_orders_list(first: 10) {\n    edges {\n      node {\n        inventory_order_id\n        product {\n          product_id\n          name\n          threshold\n          quantity\n        }\n        created_at\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ProductList_categories on Query {\n  categories {\n    name\n    description\n    products(first: 10) {\n      edges {\n        node {\n          product_id\n          category {\n            name\n          }\n          name\n          description\n          picture_url\n          price\n          sizes {\n            product_size_id\n            name\n            surcharge\n          }\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n  }\n}\n\nfragment ProductsPage_product_list on Query {\n  product_list(first: 100) {\n    edges {\n      node {\n        product_id\n        category {\n          name\n        }\n        name\n        price\n        quantity\n        threshold\n        restock_status\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ReportPage_each_product_report_data_by_month on Query {\n  get_each_product_report_by_month {\n    product_id\n    product_name\n    total_sale\n  }\n}\n\nfragment ReportPage_report_data_by_month on Query {\n  get_report_by_month {\n    total_sale\n    total_sale_cash\n    total_sale_card\n    total_customer\n  }\n}\n\nfragment StorePage_viewer on User {\n  user_id\n  ...Cart_cart\n}\n",
     "metadata": {}
   }
 };
