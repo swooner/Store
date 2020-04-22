@@ -59,7 +59,8 @@ const EmployeePage = ( props ) => {
                                 key={ i } 
                                 employee={ employee }
                                 changeRole={ changeRole }
-                                deleteEmployee={ deleteEmployee } />
+                                deleteEmployee={ deleteEmployee }
+                                viewer={ viewer } />
                         )
                     }) : [] }
                 </div>
@@ -68,18 +69,24 @@ const EmployeePage = ( props ) => {
     )
 };
 
-const Employee = ({ employee, changeRole, deleteEmployee }) => {
+const Employee = ({ viewer, employee, changeRole, deleteEmployee }) => {
     // console.log( 'employee:', employee );
     const { user_id, first_name, last_name, role } = employee;
     return (
         <div className={ styles.Employee }>
             <div className={ styles.Name }>{ first_name + " " + last_name }</div>
-            <select onChange={ ( e ) => changeRole( e, employee ) } value={ role }>
-                <option value={ 'employee' }>Employee</option>
-                <option value={ 'manager' }>Manager</option>
-                <option value={ 'inventory' }>Inventory</option>
-            </select>
-            <DeleteButton onClick={ ( ) => deleteEmployee( employee ) } />
+            { viewer.role == 'manager' ? (
+                <select onChange={ ( e ) => changeRole( e, employee ) } value={ role }>
+                    <option value={ 'employee' }>Employee</option>
+                    <option value={ 'manager' }>Manager</option>
+                    <option value={ 'inventory' }>Inventory</option>
+                </select>
+            ) : (
+                <div className={ styles.EmployeeRole }>{ role }</div>
+            )}
+            { viewer.role == 'manager' &&
+                <DeleteButton onClick={ ( ) => deleteEmployee( employee ) } />
+            }
         </div>
     )
 };

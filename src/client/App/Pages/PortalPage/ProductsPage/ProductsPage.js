@@ -40,6 +40,7 @@ const ProductPage = props => {
               product={product}
               newCategory={ newCategory }
               deleteProduct={deleteProduct}
+              viewer={ viewer }
             />
           );
         })
@@ -81,7 +82,7 @@ const ProductPage = props => {
   );
 };
 
-const Product = ({ product, newCategory, deleteProduct }) => {
+const Product = ({ viewer, product, newCategory, deleteProduct }) => {
   // console.log( 'product:', product );
   const { category, name: product_name, description, price, quantity, threshold, restock_status } = product;
   const { name: category_name } = category;
@@ -94,7 +95,9 @@ const Product = ({ product, newCategory, deleteProduct }) => {
       <div className={styles.Quantity}>{quantity}</div>
       <div className={styles.Threshold}>{threshold}</div>
       <div className={styles.Restock}>{restock_status ? 'Yes' : 'No' }</div>
-      <DeleteButton onClick={ ( ) => deleteProduct(product) } />
+      { viewer.role == 'manager' &&
+        <DeleteButton onClick={ ( ) => deleteProduct(product) } />
+      }
     </div>
   );
 };

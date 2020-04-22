@@ -47,7 +47,8 @@ const CategoryPage = ( props ) => {
                             <Category 
                                 key={ i } 
                                 category={ category }
-                                deleteCategory={ deleteCategory } />
+                                deleteCategory={ deleteCategory }
+                                viewer={ viewer } />
                         )
                     }) : [] : [] }
                 </div>
@@ -56,13 +57,15 @@ const CategoryPage = ( props ) => {
     )
 };
 
-const Category = ({ category, deleteCategory }) => {
+const Category = ({ viewer, category, deleteCategory }) => {
     const { name, description } = category;
     return (
         <div className={ styles.Category }>
             <div className={ styles.Name }>{ name }</div>
             <div className={ styles.Description }>{ description && description.length && description != 'undefined' ? description : '---' }</div>
-            <DeleteButton onClick={ ( ) => deleteCategory( category ) } />
+            { viewer.role == 'manager' &&
+                <DeleteButton onClick={ ( ) => deleteCategory( category ) } />
+            }
         </div>
     )
 };
