@@ -4,7 +4,7 @@ import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
 import AddCategory from './AddCategory';
 import DeleteCategoryMutation from '../mutations/DeleteCategoryMutation';
-import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
+import DeleteButton from '../../../Components/DeleteButton/DeleteButton';
 import styles from '../PortalPage.css';
 
 const CategoryPage = ( props ) => {
@@ -61,8 +61,8 @@ const Category = ({ category, deleteCategory }) => {
     return (
         <div className={ styles.Category }>
             <div className={ styles.Name }>{ name }</div>
-            <div className={ styles.Description }>{ description && description.length ? description : '---' }</div>
-            <div className={ styles.DeleteButton } onClick={ ( ) => deleteCategory( category ) }>Delete</div>
+            <div className={ styles.Description }>{ description && description.length && description != 'undefined' ? description : '---' }</div>
+            <DeleteButton onClick={ ( ) => deleteCategory( category ) } />
         </div>
     )
 };

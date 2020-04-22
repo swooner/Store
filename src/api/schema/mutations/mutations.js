@@ -88,7 +88,7 @@ export const LoginMutation = mutationWithClientMutationId({
 export const DeleteEmployeeMutation = mutationWithClientMutationId({
 	name: 'DeleteEmployee',
 	inputFields: {
-		E_Cus_ID: { type: GraphQLInt },
+		user_id: { type: GraphQLInt },
 	},
 	outputFields: {
 		user: {

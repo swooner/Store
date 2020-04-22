@@ -57,7 +57,7 @@
 }
 .ProductPage .Header,
 .ProductPage .Product {
-    grid-template-columns: 200px 6fr 2fr 2fr 2fr 2fr 2fr;
+    grid-template-columns: 200px 5fr 2fr 2fr 2fr 2fr 3fr;
 }
 
 .Table {

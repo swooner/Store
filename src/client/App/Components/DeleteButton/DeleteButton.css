@@ -1,0 +1,13 @@
+
+
+.Delete, .Yes, .No {
+    cursor: pointer;
+}
+
+.Delete:hover, .Yes:hover {
+    color: red;
+}
+
+.No:hover {
+    color: green;
+}

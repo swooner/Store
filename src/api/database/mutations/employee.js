@@ -3,12 +3,12 @@ import database from '../../../../mysql/connection';
 const Sequelize = require( 'sequelize' );
 
 export const deleteEmployee = ({
-    E_Cus_ID,
+    user_id,
 }) => {
     return database.query(
         `
             DELETE FROM employee
-            WHERE E_Cus_ID = '${ E_Cus_ID }',
+            WHERE E_Cus_ID = '${ user_id }',
         `, {
         type: Sequelize.QueryTypes.DELETE 
     })

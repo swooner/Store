@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { graphql, createFragmentContainer } from "react-relay";
 import { Switch, Route, Link, Redirect } from "react-router-dom";
-import SubmitButton from "../../../Components/SubmitButton/SubmitButton";
+import DeleteButton from "../../../Components/DeleteButton/DeleteButton";
 import AddProduct from "./AddProduct";
 import DeleteProductMutation from "../mutations/DeleteProductMutation";
 import styles from "../PortalPage.css";
@@ -94,9 +94,7 @@ const Product = ({ product, newCategory, deleteProduct }) => {
       <div className={styles.Quantity}>{quantity}</div>
       <div className={styles.Threshold}>{threshold}</div>
       <div className={styles.Restock}>{restock_status ? 'Yes' : 'No' }</div>
-      <div
-        className={ styles.DeleteButton }
-        onClick={() => deleteProduct(product)}>Delete</div>
+      <DeleteButton onClick={ ( ) => deleteProduct(product) } />
     </div>
   );
 };

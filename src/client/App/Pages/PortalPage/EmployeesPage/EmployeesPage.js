@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { Switch, Route, Link, Redirect } from 'react-router-dom';
 import { graphql, createFragmentContainer } from 'react-relay';
-import SubmitButton from '../../../Components/SubmitButton/SubmitButton';
+import DeleteButton from '../../../Components/DeleteButton/DeleteButton';
 import AddEmployee from './AddEmployee';
 import UpdateRoleMutation from '../mutations/UpdateRoleMutation';
 import DeleteEmployeeMutation from '../mutations/DeleteEmployeeMutation';
@@ -22,6 +22,7 @@ const EmployeePage = ( props ) => {
         const form = {
             user_id: employee.user_id,
         };
+        console.log( 'form:', form );
         DeleteEmployeeMutation.commit( form );
         window.location.replace( '/portal/employees' );
     };
@@ -78,7 +79,7 @@ const Employee = ({ employee, changeRole, deleteEmployee }) => {
                 <option value={ 'manager' }>Manager</option>
                 <option value={ 'inventory' }>Inventory</option>
             </select>
-            <div className={ styles.DeleteButton } onClick={ ( ) => deleteEmployee( employee ) }>Delete</div>
+            <DeleteButton onClick={ ( ) => deleteEmployee( employee ) } />
         </div>
     )
 };
