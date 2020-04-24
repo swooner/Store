@@ -3,26 +3,26 @@
 # COSC 3380 Database Project - Team 4 Store
 
 ## Members
-Osama Abdullah
-Noble Egbulefu
-Tuan Le
+Osama Abdullah <br />
+Noble Egbulefu <br />
+Tuan Le <br />
 Saifali Maredia
 
 
 ## Tech
-Front-end: React (Javascript)
-Back-end: Node, Express, GraphQL
+Front-end: React (Javascript) <br />
+Back-end: Node, Express, GraphQL <br />
 Database: MySQL
 
 
 ## Manager Role
-Username: manager, 
-Password: manager,
+Username: manager <br />
+Password: manager
 
 ## Inventory Role
-Username: inventorymanager. 
+Username: inventorymanager  <br />
 Password: inventory
 
 ## Employee Role
-Username: employee
+Username: employee <br />
 Password: employee
