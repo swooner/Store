@@ -1,22 +1,28 @@
 
 
-# COSC 3380 Database Project - Store
+# COSC 3380 Database Project - Team 4 Store
 
+## Members
+Osama Abdullah
+Noble Egbulefu
+Tuan Le
+Saifali Maredia
+
+
+## Tech
 Front-end: React (Javascript)
-
 Back-end: Node, Express, GraphQL
 Database: MySQL
 
 
-## Getting started
+## Manager Role
+Username: manager, 
+Password: manager,
 
-1. Download [Docker Desktop](https://www.docker.com/products/docker-desktop), turn it on
-2. Enter the following into your terminal
-```bash
-git clone https://github.com/swooner/Store.git
-cd Store
-docker-compose up
-```
+## Inventory Role
+Username: inventorymanager. 
+Password: inventory
 
-4. Website will be running on localhost:3000
-5. Database administration will be running on localhost:8081
+## Employee Role
+Username: employee
+Password: employee
