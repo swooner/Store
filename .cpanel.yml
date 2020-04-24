@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home1/tale22/repositories/
-    - /Store/public/ index.html $DEPLOYPATH
+    - /Store/public index.html $DEPLOYPATH
